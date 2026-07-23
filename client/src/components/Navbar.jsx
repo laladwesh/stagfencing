@@ -235,35 +235,37 @@ function Navbar() {
             type="button"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             onClick={() => setMobileOpen((o) => !o)}
-            className="lg:hidden flex w-9 h-9 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 transition-colors"
+            className="lg:hidden relative flex w-9 h-9 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 transition-colors"
           >
-            {mobileOpen ? (
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path
-                  d="M15 5L5 15M5 5L15 15"
-                  stroke="black"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path
-                  d="M3 5.5H17M3 10H17M3 14.5H17"
-                  stroke="black"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            )}
+            <span
+              className={
+                "absolute block h-0.5 w-4 bg-black rounded-full transition-all duration-300 ease-in-out " +
+                (mobileOpen ? "translate-y-0 rotate-45" : "-translate-y-[5px] rotate-0")
+              }
+            />
+            <span
+              className={
+                "absolute block h-0.5 w-4 bg-black rounded-full transition-all duration-300 ease-in-out " +
+                (mobileOpen ? "opacity-0" : "opacity-100")
+              }
+            />
+            <span
+              className={
+                "absolute block h-0.5 w-4 bg-black rounded-full transition-all duration-300 ease-in-out " +
+                (mobileOpen ? "translate-y-0 -rotate-45" : "translate-y-[5px] rotate-0")
+              }
+            />
           </button>
         </div>
       </nav>
 
-      {mobileOpen && (
-        <div className="lg:hidden max-w-8xl mx-auto mt-2 bg-white rounded-2xl shadow-lg shadow-black/5 border border-gray-100 overflow-hidden">
+      <div
+        className={
+          "lg:hidden max-w-8xl mx-auto overflow-hidden transition-all duration-300 ease-in-out " +
+          (mobileOpen ? "max-h-[32rem] opacity-100 mt-2" : "max-h-0 opacity-0 mt-0")
+        }
+      >
+        <div className="bg-white rounded-2xl shadow-lg shadow-black/5 border border-gray-100 overflow-hidden">
           <ul className="divide-y divide-gray-100">
             {NAV_LINKS.map((link) => (
               <li key={link.label}>
@@ -309,7 +311,7 @@ function Navbar() {
             </Link>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
