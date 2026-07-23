@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { FaStar, FaPhoneAlt } from "react-icons/fa";
 import Layout from "../components/Layout";
 import PageBanner from "../components/PageBanner";
@@ -44,13 +45,20 @@ function getWeekDays() {
 }
 
 function RequestQuotePage() {
+  const location = useLocation();
+  const calculatorEstimate = location.state?.calculatorEstimate ?? null;
+
   const days = getWeekDays();
   const todayIndex = days.findIndex((d) => d.toDateString() === new Date().toDateString());
 
-  const [service, setService] = useState(SERVICE_TYPES[0]);
+  const [service, setService] = useState(
+    calculatorEstimate && SERVICE_TYPES.includes(calculatorEstimate.serviceType)
+      ? calculatorEstimate.serviceType
+      : SERVICE_TYPES[0]
+  );
   const [propertyType, setPropertyType] = useState("Residential");
-  const [approxLength, setApproxLength] = useState("");
-  const [estimateAttached, setEstimateAttached] = useState(true);
+  const [approxLength, setApproxLength] = useState(calculatorEstimate?.approxLength ?? "");
+  const [estimateAttached, setEstimateAttached] = useState(Boolean(calculatorEstimate));
   const [selectedDayIndex, setSelectedDayIndex] = useState(todayIndex >= 0 ? todayIndex : 2);
   const [selectedTime, setSelectedTime] = useState("9-11am");
   const [noPreference, setNoPreference] = useState(false);
@@ -242,11 +250,16 @@ function RequestQuotePage() {
                 </label>
               </div>
 
-              {estimateAttached && (
+              {estimateAttached && calculatorEstimate && (
                 <div className="mt-3 flex items-start justify-between gap-3 border border-brand-orange rounded-md px-4 py-3">
                   <div>
-                    <p className="text-sm font-semibold text-black">Colorbond Calculator estimate attached</p>
-                    <p className="text-xs text-gray-500">2.4m 1.8m Colorbond, approx. $4,320 inc GST</p>
+                    <p className="text-sm font-semibold text-black">
+                      {calculatorEstimate.label} Calculator estimate attached
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {calculatorEstimate.detail}, approx. ${calculatorEstimate.low.toLocaleString()}–$
+                      {calculatorEstimate.high.toLocaleString()} inc GST
+                    </p>
                   </div>
                   <button
                     type="button"

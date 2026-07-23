@@ -12,6 +12,8 @@ import RequestQuotePage from "./pages/RequestQuotePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import BlogPage from "./pages/BlogPage";
 import ArticlePage from "./pages/ArticlePage";
+import FenceCalculatorPage from "./pages/FenceCalculatorPage";
+import RetainingCalculatorPage from "./pages/RetainingCalculatorPage";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<ArticlePage />} />
+        <Route path="/calculators/fence-calculator" element={<FenceCalculatorPage />} />
+        <Route path="/calculators/retaining-calculator" element={<RetainingCalculatorPage />} />
       </Routes>
     </BrowserRouter>
   );
