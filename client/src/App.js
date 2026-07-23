@@ -20,6 +20,7 @@ import RetainingCalculatorPage from "./pages/RetainingCalculatorPage";
 import FaqPage from "./pages/FaqPage";
 import ProductListingPage from "./pages/ProductListingPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import ProductReviewsPage from "./pages/ProductReviewsPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import MyAccountPage from "./pages/MyAccountPage";
@@ -51,6 +52,7 @@ function App() {
               <Route path="/faqs" element={<FaqPage />} />
               <Route path="/shop/:categorySlug" element={<ProductListingPage />} />
               <Route path="/product/:slug" element={<ProductDetailPage />} />
+              <Route path="/product/:slug/reviews" element={<ProductReviewsPage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/my-account" element={<MyAccountPage />} />

@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { FaStar } from "react-icons/fa";
+import StarRating from "../components/StarRating";
 import Layout from "../components/Layout";
 import ArrowIcon from "../components/ArrowIcon";
-import { getCategory, getProduct, submitReview } from "../lib/api";
+import ReviewCard from "../components/reviews/ReviewCard";
+import ReviewPhotoGrid from "../components/reviews/ReviewPhotoGrid";
+import WriteReviewForm from "../components/reviews/WriteReviewForm";
+import { getCategory, getProduct } from "../lib/api";
 import { useCart } from "../context/CartContext";
+
+const REVIEWS_PREVIEW_COUNT = 3;
 
 function defaultSelections(variantGroups) {
   const selections = {};
@@ -46,11 +51,6 @@ function ProductDetailPage() {
   const [activeImage, setActiveImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [addedMessage, setAddedMessage] = useState("");
-
-  const [reviewRating, setReviewRating] = useState(5);
-  const [reviewName, setReviewName] = useState("");
-  const [reviewComment, setReviewComment] = useState("");
-  const [submittingReview, setSubmittingReview] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -95,6 +95,8 @@ function ProductDetailPage() {
     return reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
   }, [reviews]);
 
+  const reviewPhotoGallery = useMemo(() => reviews.flatMap((r) => r.photos || []), [reviews]);
+
   const handleAddToCart = () => {
     addItem({
       productId: product._id,
@@ -108,25 +110,6 @@ function ProductDetailPage() {
     });
     setAddedMessage("Added to cart ✓");
     setTimeout(() => setAddedMessage(""), 2500);
-  };
-
-  const handleSubmitReview = async (e) => {
-    e.preventDefault();
-    if (!reviewName || !reviewComment) return;
-    setSubmittingReview(true);
-    try {
-      const newReview = await submitReview(slug, {
-        name: reviewName,
-        rating: reviewRating,
-        comment: reviewComment,
-      });
-      setReviews((prev) => [newReview, ...prev]);
-      setReviewName("");
-      setReviewComment("");
-      setReviewRating(5);
-    } finally {
-      setSubmittingReview(false);
-    }
   };
 
   if (loading) {
@@ -210,14 +193,20 @@ function ProductDetailPage() {
                           disabled={option.inStock === false}
                           onClick={() => setSelections((prev) => ({ ...prev, [group.name]: option.label }))}
                           className={
-                            "px-3 py-1.5 rounded-md text-xs font-medium border transition-colors " +
+                            "inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium border transition-colors " +
                             (option.inStock === false
-                              ? "opacity-40 cursor-not-allowed border-gray-200 text-gray-400"
+                              ? "opacity-40 cursor-not-allowed border-transparent text-gray-400"
                               : isSelected
-                              ? "bg-black text-white border-black"
-                              : "bg-[#F3EFE9] text-black border-transparent hover:border-gray-300")
+                              ? "border-black text-black"
+                              : "border-transparent text-gray-600 hover:border-gray-300")
                           }
                         >
+                          {option.swatch && (
+                            <span
+                              className="w-3.5 h-3.5 rounded-full border border-black/10 shrink-0"
+                              style={{ backgroundColor: option.swatch }}
+                            />
+                          )}
                           {option.label}
                         </button>
                       );
@@ -293,7 +282,7 @@ function ProductDetailPage() {
 
           {product.specifications?.length > 0 && (
             <div className="lg:col-span-1">
-              <div className="bg-[#F3EFE9] rounded-xl p-5">
+              <div className="bg-gray-50 rounded-xl p-5">
                 <h3 className="text-sm font-semibold text-black">Specifications</h3>
                 <dl className="mt-3 space-y-2 text-sm">
                   {product.specifications.map((spec) => (
@@ -328,74 +317,34 @@ function ProductDetailPage() {
             <h2 className="text-lg font-semibold text-black">Customer reviews</h2>
             {averageRating && (
               <div className="flex items-center gap-2">
-                <div className="flex text-yellow-400">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <FaStar key={i} className="w-3.5 h-3.5" />
-                  ))}
-                </div>
+                <StarRating value={averageRating} />
                 <span className="text-sm font-semibold text-black">{averageRating.toFixed(1)}</span>
-                <span className="text-xs text-gray-500">{reviews.length} reviews</span>
+                <span className="text-xs text-gray-500">· {reviews.length} reviews</span>
               </div>
             )}
           </div>
 
-          <div className="mt-5 space-y-5">
+          <ReviewPhotoGrid photos={reviewPhotoGallery} />
+
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6">
             {reviews.length === 0 && <p className="text-sm text-gray-500">No reviews yet.</p>}
-            {reviews.map((review) => (
-              <div key={review._id} className="border-b border-gray-100 pb-5">
-                <div className="flex text-yellow-400">
-                  {Array.from({ length: review.rating }).map((_, i) => (
-                    <FaStar key={i} className="w-3.5 h-3.5" />
-                  ))}
-                </div>
-                <p className="mt-2 text-sm text-gray-700 italic">"{review.comment}"</p>
-                <p className="mt-2 text-sm font-medium text-black">
-                  {review.name}
-                  {review.location && <span className="font-normal text-gray-500"> · {review.location}</span>}
-                </p>
-              </div>
+            {reviews.slice(0, REVIEWS_PREVIEW_COUNT).map((review) => (
+              <ReviewCard key={review._id} review={review} />
             ))}
           </div>
 
-          <form onSubmit={handleSubmitReview} className="mt-8 bg-white border border-gray-200 rounded-xl p-5">
-            <p className="font-semibold text-black">Write a review</p>
-            <div className="mt-3 flex items-center gap-1">
-              {[1, 2, 3, 4, 5].map((n) => (
-                <button
-                  key={n}
-                  type="button"
-                  onClick={() => setReviewRating(n)}
-                  aria-label={`${n} star`}
-                  className={n <= reviewRating ? "text-yellow-400" : "text-gray-300"}
-                >
-                  <FaStar className="w-5 h-5" />
-                </button>
-              ))}
-            </div>
-            <input
-              type="text"
-              required
-              value={reviewName}
-              onChange={(e) => setReviewName(e.target.value)}
-              placeholder="Your name"
-              className="mt-3 w-full bg-[#F3EFE9] rounded-md px-4 py-2.5 text-sm focus:outline-none"
-            />
-            <textarea
-              required
-              value={reviewComment}
-              onChange={(e) => setReviewComment(e.target.value)}
-              placeholder="Tell others how it held up — quality, delivery, install…"
-              rows={3}
-              className="mt-3 w-full bg-[#F3EFE9] rounded-md px-4 py-2.5 text-sm resize-none focus:outline-none"
-            />
-            <button
-              type="submit"
-              disabled={submittingReview}
-              className="mt-3 bg-black hover:bg-gray-800 text-white text-sm font-medium px-5 py-2 rounded-full transition-colors disabled:opacity-50"
+          {reviews.length > REVIEWS_PREVIEW_COUNT && (
+            <Link
+              to={`/product/${slug}/reviews`}
+              className="mt-6 inline-block text-sm font-medium text-black underline underline-offset-2"
             >
-              {submittingReview ? "Submitting…" : "Submit Review"}
-            </button>
-          </form>
+              View all {reviews.length} reviews
+            </Link>
+          )}
+
+          <div className="mt-8">
+            <WriteReviewForm slug={slug} onReviewAdded={(newReview) => setReviews((prev) => [newReview, ...prev])} />
+          </div>
         </div>
 
         {related.length > 0 && (
