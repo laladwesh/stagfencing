@@ -1,0 +1,8 @@
+node_modules
+client/node_modules
+client/build
+.git
+.env
+client/.env
+npm-debug.log
+*.md
