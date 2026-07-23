@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
+const connectDB = require("./server/db");
 const apiRouter = require("./server/routes");
 
 const app = express();
@@ -8,6 +9,10 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use("/api", apiRouter);
+
+connectDB().catch((err) => {
+  console.error("MongoDB connection error:", err.message);
+});
 
 if (process.env.NODE_ENV === "production") {
   const clientBuildPath = path.join(__dirname, "client/build");

@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -26,6 +27,7 @@ const NAV_LINKS = [
 
 function Navbar() {
   const location = useLocation();
+  const { itemCount } = useCart();
 
   return (
     <div className="px-4 sm:px-6 pb-4">
@@ -115,11 +117,16 @@ function Navbar() {
               </defs>
             </svg>
           </button>
-          <button
-            type="button"
+          <Link
+            to="/cart"
             aria-label="Cart"
-            className="hidden sm:flex w-9 h-9 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 transition-colors"
+            className="relative hidden sm:flex w-9 h-9 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 transition-colors"
           >
+            {itemCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-brand-orange text-white text-[10px] font-semibold flex items-center justify-center">
+                {itemCount}
+              </span>
+            )}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -159,7 +166,7 @@ function Navbar() {
                 </clipPath>
               </defs>
             </svg>
-          </button>
+          </Link>
           <button
             type="button"
             aria-label="Account"
