@@ -1,7 +1,6 @@
 const STEPS = [
   {
     icon: "📏",
-    badge: "💬",
     title: "Free measure and quote",
     description:
       "We come out, measure up, and give you a clear price the same day. No obligation to go ahead.",

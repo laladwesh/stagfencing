@@ -3,6 +3,9 @@ import Services from "./components/Services";
 import WhyChooseUs from "./components/WhyChooseUs";
 import Reviews from "./components/Reviews";
 import RecentProjects from "./components/RecentProjects";
+import Process from "./components/Process";
+import ShopPreview from "./components/ShopPreview";
+import AboutUs from "./components/AboutUs";
 
 function App() {
   return (
@@ -12,6 +15,9 @@ function App() {
       <WhyChooseUs />
       <Reviews />
       <RecentProjects />
+      <Process />
+      <ShopPreview />
+      <AboutUs />
     </div>
   );
 }
