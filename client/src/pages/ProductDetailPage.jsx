@@ -8,6 +8,7 @@ import ReviewPhotoGrid from "../components/reviews/ReviewPhotoGrid";
 import WriteReviewForm from "../components/reviews/WriteReviewForm";
 import { getCategory, getProduct } from "../lib/api";
 import { useCart } from "../context/CartContext";
+import { notifyAddedToCart } from "../lib/toast";
 
 const REVIEWS_PREVIEW_COUNT = 3;
 
@@ -50,7 +51,6 @@ function ProductDetailPage() {
   const [selections, setSelections] = useState({});
   const [activeImage, setActiveImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [addedMessage, setAddedMessage] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -108,8 +108,7 @@ function ProductDetailPage() {
       quantity,
       unitPrice: price,
     });
-    setAddedMessage("Added to cart ✓");
-    setTimeout(() => setAddedMessage(""), 2500);
+    notifyAddedToCart({ name: product.name, image: product.images?.[0] });
   };
 
   if (loading) {
@@ -253,7 +252,6 @@ function ProductDetailPage() {
                   <ArrowIcon className="transition-transform duration-300 group-hover:rotate-45" />
                 </span>
               </Link>
-              {addedMessage && <span className="text-sm text-green-700">{addedMessage}</span>}
             </div>
 
             <p className="mt-3 text-xs text-gray-500">

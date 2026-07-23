@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { Toaster } from "react-hot-toast";
 import ScrollToTop from "./components/ScrollToTop";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
@@ -34,6 +35,24 @@ function App() {
         <CartProvider>
           <BrowserRouter>
             <ScrollToTop />
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                duration: 3000,
+                style: {
+                  background: "#000",
+                  color: "#fff",
+                  borderRadius: "9999px",
+                  padding: "10px 18px",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  fontFamily: "Manrope, -apple-system, BlinkMacSystemFont, sans-serif",
+                  boxShadow: "0 10px 25px -5px rgba(0,0,0,0.2)",
+                },
+                success: { iconTheme: { primary: "#fff", secondary: "#000" } },
+                error: { iconTheme: { primary: "#fff", secondary: "#B83A31" } },
+              }}
+            />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/services" element={<ServicesPage />} />
