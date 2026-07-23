@@ -81,3 +81,31 @@ export function createOrder(payload) {
     body: JSON.stringify(payload),
   });
 }
+
+export function getCart() {
+  return request("/cart");
+}
+
+export function saveCart(items) {
+  return request("/cart", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ items }),
+  });
+}
+
+export function saveAddress(address) {
+  return request("/auth/address", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(address),
+  });
+}
+
+export function createPaymentIntent(amount) {
+  return request("/payments/create-intent", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount }),
+  });
+}

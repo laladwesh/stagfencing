@@ -19,8 +19,8 @@ const DELIVERY_METHODS = [
   {
     id: "delivery",
     label: "Delivery",
-    detail: "Calculated at checkout from your address",
-    fee: 15,
+    detail: "Perth metro flat rate",
+    fee: 54,
   },
 ];
 

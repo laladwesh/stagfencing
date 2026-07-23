@@ -13,7 +13,18 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { items, deliveryMethod, subtotal, discount, deliveryFee, total } = req.body;
+  const {
+    items,
+    deliveryMethod,
+    address,
+    notes,
+    subtotal,
+    discount,
+    deliveryFee,
+    total,
+    paymentMethod,
+    stripePaymentIntentId,
+  } = req.body;
   if (!Array.isArray(items) || items.length === 0) {
     return res.status(400).json({ error: "Order must have at least one item" });
   }
@@ -25,10 +36,15 @@ router.post("/", async (req, res) => {
     reference,
     items,
     deliveryMethod,
+    address,
+    notes,
     subtotal,
     discount: discount || 0,
     deliveryFee: deliveryFee || 0,
     total,
+    paymentMethod: paymentMethod || "card",
+    stripePaymentIntentId,
+    status: paymentMethod === "bank_transfer" ? "Pending payment" : "Paid",
   });
 
   res.status(201).json(order);

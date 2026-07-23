@@ -104,4 +104,11 @@ router.get("/me", requireAuth, (req, res) => {
   res.json({ user: req.user });
 });
 
+router.put("/address", requireAuth, async (req, res) => {
+  const { firstName, lastName, phone, street, apartment, suburb, state, postcode } = req.body;
+  req.user.address = { firstName, lastName, phone, street, apartment, suburb, state, postcode };
+  await req.user.save();
+  res.json({ user: req.user });
+});
+
 module.exports = router;
