@@ -48,7 +48,7 @@ function Navbar() {
                 <Link
                   to={link.href}
                   className={
-                    "relative inline-flex items-center gap-1 py-1 " +
+                    "relative inline-block py-1 " +
                     (isActive ? "text-gray-900 font-semibold" : "hover:text-gray-900 transition-colors")
                   }
                 >
