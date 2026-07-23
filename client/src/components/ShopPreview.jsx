@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function ArrowIcon(props) {
   return (
@@ -65,15 +66,15 @@ function ProductRow({ title, products, showIntro }) {
               The same trade-quality materials we install, ready for you to pick up or have delivered across
               Perth.
             </p>
-            <a
-              href="/shop"
-              className="group mt-4 inline-flex items-center gap-2 bg-gray-900 hover:bg-black text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
+            <Link
+              to="/shop"
+              className="group mt-4 inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
             >
               See the full range
               <span className="w-7 h-7 rounded-full bg-white text-gray-900 flex items-center justify-center">
                 <ArrowIcon className="transition-transform duration-300 group-hover:rotate-45" />
               </span>
-            </a>
+            </Link>
           </div>
         )}
       </div>

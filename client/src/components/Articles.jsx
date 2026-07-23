@@ -129,7 +129,7 @@ function Articles() {
         <div className="mt-10 text-center">
           <a
             href="/blog"
-            className="group inline-flex items-center gap-2 bg-gray-900 hover:bg-black text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
+            className="group inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
           >
             Read more articles
             <span className="w-7 h-7 rounded-full bg-white text-gray-900 flex items-center justify-center">

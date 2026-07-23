@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import TopBar from "./TopBar";
 import Navbar from "./Navbar";
+import QuoteForm from "./QuoteForm";
 
 const STATS = [
   { value: "500+", label: "Fences Built" },
   { value: "2,000+", label: "Fences quoted" },
   { value: "10 yr", label: "Workmanship Warranty" },
 ];
-
-const SERVICE_TYPES = ["Fence Installation", "Fence Repair", "Gate & Automation", "Retaining Wall"];
 
 function Hero() {
   const [showStickyNav, setShowStickyNav] = useState(false);
@@ -66,25 +66,25 @@ function Hero() {
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-4">
-              <a
-                href="/calculators"
+              <Link
+                to="/calculators"
                 className="bg-brand-orange hover:bg-orange-600 text-white font-medium px-6 py-3 rounded-full transition-colors"
               >
                 Calculate your fence cost
-              </a>
-              <a
-                href="/shop"
+              </Link>
+              <Link
+                to="/shop"
                 className="bg-white hover:bg-gray-100 text-gray-900 font-medium px-6 py-3 rounded-full transition-colors"
               >
                 Shop supplies (DIY)
-              </a>
+              </Link>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-white">
               <div className="flex items-center gap-2">
-                <span className="font-semibold text-lg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
-  <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"/>
-</svg></span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-google" viewBox="0 0 16 16">
+                  <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z" />
+                </svg>
                 <div className="flex text-yellow-400">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <FaStar key={i} className="w-3.5 h-3.5" />
@@ -124,71 +124,7 @@ function Hero() {
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 -mt-28 sm:-mt-32">
-        <form className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-3 sm:grid-rows-4 gap-3">
-          <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md shadow-sm px-5 py-4 text-xs font-medium text-gray-500 sm:col-start-1 sm:row-start-1">
-            Name*
-            <input
-              type="text"
-              required
-              className="bg-transparent border-b border-transparent text-sm text-gray-800 focus:outline-none focus:border-gray-900"
-            />
-          </label>
-          <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md shadow-sm px-5 py-4 text-xs font-medium text-gray-500 sm:col-start-2 sm:row-start-1">
-            Email*
-            <input
-              type="email"
-              required
-              className="bg-transparent border-b border-transparent text-sm text-gray-800 focus:outline-none focus:border-gray-900"
-            />
-          </label>
-          <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md shadow-sm px-5 py-4 text-xs font-medium text-gray-500 sm:col-start-3 sm:row-start-1">
-            Phone No*
-            <input
-              type="tel"
-              required
-              className="bg-transparent border-b border-transparent text-sm text-gray-800 focus:outline-none focus:border-gray-900"
-            />
-          </label>
-
-          <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md shadow-sm px-5 py-4 text-xs font-medium text-gray-500 sm:col-start-1 sm:col-span-2 sm:row-start-2">
-            Address*
-            <input
-              type="text"
-              required
-              className="bg-transparent border-b border-transparent text-sm text-gray-800 focus:outline-none focus:border-gray-900"
-            />
-          </label>
-          <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md shadow-sm px-5 py-4 text-xs font-medium text-gray-500 sm:col-start-3 sm:row-start-2">
-            Type Of Service*
-            <select className="bg-transparent border-b border-transparent text-sm text-gray-800 focus:outline-none focus:border-gray-900">
-              {SERVICE_TYPES.map((type) => (
-                <option key={type}>{type}</option>
-              ))}
-            </select>
-          </label>
-
-          <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md shadow-sm px-5 py-4 text-xs font-medium text-gray-500 sm:col-start-1 sm:col-span-2 sm:row-start-3 sm:row-span-2">
-            Message
-            <textarea
-              className="flex-1 bg-transparent border-b border-transparent text-sm text-gray-800 resize-none focus:outline-none focus:border-gray-900"
-            />
-          </label>
-          <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md shadow-sm px-5 py-4 text-xs font-medium text-gray-500 sm:col-start-3 sm:row-start-3">
-            Remove Existing Fence?*
-            <select className="bg-transparent border-b border-transparent text-sm text-gray-800 focus:outline-none focus:border-gray-900">
-              <option>Yes</option>
-              <option>No</option>
-            </select>
-          </label>
-          <div className="flex items-end sm:col-start-3 sm:row-start-4">
-            <button
-              type="submit"
-              className="w-full bg-gray-900 hover:bg-black text-white font-medium py-3 rounded-full transition-colors"
-            >
-              Get my free quote
-            </button>
-          </div>
-        </form>
+        <QuoteForm />
       </div>
     </section>
   );

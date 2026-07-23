@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { FaSearch, FaShoppingCart, FaUser, FaArrowRight } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -12,44 +11,42 @@ const NAV_LINKS = [
 ];
 
 function Navbar() {
-  const [active, setActive] = useState("Home");
+  const location = useLocation();
 
   return (
     <div className="px-4 sm:px-6 pb-4">
       <nav className="max-w-8xl mx-auto bg-white rounded-full shadow-lg shadow-black/5 flex items-center justify-between gap-4 pl-4 pr-2 py-2">
-        <a href="/" className="flex items-center shrink-0">
+        <Link to="/" className="flex items-center shrink-0">
           <img
             src="/stag-icon.svg"
             alt="Stag Fencing"
             className="h-14 w-auto"
           />
-        </a>
+        </Link>
 
         <ul className="hidden lg:flex items-center gap-7 text-sm font-medium text-gray-700">
-          {NAV_LINKS.map((link) => (
-            <li key={link.label}>
-              <a
-                href={link.href}
-                onClick={() => setActive(link.label)}
-                className={
-                  "group relative inline-block py-1 " +
-                  (active === link.label
-                    ? "text-gray-900 font-semibold"
-                    : "hover:text-gray-900 transition-colors")
-                }
-              >
-                {link.label}
-                <span
+          {NAV_LINKS.map((link) => {
+            const isActive = location.pathname === link.href;
+            return (
+              <li key={link.label}>
+                <Link
+                  to={link.href}
                   className={
-                    "absolute left-1/2 -bottom-1 h-0.5 w-2/5 -translate-x-1/2 bg-gray-900 rounded-full transition-opacity " +
-                    (active === link.label
-                      ? "opacity-100"
-                      : "opacity-0 group-hover:opacity-100")
+                    "group relative inline-block py-1 " +
+                    (isActive ? "text-gray-900 font-semibold" : "hover:text-gray-900 transition-colors")
                   }
-                />
-              </a>
-            </li>
-          ))}
+                >
+                  {link.label}
+                  <span
+                    className={
+                      "absolute left-1/2 -bottom-1 h-0.5 w-2/5 -translate-x-1/2 bg-gray-900 rounded-full transition-opacity " +
+                      (isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100")
+                    }
+                  />
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="flex items-center gap-3 shrink-0">
@@ -165,9 +162,9 @@ function Navbar() {
             </svg>
           </button>
 
-          <a
-            href="/contact-us"
-            className="flex items-center gap-2 bg-gray-900 hover:bg-black text-white text-sm font-semibold pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
+          <Link
+            to="/request-a-quote"
+            className="flex items-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-semibold pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
           >
             Get My Free Quote
             <span className="w-7 h-7 rounded-full bg-white text-gray-900 flex items-center justify-center">
@@ -186,7 +183,7 @@ function Navbar() {
                 />
               </svg>
             </span>
-          </a>
+          </Link>
         </div>
       </nav>
     </div>

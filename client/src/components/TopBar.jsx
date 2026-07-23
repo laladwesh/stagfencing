@@ -1,5 +1,3 @@
-import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
-
 function TopBar() {
   return (
     <div className="bg-transparent text-gray-200 text-xs sm:text-sm">

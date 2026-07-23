@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function ArrowIcon(props) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" {...props}>
@@ -35,15 +37,15 @@ function AboutUs() {
               before we leave. From a back fence to a full commercial run, you get one crew, one clear price,
               and a fence built to last.
             </p>
-            <a
-              href="/about-us"
-              className="group mt-5 inline-flex items-center gap-2 bg-gray-900 hover:bg-black text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
+            <Link
+              to="/about-us"
+              className="group mt-5 inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
             >
               More About Us
               <span className="w-7 h-7 rounded-full bg-white text-gray-900 flex items-center justify-center">
                 <ArrowIcon className="transition-transform duration-300 group-hover:rotate-45" />
               </span>
-            </a>
+            </Link>
           </div>
         </div>
 

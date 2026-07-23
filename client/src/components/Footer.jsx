@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   FaStar,
   FaFacebookF,
@@ -93,15 +94,15 @@ function Footer() {
             </p>
           </div>
           <div className="flex items-center gap-5 shrink-0">
-            <a
-              href="/contact-us"
+            <Link
+              to="/request-a-quote"
               className="group inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-gray-900 text-sm font-semibold pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
             >
               Get A Free Quote
               <span className="w-7 h-7 rounded-full bg-gray-900 text-white flex items-center justify-center">
                 <ArrowIcon className="transition-transform duration-300 group-hover:rotate-45" />
               </span>
-            </a>
+            </Link>
             <a href="tel:0431703770" className="flex items-center gap-2 text-sm font-medium text-white">
               <span className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center">
                 <FaPhoneAlt className="w-3 h-3" />
@@ -115,7 +116,7 @@ function Footer() {
 
         <div className="mt-10 grid grid-cols-1 lg:grid-cols-6 gap-10">
           <div className="lg:col-span-2">
-            <img src="/stag-icon.svg" alt="Stag Fencing" className="h-9 w-auto" />
+            <img src="/stag-icon.svg" alt="Stag Fencing" className="h-12 w-auto" />
             <p className="mt-1 text-xs font-semibold tracking-wide text-brand-orange">PERTH · WA</p>
 
             <p className="mt-4 text-sm text-gray-400 leading-relaxed max-w-xs">

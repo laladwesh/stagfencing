@@ -1,28 +1,29 @@
-import Hero from "./components/Hero";
-import Services from "./components/Services";
-import WhyChooseUs from "./components/WhyChooseUs";
-import Reviews from "./components/Reviews";
-import RecentProjects from "./components/RecentProjects";
-import Process from "./components/Process";
-import ShopPreview from "./components/ShopPreview";
-import AboutUs from "./components/AboutUs";
-import Articles from "./components/Articles";
-import Footer from "./components/Footer";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import ServicesPage from "./pages/ServicesPage";
+import ShopPage from "./pages/ShopPage";
+import CalculatorsPage from "./pages/CalculatorsPage";
+import GalleryPage from "./pages/GalleryPage";
+import AboutUsPage from "./pages/AboutUsPage";
+import ResourcesPage from "./pages/ResourcesPage";
+import ContactPage from "./pages/ContactPage";
+import RequestQuotePage from "./pages/RequestQuotePage";
 
 function App() {
   return (
-    <div className="min-h-screen bg-white">
-      <Hero />
-      <Services />
-      <WhyChooseUs />
-      <Reviews />
-      <RecentProjects />
-      <Process />
-      <ShopPreview />
-      <AboutUs />
-      <Articles />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/shop" element={<ShopPage />} />
+        <Route path="/calculators" element={<CalculatorsPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/about-us" element={<AboutUsPage />} />
+        <Route path="/resources" element={<ResourcesPage />} />
+        <Route path="/contact-us" element={<ContactPage />} />
+        <Route path="/request-a-quote" element={<RequestQuotePage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
