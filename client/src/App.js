@@ -9,6 +9,9 @@ import AboutUsPage from "./pages/AboutUsPage";
 import ResourcesPage from "./pages/ResourcesPage";
 import ContactPage from "./pages/ContactPage";
 import RequestQuotePage from "./pages/RequestQuotePage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import BlogPage from "./pages/BlogPage";
+import ArticlePage from "./pages/ArticlePage";
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
         <Route path="/resources" element={<ResourcesPage />} />
         <Route path="/contact-us" element={<ContactPage />} />
         <Route path="/request-a-quote" element={<RequestQuotePage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/:slug" element={<ArticlePage />} />
       </Routes>
     </BrowserRouter>
   );

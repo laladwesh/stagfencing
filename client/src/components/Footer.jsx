@@ -203,9 +203,9 @@ function Footer() {
             <a href="/terms-and-conditions" className="hover:text-white transition-colors">
               Terms
             </a>
-            <a href="/privacy-policy" className="hover:text-white transition-colors">
+            <Link to="/privacy-policy" className="hover:text-white transition-colors">
               Privacy
-            </a>
+            </Link>
           </div>
         </div>
       </div>

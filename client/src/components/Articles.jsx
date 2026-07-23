@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ARTICLES } from "../data/articles";
 
 function ArrowIcon(props) {
   return (
@@ -14,45 +16,6 @@ function ArrowIcon(props) {
 }
 
 const VISIBLE_COUNT = 3;
-
-const ARTICLES = [
-  {
-    title: "5 Popular Fence Styles To Transform Your Yard",
-    tag: "Instructions",
-    date: "March 18, 2025",
-    readTime: "7 min read",
-  },
-  {
-    title: "5 Popular Fence Styles To Transform Your Yard",
-    tag: "Instructions",
-    date: "March 18, 2025",
-    readTime: "7 min read",
-  },
-  {
-    title: "5 Popular Fence Styles To Transform Your Yard",
-    tag: "Instructions",
-    date: "March 18, 2025",
-    readTime: "7 min read",
-  },
-  {
-    title: "How Much Does A Colorbond Fence Cost in Perth?",
-    tag: "Pricing",
-    date: "March 25, 2025",
-    readTime: "5 min read",
-  },
-  {
-    title: "Do You Need Council Approval For A New Fence?",
-    tag: "Guides",
-    date: "April 2, 2025",
-    readTime: "6 min read",
-  },
-  {
-    title: "Asbestos Fence Removal: What Perth Homeowners Should Know",
-    tag: "Safety",
-    date: "April 10, 2025",
-    readTime: "8 min read",
-  },
-];
 
 function Articles() {
   const maxStart = Math.max(0, ARTICLES.length - VISIBLE_COUNT);
@@ -103,8 +66,8 @@ function Articles() {
           >
             {slides.map((slide, slideIndex) => (
               <div key={slideIndex} className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full shrink-0 pr-6">
-                {slide.map((article, i) => (
-                  <div key={`${article.title}-${i}`}>
+                {slide.map((article) => (
+                  <Link key={article.slug} to={`/blog/${article.slug}`} className="block">
                     <div className="relative rounded-xl overflow-hidden">
                       <img src="/hero-bg.png" alt="" className="w-full h-48 object-cover" />
                       <span className="absolute top-3 left-3 flex items-center gap-1.5 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full">
@@ -119,7 +82,7 @@ function Articles() {
                       <span className="text-xs text-gray-400 shrink-0">{article.date}</span>
                     </div>
                     <h3 className="mt-2 text-base font-semibold text-black leading-snug">{article.title}</h3>
-                  </div>
+                  </Link>
                 ))}
               </div>
             ))}
@@ -127,15 +90,15 @@ function Articles() {
         </div>
 
         <div className="mt-10 text-center">
-          <a
-            href="/blog"
+          <Link
+            to="/blog"
             className="group inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
           >
             Read more articles
             <span className="w-7 h-7 rounded-full bg-white text-gray-900 flex items-center justify-center">
               <ArrowIcon className="transition-transform duration-300 group-hover:rotate-45" />
             </span>
-          </a>
+          </Link>
         </div>
       </div>
     </section>

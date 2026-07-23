@@ -1,0 +1,51 @@
+export const ARTICLES = [
+  {
+    slug: "how-to-choose-the-right-fence",
+    title: "How to choose the right fence for your Perth property",
+    tag: "Buying Guide",
+    date: "13 Feb 2026",
+    readTime: "7 min read",
+  },
+  {
+    slug: "5-popular-fence-styles-1",
+    title: "5 Popular Fence Styles To Transform Your Yard",
+    tag: "Instructions",
+    date: "March 18, 2025",
+    readTime: "7 min read",
+  },
+  {
+    slug: "5-popular-fence-styles-2",
+    title: "5 Popular Fence Styles To Transform Your Yard",
+    tag: "Instructions",
+    date: "March 18, 2025",
+    readTime: "7 min read",
+  },
+  {
+    slug: "5-popular-fence-styles-3",
+    title: "5 Popular Fence Styles To Transform Your Yard",
+    tag: "Instructions",
+    date: "March 18, 2025",
+    readTime: "7 min read",
+  },
+  {
+    slug: "colorbond-fence-cost-perth",
+    title: "How Much Does A Colorbond Fence Cost in Perth?",
+    tag: "Pricing",
+    date: "March 25, 2025",
+    readTime: "5 min read",
+  },
+  {
+    slug: "council-approval-new-fence",
+    title: "Do You Need Council Approval For A New Fence?",
+    tag: "Guides",
+    date: "April 2, 2025",
+    readTime: "6 min read",
+  },
+  {
+    slug: "asbestos-fence-removal-guide",
+    title: "Asbestos Fence Removal: What Perth Homeowners Should Know",
+    tag: "Safety",
+    date: "April 10, 2025",
+    readTime: "8 min read",
+  },
+];
