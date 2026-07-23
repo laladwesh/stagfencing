@@ -30,14 +30,22 @@ const SERVICE_OPTIONS = ["Fence Installation", "Fence Repair", "Gate & Automatio
 
 function ContactPage() {
   return (
-    <Layout>
+    <Layout transparentHeader>
       <PageBanner
         breadcrumb="Home / Contact Us"
         title="Contact Us"
         subtitle="We're here to help — call, email, or book a free on-site measure."
-        ctaLabel="Call Us Today"
-        ctaHref="tel:0431703770"
-      />
+      >
+        <a
+          href="tel:0431703770"
+          className="group inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
+        >
+          Call Us Today
+          <span className="w-7 h-7 rounded-full bg-white text-gray-900 flex items-center justify-center">
+            <ArrowIcon className="transition-transform duration-300 group-hover:rotate-45" />
+          </span>
+        </a>
+      </PageBanner>
 
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">

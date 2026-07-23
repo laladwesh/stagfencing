@@ -15,7 +15,7 @@ function Navbar() {
 
   return (
     <div className="px-4 sm:px-6 pb-4">
-      <nav className="max-w-8xl mx-auto bg-white rounded-full shadow-lg shadow-black/5 flex items-center justify-between gap-4 pl-4 pr-2 py-2">
+      <nav className="relative max-w-8xl mx-auto bg-white rounded-full shadow-lg shadow-black/5 flex items-center justify-between gap-4 pl-4 pr-2 py-2">
         <Link to="/" className="flex items-center shrink-0">
           <img
             src="/stag-icon.svg"
@@ -24,7 +24,7 @@ function Navbar() {
           />
         </Link>
 
-        <ul className="hidden lg:flex items-center gap-7 text-sm font-medium text-gray-700">
+        <ul className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-4 text-sm font-medium text-gray-700">
           {NAV_LINKS.map((link) => {
             const isActive = location.pathname === link.href;
             return (
@@ -49,7 +49,7 @@ function Navbar() {
           })}
         </ul>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             type="button"
             aria-label="Search"

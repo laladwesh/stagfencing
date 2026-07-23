@@ -153,14 +153,22 @@ function RequestQuotePage() {
   }
 
   return (
-    <Layout>
+    <Layout transparentHeader>
       <PageBanner
         breadcrumb="Home / Request a Quote"
         title="Request a Quote"
         subtitle="Tell us about the job and book your free on-site measure — price confirmed in writing."
-        ctaLabel="Call Us Today"
-        ctaHref="tel:0431703770"
-      />
+      >
+        <a
+          href="tel:0431703770"
+          className="group inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
+        >
+          Call Us Today
+          <span className="w-7 h-7 rounded-full bg-white text-gray-900 flex items-center justify-center">
+            <ArrowIcon className="transition-transform duration-300 group-hover:rotate-45" />
+          </span>
+        </a>
+      </PageBanner>
 
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-3 gap-10">

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
+import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
 import { ARTICLES } from "../data/articles";
 
@@ -19,24 +20,15 @@ function QuoteCta({ label }) {
 
 function BlogPage() {
   return (
-    <Layout>
-      <div
-        className="relative bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "linear-gradient(180deg, rgba(20,15,10,0.55) 0%, rgba(20,15,10,0.65) 100%), url('/hero-bg.png')",
-        }}
+    <Layout transparentHeader>
+      <PageBanner
+        breadcrumb="Home / Articles"
+        title="Articles"
+        subtitle="Fencing advice, guides and news from the Stag crew."
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center text-white">
-          <p className="text-xs text-gray-300">Home / Articles</p>
-          <h1 className="mt-3 text-4xl sm:text-5xl font-semibold">Articles</h1>
-          <p className="mt-3 text-gray-200">Fencing advice, guides and news from the Stag crew.</p>
-          <div className="mt-6 flex items-center justify-center gap-3">
-            <QuoteCta label="Get A Free Quote" />
-            <QuoteCta label="Get A Free Quote" />
-          </div>
-        </div>
-      </div>
+        <QuoteCta label="Get A Free Quote" />
+        <QuoteCta label="Get A Free Quote" />
+      </PageBanner>
 
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
