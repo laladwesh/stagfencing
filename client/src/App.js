@@ -6,6 +6,8 @@ import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import Home from "./pages/Home";
 import ServicesPage from "./pages/ServicesPage";
+import ServiceCategoryPage from "./pages/ServiceCategoryPage";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
 import ShopPage from "./pages/ShopPage";
 import CalculatorsPage from "./pages/CalculatorsPage";
 import GalleryPage from "./pages/GalleryPage";
@@ -56,6 +58,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/services" element={<ServicesPage />} />
+              <Route path="/services/:categorySlug" element={<ServiceCategoryPage />} />
+              <Route path="/services/:categorySlug/:serviceSlug" element={<ServiceDetailPage />} />
               <Route path="/shop" element={<ShopPage />} />
               <Route path="/calculators" element={<CalculatorsPage />} />
               <Route path="/gallery" element={<GalleryPage />} />

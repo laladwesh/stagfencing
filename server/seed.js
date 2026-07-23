@@ -1,4 +1,5 @@
 require("dotenv").config();
+const mongoose = require("mongoose");
 const connectDB = require("./db");
 const Category = require("./models/Category");
 const Product = require("./models/Product");
@@ -401,10 +402,10 @@ async function seed() {
   ]);
 
   console.log("Seed complete.");
-  process.exit(0);
+  await mongoose.connection.close();
 }
 
-seed().catch((err) => {
+seed().catch(async (err) => {
   console.error("Seed failed:", err);
-  process.exit(1);
+  await mongoose.connection.close();
 });

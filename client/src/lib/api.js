@@ -109,3 +109,15 @@ export function createPaymentIntent(amount) {
     body: JSON.stringify({ amount }),
   });
 }
+
+export function getServiceCategories() {
+  return request("/services/categories");
+}
+
+export function getServiceCategory(slug) {
+  return request(`/services/categories/${slug}`);
+}
+
+export function getServiceDetail(slug) {
+  return request(`/services/detail/${slug}`);
+}
