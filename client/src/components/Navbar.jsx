@@ -167,8 +167,8 @@ function Navbar() {
               </defs>
             </svg>
           </Link>
-          <button
-            type="button"
+          <Link
+            to="/my-account"
             aria-label="Account"
             className="hidden sm:flex w-9 h-9 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 transition-colors"
           >
@@ -199,7 +199,7 @@ function Navbar() {
                 </clipPath>
               </defs>
             </svg>
-          </button>
+          </Link>
 
           <Link
             to="/request-a-quote"
