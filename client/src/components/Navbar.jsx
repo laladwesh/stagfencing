@@ -1,5 +1,4 @@
 import { Link, useLocation } from "react-router-dom";
-import { FaChevronDown } from "react-icons/fa";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
