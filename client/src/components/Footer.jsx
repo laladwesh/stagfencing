@@ -31,9 +31,26 @@ const FENCING_LINKS = [
   "Retaining walls",
   "Gates & automation",
 ];
-const SHOP_LINKS = ["Shop all products", "Panels & posts", "Gates & hardware", "Fencing accessories", "Gate motors"];
-const COMPANY_LINKS = ["About us", "Gallery", "About us", "Contact"];
-const SUPPORT_LINKS = ["Fencing calculator", "Warranty", "Delivery", "Returns", "FAQs"];
+const SHOP_LINKS = [
+  { label: "Shop all products", href: "/shop" },
+  "Panels & posts",
+  "Gates & hardware",
+  "Fencing accessories",
+  "Gate motors",
+];
+const COMPANY_LINKS = [
+  { label: "About us", href: "/about-us" },
+  { label: "Gallery", href: "/gallery" },
+  "Reviews",
+  { label: "Contact", href: "/contact-us" },
+];
+const SUPPORT_LINKS = [
+  { label: "Fencing calculator", href: "/calculators" },
+  "Warranty",
+  "Delivery",
+  "Returns",
+  { label: "FAQs", href: "/faqs" },
+];
 
 const SOCIAL_ICONS = [FaFacebookF, FaInstagram, FaGoogle];
 
@@ -45,13 +62,23 @@ function FooterColumn({ title, links }) {
         {title}
       </p>
       <ul className="mt-4 space-y-2.5">
-        {links.map((link, i) => (
-          <li key={`${link}-${i}`}>
-            <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
-              {link}
-            </a>
-          </li>
-        ))}
+        {links.map((link, i) => {
+          const label = typeof link === "string" ? link : link.label;
+          const href = typeof link === "string" ? null : link.href;
+          return (
+            <li key={`${label}-${i}`}>
+              {href ? (
+                <Link to={href} className="text-sm text-gray-400 hover:text-white transition-colors">
+                  {label}
+                </Link>
+              ) : (
+                <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  {label}
+                </a>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

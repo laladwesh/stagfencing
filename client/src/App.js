@@ -14,6 +14,7 @@ import BlogPage from "./pages/BlogPage";
 import ArticlePage from "./pages/ArticlePage";
 import FenceCalculatorPage from "./pages/FenceCalculatorPage";
 import RetainingCalculatorPage from "./pages/RetainingCalculatorPage";
+import FaqPage from "./pages/FaqPage";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/blog/:slug" element={<ArticlePage />} />
         <Route path="/calculators/fence-calculator" element={<FenceCalculatorPage />} />
         <Route path="/calculators/retaining-calculator" element={<RetainingCalculatorPage />} />
+        <Route path="/faqs" element={<FaqPage />} />
       </Routes>
     </BrowserRouter>
   );

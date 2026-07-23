@@ -1,13 +1,28 @@
 import { Link, useLocation } from "react-router-dom";
+import { FaChevronDown } from "react-icons/fa";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
   { label: "Shop", href: "/shop" },
-  { label: "Calculators", href: "/calculators" },
+  {
+    label: "Calculators",
+    href: "/calculators",
+    subLinks: [
+      { label: "Fence Calculator", href: "/calculators/fence-calculator" },
+      { label: "Retaining Calculator", href: "/calculators/retaining-calculator" },
+    ],
+  },
   { label: "Gallery", href: "/gallery" },
   { label: "About us", href: "/about-us" },
-  { label: "Resources", href: "/resources" },
+  {
+    label: "Resources",
+    href: "/resources",
+    subLinks: [
+      { label: "Blog", href: "/blog" },
+      { label: "FAQs", href: "/faqs" },
+    ],
+  },
 ];
 
 function Navbar() {
@@ -26,13 +41,15 @@ function Navbar() {
 
         <ul className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-4 text-sm font-medium text-gray-700">
           {NAV_LINKS.map((link) => {
-            const isActive = location.pathname === link.href;
+            const isActive =
+              location.pathname === link.href ||
+              (link.subLinks && link.subLinks.some((sub) => location.pathname === sub.href));
             return (
-              <li key={link.label}>
+              <li key={link.label} className="group relative">
                 <Link
                   to={link.href}
                   className={
-                    "group relative inline-block py-1 " +
+                    "relative inline-flex items-center gap-1 py-1 " +
                     (isActive ? "text-gray-900 font-semibold" : "hover:text-gray-900 transition-colors")
                   }
                 >
@@ -44,6 +61,22 @@ function Navbar() {
                     }
                   />
                 </Link>
+
+                {link.subLinks && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible -translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                    <div className="bg-white rounded-xl shadow-lg shadow-black/10 border border-gray-100 py-2 min-w-[200px]">
+                      {link.subLinks.map((sub) => (
+                        <Link
+                          key={sub.href}
+                          to={sub.href}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors whitespace-nowrap"
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </li>
             );
           })}
