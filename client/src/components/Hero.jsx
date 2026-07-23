@@ -4,6 +4,7 @@ import { FaStar } from "react-icons/fa";
 import TopBar from "./TopBar";
 import Navbar from "./Navbar";
 import QuoteForm from "./QuoteForm";
+import ArrowIcon from "./ArrowIcon";
 
 const STATS = [
   { value: "500+", label: "Fences Built" },
@@ -125,6 +126,31 @@ function Hero() {
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 -mt-28 sm:-mt-32">
         <QuoteForm />
+      </div>
+
+      <div
+        className={
+          "lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-4 py-3 transition-transform duration-300 " +
+          (showStickyNav ? "translate-y-0" : "translate-y-full")
+        }
+      >
+        <div className="flex items-center gap-3 max-w-md mx-auto">
+          <a
+            href="tel:0431703770"
+            className="flex-1 inline-flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-900 text-sm font-semibold px-4 py-2.5 rounded-full whitespace-nowrap"
+          >
+            Call 0431 703 770
+          </a>
+          <Link
+            to="/request-a-quote"
+            className="group flex-1 inline-flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-semibold pl-4 pr-1.5 py-1.5 rounded-full transition-colors whitespace-nowrap"
+          >
+            Get A Free Quote
+            <span className="w-7 h-7 rounded-full bg-white text-gray-900 flex items-center justify-center shrink-0">
+              <ArrowIcon className="transition-transform duration-300 group-hover:rotate-45" />
+            </span>
+          </Link>
+        </div>
       </div>
     </section>
   );
