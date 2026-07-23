@@ -120,22 +120,22 @@ function Footer() {
               Free on-site measure and a clear written quote, usually within a couple of days.
             </p>
           </div>
-          <div className="flex items-center gap-5 shrink-0">
+          <div className="flex items-center gap-3 w-full sm:w-auto shrink-0">
+            <a
+              href="tel:0431703770"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-100 text-gray-900 text-sm font-semibold px-5 py-2.5 rounded-full transition-colors whitespace-nowrap"
+            >
+              Call 0431 703 770
+            </a>
             <Link
               to="/request-a-quote"
-              className="group inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-gray-900 text-sm font-semibold pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
+              className="group flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-semibold pl-4 pr-1.5 py-1.5 rounded-full transition-colors whitespace-nowrap"
             >
               Get A Free Quote
-              <span className="w-7 h-7 rounded-full bg-gray-900 text-white flex items-center justify-center">
+              <span className="w-7 h-7 rounded-full bg-white text-gray-900 flex items-center justify-center shrink-0">
                 <ArrowIcon className="transition-transform duration-300 group-hover:rotate-45" />
               </span>
             </Link>
-            <a href="tel:0431703770" className="flex items-center gap-2 text-sm font-medium text-white">
-              <span className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center">
-                <FaPhoneAlt className="w-3 h-3" />
-              </span>
-              0431 703 770
-            </a>
           </div>
         </div>
 

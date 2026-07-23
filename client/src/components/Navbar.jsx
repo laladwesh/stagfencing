@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
@@ -28,6 +29,12 @@ const NAV_LINKS = [
 function Navbar() {
   const location = useLocation();
   const { itemCount } = useCart();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const closeMobile = () => setMobileOpen(false);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   return (
     <div className="px-4 sm:px-6 pb-4">
@@ -120,7 +127,7 @@ function Navbar() {
           <Link
             to="/cart"
             aria-label="Cart"
-            className="relative hidden sm:flex w-9 h-9 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 transition-colors"
+            className="relative flex w-9 h-9 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 transition-colors"
           >
             {itemCount > 0 && (
               <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-brand-orange text-white text-[10px] font-semibold flex items-center justify-center">
@@ -203,7 +210,7 @@ function Navbar() {
 
           <Link
             to="/request-a-quote"
-            className="flex items-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-semibold pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
+            className="hidden sm:flex items-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-semibold pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
           >
             Get My Free Quote
             <span className="w-7 h-7 rounded-full bg-white text-gray-900 flex items-center justify-center">
@@ -223,8 +230,86 @@ function Navbar() {
               </svg>
             </span>
           </Link>
+
+          <button
+            type="button"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMobileOpen((o) => !o)}
+            className="lg:hidden flex w-9 h-9 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 transition-colors"
+          >
+            {mobileOpen ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M15 5L5 15M5 5L15 15"
+                  stroke="black"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M3 5.5H17M3 10H17M3 14.5H17"
+                  stroke="black"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            )}
+          </button>
         </div>
       </nav>
+
+      {mobileOpen && (
+        <div className="lg:hidden max-w-8xl mx-auto mt-2 bg-white rounded-2xl shadow-lg shadow-black/5 border border-gray-100 overflow-hidden">
+          <ul className="divide-y divide-gray-100">
+            {NAV_LINKS.map((link) => (
+              <li key={link.label}>
+                <Link
+                  to={link.href}
+                  onClick={closeMobile}
+                  className="block px-5 py-3 text-sm font-medium text-gray-800"
+                >
+                  {link.label}
+                </Link>
+                {link.subLinks && (
+                  <ul className="pb-2">
+                    {link.subLinks.map((sub) => (
+                      <li key={sub.href}>
+                        <Link
+                          to={sub.href}
+                          onClick={closeMobile}
+                          className="block px-8 py-2 text-sm text-gray-500"
+                        >
+                          {sub.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+          <div className="p-4 border-t border-gray-100 flex items-center gap-3">
+            <Link
+              to="/my-account"
+              onClick={closeMobile}
+              className="flex-1 text-center text-sm font-medium text-gray-700 border border-gray-200 rounded-full py-2.5"
+            >
+              My Account
+            </Link>
+            <Link
+              to="/request-a-quote"
+              onClick={closeMobile}
+              className="flex-1 text-center text-sm font-semibold bg-black hover:bg-gray-800 text-white rounded-full py-2.5 transition-colors"
+            >
+              Get My Free Quote
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

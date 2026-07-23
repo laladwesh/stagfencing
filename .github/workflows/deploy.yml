@@ -18,6 +18,7 @@ jobs:
           port: ${{ secrets.SSH_PORT || 22 }}
           script: |
             set -e
+            git config --global --add safe.directory '*'
             cd stagfencing
             git fetch origin master
             git reset --hard origin/master
