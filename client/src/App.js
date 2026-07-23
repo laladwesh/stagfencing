@@ -6,6 +6,8 @@ import RecentProjects from "./components/RecentProjects";
 import Process from "./components/Process";
 import ShopPreview from "./components/ShopPreview";
 import AboutUs from "./components/AboutUs";
+import Articles from "./components/Articles";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
       <Process />
       <ShopPreview />
       <AboutUs />
+      <Articles />
+      <Footer />
     </div>
   );
 }
