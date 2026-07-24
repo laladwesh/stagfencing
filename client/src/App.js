@@ -27,7 +27,16 @@ import ProductReviewsPage from "./pages/ProductReviewsPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import MyAccountPage from "./pages/MyAccountPage";
-import AdminServiceIconsPage from "./pages/AdminServiceIconsPage";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
+import AdminUsersPage from "./pages/admin/AdminUsersPage";
+import AdminShopCategoriesPage from "./pages/admin/AdminShopCategoriesPage";
+import AdminShopProductsPage from "./pages/admin/AdminShopProductsPage";
+import AdminShopProductFormPage from "./pages/admin/AdminShopProductFormPage";
+import AdminShopReviewsPage from "./pages/admin/AdminShopReviewsPage";
+import AdminServiceCategoriesPage from "./pages/admin/AdminServiceCategoriesPage";
+import AdminServicesPage from "./pages/admin/AdminServicesPage";
+import AdminServiceFormPage from "./pages/admin/AdminServiceFormPage";
+import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
 
@@ -80,7 +89,19 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/my-account" element={<MyAccountPage />} />
-              <Route path="/admin/service-icons" element={<AdminServiceIconsPage />} />
+
+              <Route path="/admin" element={<AdminDashboardPage />} />
+              <Route path="/admin/users" element={<AdminUsersPage />} />
+              <Route path="/admin/shop/categories" element={<AdminShopCategoriesPage />} />
+              <Route path="/admin/shop/products" element={<AdminShopProductsPage />} />
+              <Route path="/admin/shop/products/new" element={<AdminShopProductFormPage />} />
+              <Route path="/admin/shop/products/:id/edit" element={<AdminShopProductFormPage />} />
+              <Route path="/admin/shop/reviews" element={<AdminShopReviewsPage />} />
+              <Route path="/admin/services/categories" element={<AdminServiceCategoriesPage />} />
+              <Route path="/admin/services/services" element={<AdminServicesPage />} />
+              <Route path="/admin/services/services/new" element={<AdminServiceFormPage />} />
+              <Route path="/admin/services/services/:id/edit" element={<AdminServiceFormPage />} />
+              <Route path="/admin/orders" element={<AdminOrdersPage />} />
             </Routes>
           </BrowserRouter>
         </CartProvider>

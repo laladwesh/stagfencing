@@ -21,6 +21,7 @@ const userSchema = new Schema(
     avatar: String,
     googleId: String,
     address: addressSchema,
+    isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
