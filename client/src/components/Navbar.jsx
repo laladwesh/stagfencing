@@ -1,69 +1,294 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useSearch } from "../context/SearchContext";
+import { getCategories, getServiceCategories } from "../lib/api";
+import ServiceCategoryIcon from "./ServiceCategoryIcon";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Services", href: "/services" },
-  { label: "Shop", href: "/shop" },
-  {
-    label: "Calculators",
-    href: "/calculators",
-    subLinks: [
-      { label: "Fence Calculator", href: "/calculators/fence-calculator" },
-      { label: "Retaining Calculator", href: "/calculators/retaining-calculator" },
-    ],
-  },
+  { label: "Services", href: "/services", dropdown: "services" },
+  { label: "Shop", href: "/shop", dropdown: "shop" },
+  { label: "Calculators", href: "/calculators", dropdown: "calculators" },
   { label: "Gallery", href: "/gallery" },
   { label: "About us", href: "/about-us" },
-  {
-    label: "Resources",
-    href: "/resources",
-    subLinks: [
-      { label: "Blog", href: "/blog" },
-      { label: "FAQs", href: "/faqs" },
-    ],
-  },
+  { label: "Resources", href: "/resources", dropdown: "resources" },
 ];
+
+const CALCULATOR_LINKS = [
+  { label: "Colorbond Calculator", description: "instant panel & post estimate", href: "/calculators/fence-calculator" },
+  { label: "Retaining Calculator", description: "wall height & sleeper estimate", href: "/calculators/retaining-calculator" },
+];
+
+const RESOURCE_LINKS = [
+  { label: "Blog", href: "/blog" },
+  { label: "Colorbond Colours", href: "/resources/colorbond-colours" },
+  { label: "Brochures", href: "/resources/brochures" },
+  { label: "FAQs", href: "/faqs" },
+];
+
+function ChevronIcon({ open, className = "" }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="10"
+      height="10"
+      viewBox="0 0 12 12"
+      fill="none"
+      className={"transition-transform duration-200 " + (open ? "rotate-180" : "") + " " + className}
+    >
+      <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function DropdownPanelWrapper({ innerRef, wide, onNavigate, children }) {
+  const handleKeyDown = (e) => {
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    e.preventDefault();
+    const items = Array.from(e.currentTarget.querySelectorAll("a[href]"));
+    if (!items.length) return;
+    const currentIndex = items.indexOf(document.activeElement);
+    const dir = e.key === "ArrowDown" ? 1 : -1;
+    let next = currentIndex + dir;
+    if (next < 0) next = items.length - 1;
+    if (next >= items.length) next = 0;
+    items[next]?.focus();
+  };
+
+  return (
+    <div
+      ref={innerRef}
+      onKeyDown={handleKeyDown}
+      onClick={onNavigate}
+      className={
+        "bg-white rounded-2xl shadow-lg shadow-black/10 border border-gray-100 overflow-hidden " +
+        (wide ? "w-[560px]" : "min-w-[220px]")
+      }
+    >
+      {children}
+    </div>
+  );
+}
+
+function ServicesDropdownContent({ categories }) {
+  return (
+    <div className="p-3">
+      <div className="grid grid-cols-2 gap-1">
+        {categories.map((category) => (
+          <Link
+            key={category.slug}
+            to={`/services/${category.slug}`}
+            className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-[#F3EFE9] transition-colors"
+          >
+            <span className="w-9 h-9 rounded-lg bg-[#F3EFE9] text-gray-500 flex items-center justify-center shrink-0">
+              <ServiceCategoryIcon slug={category.slug} className="w-5 h-5" />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-sm font-medium text-black truncate">{category.name}</span>
+              <span className="block text-xs text-gray-500">
+                {category.fromPrice ? `from $${category.fromPrice}${category.priceUnit ? ` / ${category.priceUnit.replace("per ", "")}` : ""}` : ""}
+              </span>
+            </span>
+          </Link>
+        ))}
+      </div>
+      <div className="mt-1 flex items-center justify-between border-t border-gray-100 px-3 pt-3 text-xs">
+        <Link to="/services" className="font-medium text-black hover:underline">
+          All services →
+        </Link>
+        <span className="text-gray-400">Free on-site measure · written quote in 48h</span>
+      </div>
+    </div>
+  );
+}
+
+function ShopDropdownContent({ categories }) {
+  return (
+    <div className="p-3">
+      <p className="px-3 pt-1 text-[11px] text-gray-400">Categories · admin-managed · fixed order</p>
+      <div className="mt-1">
+        {categories.map((category) => (
+          <Link
+            key={category.slug}
+            to={`/shop/${category.slug}`}
+            className="block rounded-xl px-3 py-2.5 text-sm text-black hover:bg-[#F3EFE9] transition-colors"
+          >
+            {category.name}
+          </Link>
+        ))}
+      </div>
+      <div className="mt-1 border-t border-gray-100 px-3 pt-3">
+        <Link to="/shop" className="text-xs font-medium text-black hover:underline">
+          Shop all products →
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function CalculatorsDropdownContent() {
+  return (
+    <div className="p-3">
+      {CALCULATOR_LINKS.map((item) => (
+        <Link
+          key={item.href}
+          to={item.href}
+          className="flex items-start gap-2.5 rounded-xl px-3 py-2.5 hover:bg-[#F3EFE9] transition-colors"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-orange mt-2 shrink-0" />
+          <span>
+            <span className="block text-sm font-medium text-black">{item.label}</span>
+            <span className="block text-xs text-gray-500">{item.description}</span>
+          </span>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function ResourcesDropdownContent() {
+  return (
+    <div className="p-3">
+      {RESOURCE_LINKS.map((item) => (
+        <Link
+          key={item.href}
+          to={item.href}
+          className="block rounded-xl px-3 py-2.5 text-sm text-black hover:bg-[#F3EFE9] transition-colors"
+        >
+          {item.label}
+        </Link>
+      ))}
+    </div>
+  );
+}
 
 function Navbar() {
   const location = useLocation();
   const { itemCount } = useCart();
   const { openSearch } = useSearch();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileAccordion, setMobileAccordion] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [serviceCategories, setServiceCategories] = useState([]);
+  const [shopCategories, setShopCategories] = useState([]);
+  const navListRef = useRef(null);
+  const panelRefs = useRef({});
+  const triggerRefs = useRef({});
+  const focusFirstItemFor = useRef(null);
   const closeMobile = () => setMobileOpen(false);
 
   useEffect(() => {
+    getServiceCategories()
+      .then((data) => setServiceCategories(data.categories))
+      .catch(() => {});
+    getCategories()
+      .then(setShopCategories)
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
     setMobileOpen(false);
+    setOpenDropdown(null);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (!openDropdown) return;
+    const close = () => setOpenDropdown(null);
+    window.addEventListener("scroll", close, { passive: true });
+    return () => window.removeEventListener("scroll", close);
+  }, [openDropdown]);
+
+  useEffect(() => {
+    if (!openDropdown) return;
+    const dropdownKey = openDropdown;
+    const handleKeyDown = (e) => {
+      if (e.key !== "Escape") return;
+      setOpenDropdown(null);
+      triggerRefs.current[dropdownKey]?.focus();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [openDropdown]);
+
+  useEffect(() => {
+    if (!openDropdown) return;
+    const handleClick = (e) => {
+      if (navListRef.current && !navListRef.current.contains(e.target)) setOpenDropdown(null);
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [openDropdown]);
+
+  useEffect(() => {
+    if (!openDropdown || focusFirstItemFor.current !== openDropdown) return;
+    focusFirstItemFor.current = null;
+    const dropdownKey = openDropdown;
+    let attempts = 0;
+    const tryFocus = () => {
+      const target = panelRefs.current[dropdownKey]?.querySelector("a[href]");
+      if (!target) return;
+      target.focus();
+      if (document.activeElement !== target && attempts < 10) {
+        attempts += 1;
+        requestAnimationFrame(tryFocus);
+      }
+    };
+    tryFocus();
+  }, [openDropdown]);
+
+  const renderDropdownContent = (key) => {
+    if (key === "services") return <ServicesDropdownContent categories={serviceCategories} />;
+    if (key === "shop") return <ShopDropdownContent categories={shopCategories} />;
+    if (key === "calculators") return <CalculatorsDropdownContent />;
+    if (key === "resources") return <ResourcesDropdownContent />;
+    return null;
+  };
+
+  const handleTriggerKeyDown = (e, link) => {
+    if (!link.dropdown || e.key !== "ArrowDown") return;
+    e.preventDefault();
+    focusFirstItemFor.current = link.dropdown;
+    setOpenDropdown(link.dropdown);
+  };
 
   return (
     <div className="px-4 sm:px-6 pb-4">
       <nav className="relative max-w-8xl mx-auto bg-white rounded-full shadow-lg shadow-black/5 flex items-center justify-between gap-4 pl-4 pr-2 py-2">
         <Link to="/" className="flex items-center shrink-0">
-          <img
-            src="/stag-icon.svg"
-            alt="Stag Fencing"
-            className="h-14 w-auto"
-          />
+          <img src="/stag-icon.svg" alt="Stag Fencing" className="h-14 w-auto" />
         </Link>
 
-        <ul className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-4 text-sm font-medium text-gray-700">
+        <ul
+          ref={navListRef}
+          className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-4 text-sm font-medium text-gray-700"
+        >
           {NAV_LINKS.map((link) => {
-            const isActive =
-              location.pathname === link.href ||
-              (link.subLinks && link.subLinks.some((sub) => location.pathname === sub.href));
+            const isActive = location.pathname === link.href;
+            const isOpen = openDropdown === link.dropdown && !!link.dropdown;
             return (
-              <li key={link.label} className="group relative">
+              <li
+                key={link.label}
+                className="relative"
+                onMouseEnter={() => link.dropdown && setOpenDropdown(link.dropdown)}
+                onMouseLeave={() => link.dropdown && setOpenDropdown((cur) => (cur === link.dropdown ? null : cur))}
+              >
                 <Link
                   to={link.href}
+                  ref={link.dropdown ? (el) => (triggerRefs.current[link.dropdown] = el) : undefined}
+                  aria-haspopup={link.dropdown ? "true" : undefined}
+                  aria-expanded={link.dropdown ? isOpen : undefined}
+                  onKeyDown={(e) => handleTriggerKeyDown(e, link)}
+                  onClick={() =>
+                    link.dropdown && setOpenDropdown((cur) => (cur === link.dropdown ? null : cur))
+                  }
                   className={
-                    "relative inline-block py-1 " +
+                    "relative inline-flex items-center gap-1 py-1 " +
                     (isActive ? "text-gray-900 font-semibold" : "hover:text-gray-900 transition-colors")
                   }
                 >
                   {link.label}
+                  {link.dropdown && <ChevronIcon open={isOpen} className="text-gray-400" />}
                   <span
                     className={
                       "absolute left-1/2 -bottom-1 h-0.5 w-2/5 -translate-x-1/2 bg-gray-900 rounded-full transition-opacity " +
@@ -72,19 +297,24 @@ function Navbar() {
                   />
                 </Link>
 
-                {link.subLinks && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible -translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
-                    <div className="bg-white rounded-xl shadow-lg shadow-black/10 border border-gray-100 py-2 min-w-[200px]">
-                      {link.subLinks.map((sub) => (
-                        <Link
-                          key={sub.href}
-                          to={sub.href}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors whitespace-nowrap"
-                        >
-                          {sub.label}
-                        </Link>
-                      ))}
-                    </div>
+                {link.dropdown && (
+                  <div
+                    className={
+                      "absolute top-full pt-3 transition-all duration-150 ease-out " +
+                      (link.dropdown === "services" ? "left-0" : "left-1/2 -translate-x-1/2") +
+                      " " +
+                      (isOpen
+                        ? "opacity-100 visible translate-y-0"
+                        : "opacity-0 invisible -translate-y-1 pointer-events-none")
+                    }
+                  >
+                    <DropdownPanelWrapper
+                      innerRef={(el) => (panelRefs.current[link.dropdown] = el)}
+                      wide={link.dropdown === "services"}
+                      onNavigate={() => setOpenDropdown(null)}
+                    >
+                      {renderDropdownContent(link.dropdown)}
+                    </DropdownPanelWrapper>
                   </div>
                 )}
               </li>
@@ -265,7 +495,7 @@ function Navbar() {
       <div
         className={
           "lg:hidden max-w-8xl mx-auto overflow-hidden transition-all duration-300 ease-in-out " +
-          (mobileOpen ? "max-h-[32rem] opacity-100 mt-2" : "max-h-0 opacity-0 mt-0")
+          (mobileOpen ? "max-h-[42rem] opacity-100 mt-2" : "max-h-0 opacity-0 mt-0")
         }
       >
         <div className="bg-white rounded-2xl shadow-lg shadow-black/5 border border-gray-100 overflow-hidden">
@@ -289,32 +519,100 @@ function Navbar() {
             Search
           </button>
           <ul className="divide-y divide-gray-100">
-            {NAV_LINKS.map((link) => (
-              <li key={link.label}>
-                <Link
-                  to={link.href}
-                  onClick={closeMobile}
-                  className="block px-5 py-3 text-sm font-medium text-gray-800"
-                >
-                  {link.label}
-                </Link>
-                {link.subLinks && (
-                  <ul className="pb-2">
-                    {link.subLinks.map((sub) => (
-                      <li key={sub.href}>
-                        <Link
-                          to={sub.href}
-                          onClick={closeMobile}
-                          className="block px-8 py-2 text-sm text-gray-500"
-                        >
-                          {sub.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const accordionOpen = mobileAccordion === link.dropdown;
+              return (
+                <li key={link.label}>
+                  <div className="flex items-center">
+                    <Link
+                      to={link.href}
+                      onClick={closeMobile}
+                      className="flex-1 block px-5 py-3 text-sm font-medium text-gray-800"
+                    >
+                      {link.label}
+                    </Link>
+                    {link.dropdown && (
+                      <button
+                        type="button"
+                        aria-label={accordionOpen ? `Collapse ${link.label}` : `Expand ${link.label}`}
+                        aria-expanded={accordionOpen}
+                        onClick={() => setMobileAccordion((cur) => (cur === link.dropdown ? null : link.dropdown))}
+                        className="px-4 py-3 text-gray-400"
+                      >
+                        <ChevronIcon open={accordionOpen} />
+                      </button>
+                    )}
+                  </div>
+                  {link.dropdown && (
+                    <div
+                      className={
+                        "overflow-hidden transition-all duration-200 ease-in-out bg-gray-50/50 " +
+                        (accordionOpen ? "max-h-[28rem]" : "max-h-0")
+                      }
+                    >
+                      {link.dropdown === "services" && (
+                        <div className="px-3 py-2 grid grid-cols-1 gap-1">
+                          {serviceCategories.map((c) => (
+                            <Link
+                              key={c.slug}
+                              to={`/services/${c.slug}`}
+                              onClick={closeMobile}
+                              className="flex items-center gap-2.5 rounded-lg px-2 py-2 text-sm text-gray-700"
+                            >
+                              <ServiceCategoryIcon slug={c.slug} className="w-4 h-4 shrink-0" />
+                              {c.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                      {link.dropdown === "shop" && (
+                        <div className="px-3 py-2">
+                          {shopCategories.map((c) => (
+                            <Link
+                              key={c.slug}
+                              to={`/shop/${c.slug}`}
+                              onClick={closeMobile}
+                              className="block rounded-lg px-2 py-2 text-sm text-gray-700"
+                            >
+                              {c.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                      {link.dropdown === "calculators" && (
+                        <div className="px-3 py-2">
+                          {CALCULATOR_LINKS.map((item) => (
+                            <Link
+                              key={item.href}
+                              to={item.href}
+                              onClick={closeMobile}
+                              className="block rounded-lg px-2 py-2"
+                            >
+                              <span className="block text-sm text-gray-800">{item.label}</span>
+                              <span className="block text-xs text-gray-500">{item.description}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                      {link.dropdown === "resources" && (
+                        <div className="px-3 py-2">
+                          {RESOURCE_LINKS.map((item) => (
+                            <Link
+                              key={item.href}
+                              to={item.href}
+                              onClick={closeMobile}
+                              className="block rounded-lg px-2 py-2 text-sm text-gray-700"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
           <div className="p-4 border-t border-gray-100 flex items-center gap-3">
             <Link

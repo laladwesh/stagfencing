@@ -14,6 +14,8 @@ import CalculatorsPage from "./pages/CalculatorsPage";
 import GalleryPage from "./pages/GalleryPage";
 import AboutUsPage from "./pages/AboutUsPage";
 import ResourcesPage from "./pages/ResourcesPage";
+import ColorbondColoursPage from "./pages/ColorbondColoursPage";
+import BrochuresPage from "./pages/BrochuresPage";
 import ContactPage from "./pages/ContactPage";
 import RequestQuotePage from "./pages/RequestQuotePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
@@ -70,7 +72,7 @@ function App() {
             />
             <SearchProvider>
               <Routes>
-                <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/services/:categorySlug" element={<ServiceCategoryPage />} />
               <Route path="/services/:categorySlug/:serviceSlug" element={<ServiceDetailPage />} />
@@ -79,6 +81,8 @@ function App() {
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/about-us" element={<AboutUsPage />} />
               <Route path="/resources" element={<ResourcesPage />} />
+              <Route path="/resources/colorbond-colours" element={<ColorbondColoursPage />} />
+              <Route path="/resources/brochures" element={<BrochuresPage />} />
               <Route path="/contact-us" element={<ContactPage />} />
               <Route path="/request-a-quote" element={<RequestQuotePage />} />
               <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
@@ -93,7 +97,6 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/my-account" element={<MyAccountPage />} />
-
               <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/users" element={<AdminUsersPage />} />
               <Route path="/admin/shop/categories" element={<AdminShopCategoriesPage />} />
