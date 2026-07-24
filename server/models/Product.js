@@ -44,6 +44,8 @@ const productSchema = new Schema(
     specifications: [specSchema],
     inStock: { type: Boolean, default: true },
     featured: { type: Boolean, default: false },
+    isPinned: { type: Boolean, default: false },
+    compareAtPrice: Number,
     relatedSlugs: [String],
     priceMin: { type: Number, default: 0 },
     priceMax: { type: Number, default: 0 },

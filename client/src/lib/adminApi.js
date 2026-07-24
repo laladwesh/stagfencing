@@ -63,6 +63,16 @@ export const setServiceStyleIcon = (serviceId, styleId, icon) =>
 export const getAdminOrders = () => request("/orders");
 export const setOrderStatus = (id, status) => json("PUT", `/orders/${id}/status`, { status });
 
+// Gallery
+export const getAdminGalleryProjects = () => request("/gallery");
+export const createGalleryProject = (payload) => json("POST", "/gallery", payload);
+export const updateGalleryProject = (id, payload) => json("PUT", `/gallery/${id}`, payload);
+export const deleteGalleryProject = (id) => json("DELETE", `/gallery/${id}`);
+
+// Search analytics
+export const getSearchQueries = () => request("/search-queries");
+export const deleteSearchQuery = (id) => json("DELETE", `/search-queries/${id}`);
+
 export async function uploadAdminFile(file) {
   const token = getToken();
   const formData = new FormData();

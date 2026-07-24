@@ -13,6 +13,7 @@
     "seed:services": "node server/seed-services.js",
     "migrate:style-ids": "node server/migrate-style-ids.js",
     "bootstrap:admin": "node server/bootstrap-admin.js",
+    "seed:gallery": "node server/seed-gallery.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

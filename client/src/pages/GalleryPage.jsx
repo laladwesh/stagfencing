@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import ArrowIcon from "../components/ArrowIcon";
-import { FILTERS, GALLERY_PROJECTS } from "../data/galleryProjects";
+import { getGalleryProjects } from "../lib/api";
 
 function QuoteCta({ label }) {
   return (
@@ -19,6 +19,10 @@ function QuoteCta({ label }) {
 }
 
 function ProjectModal({ project, onClose }) {
+  const completed = project.completedDate
+    ? new Date(project.completedDate).toLocaleDateString("en-AU", { month: "long", year: "numeric" })
+    : null;
+
   return (
     <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4" onClick={onClose}>
       <div
@@ -59,19 +63,37 @@ function ProjectModal({ project, onClose }) {
               <dt className="text-gray-500">Service</dt>
               <dd className="text-black font-medium">{project.service}</dd>
             </div>
-            <div className="flex justify-between border-b border-gray-100 pb-2">
-              <dt className="text-gray-500">Length</dt>
-              <dd className="text-black font-medium">{project.length}</dd>
-            </div>
-            <div className="flex justify-between pb-2">
-              <dt className="text-gray-500">Completed</dt>
-              <dd className="text-black font-medium">{project.completed}</dd>
-            </div>
+            {project.length && (
+              <div className="flex justify-between border-b border-gray-100 pb-2">
+                <dt className="text-gray-500">Length</dt>
+                <dd className="text-black font-medium">{project.length}</dd>
+              </div>
+            )}
+            {project.colour && (
+              <div className="flex justify-between border-b border-gray-100 pb-2">
+                <dt className="text-gray-500">Colour</dt>
+                <dd className="text-black font-medium">{project.colour}</dd>
+              </div>
+            )}
+            {completed && (
+              <div className="flex justify-between pb-2">
+                <dt className="text-gray-500">Completed</dt>
+                <dd className="text-black font-medium">{completed}</dd>
+              </div>
+            )}
           </dl>
 
+          {project.serviceSlug && (
+            <Link
+              to={`/services/${project.serviceSlug}`}
+              className="mt-3 block text-center border border-gray-300 hover:bg-gray-50 text-gray-900 font-medium py-2.5 rounded-full transition-colors"
+            >
+              View this service
+            </Link>
+          )}
           <Link
             to="/request-a-quote"
-            className="mt-6 block text-center bg-black hover:bg-gray-800 text-white font-medium py-2.5 rounded-full transition-colors"
+            className="mt-3 block text-center bg-black hover:bg-gray-800 text-white font-medium py-2.5 rounded-full transition-colors"
           >
             Get A Similar Quote
           </Link>
@@ -82,13 +104,25 @@ function ProjectModal({ project, onClose }) {
 }
 
 function GalleryPage() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const projects =
-    activeFilter === "All"
-      ? GALLERY_PROJECTS
-      : GALLERY_PROJECTS.filter((p) => p.service === activeFilter);
+  useEffect(() => {
+    getGalleryProjects()
+      .then((data) => setProjects(data.projects))
+      .catch(() => setProjects([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filters = useMemo(() => {
+    const unique = [...new Set(projects.map((p) => p.service).filter(Boolean))];
+    return ["All", ...unique];
+  }, [projects]);
+
+  const filteredProjects =
+    activeFilter === "All" ? projects : projects.filter((p) => p.service === activeFilter);
 
   return (
     <Layout>
@@ -98,47 +132,55 @@ function GalleryPage() {
         </span>
         <div className="mt-4 flex items-center justify-center gap-3">
           <QuoteCta label="Get A Free Quote" />
-          <QuoteCta label="Get A Free Quote" />
         </div>
       </div>
 
       <div className="bg-white pb-16 sm:pb-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {FILTERS.map((filter) => (
-              <button
-                key={filter}
-                type="button"
-                onClick={() => setActiveFilter(filter)}
-                className={
-                  "px-4 py-1.5 rounded-full text-sm font-medium transition-colors " +
-                  (activeFilter === filter
-                    ? "bg-black text-white"
-                    : "bg-[#F3EFE9] text-black hover:bg-gray-200")
-                }
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
+          {loading ? (
+            <p className="text-center text-sm text-gray-500">Loading…</p>
+          ) : (
+            <>
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                {filters.map((filter) => (
+                  <button
+                    key={filter}
+                    type="button"
+                    onClick={() => setActiveFilter(filter)}
+                    className={
+                      "px-4 py-1.5 rounded-full text-sm font-medium transition-colors " +
+                      (activeFilter === filter
+                        ? "bg-black text-white"
+                        : "bg-[#F3EFE9] text-black hover:bg-gray-200")
+                    }
+                  >
+                    {filter}
+                  </button>
+                ))}
+              </div>
 
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => (
-              <button
-                key={project.id}
-                type="button"
-                onClick={() => setSelectedProject(project)}
-                className="text-left"
-              >
-                <div className="rounded-xl overflow-hidden">
-                  <img src={project.image} alt={project.title} className="w-full h-48 object-cover" />
-                </div>
-                <p className="mt-2 text-sm text-gray-600">
-                  {project.suburb} · {project.service}
-                </p>
-              </button>
-            ))}
-          </div>
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredProjects.map((project) => (
+                  <button
+                    key={project._id}
+                    type="button"
+                    onClick={() => setSelectedProject(project)}
+                    className="text-left"
+                  >
+                    <div className="rounded-xl overflow-hidden">
+                      <img src={project.image} alt={project.title} className="w-full h-48 object-cover" />
+                    </div>
+                    <p className="mt-2 text-sm text-gray-600">
+                      {project.suburb} · {project.service}
+                    </p>
+                  </button>
+                ))}
+                {filteredProjects.length === 0 && (
+                  <p className="text-sm text-gray-500">No projects in this category yet.</p>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
 

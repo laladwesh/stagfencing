@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast";
 import ScrollToTop from "./components/ScrollToTop";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
+import { SearchProvider } from "./context/SearchContext";
 import Home from "./pages/Home";
 import ServicesPage from "./pages/ServicesPage";
 import ServiceCategoryPage from "./pages/ServiceCategoryPage";
@@ -37,6 +38,8 @@ import AdminServiceCategoriesPage from "./pages/admin/AdminServiceCategoriesPage
 import AdminServicesPage from "./pages/admin/AdminServicesPage";
 import AdminServiceFormPage from "./pages/admin/AdminServiceFormPage";
 import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
+import AdminGalleryPage from "./pages/admin/AdminGalleryPage";
+import AdminSearchAnalyticsPage from "./pages/admin/AdminSearchAnalyticsPage";
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
 
@@ -65,8 +68,9 @@ function App() {
                 error: { iconTheme: { primary: "#fff", secondary: "#B83A31" } },
               }}
             />
-            <Routes>
-              <Route path="/" element={<Home />} />
+            <SearchProvider>
+              <Routes>
+                <Route path="/" element={<Home />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/services/:categorySlug" element={<ServiceCategoryPage />} />
               <Route path="/services/:categorySlug/:serviceSlug" element={<ServiceDetailPage />} />
@@ -102,7 +106,10 @@ function App() {
               <Route path="/admin/services/services/new" element={<AdminServiceFormPage />} />
               <Route path="/admin/services/services/:id/edit" element={<AdminServiceFormPage />} />
               <Route path="/admin/orders" element={<AdminOrdersPage />} />
+              <Route path="/admin/gallery" element={<AdminGalleryPage />} />
+              <Route path="/admin/search-analytics" element={<AdminSearchAnalyticsPage />} />
             </Routes>
+            </SearchProvider>
           </BrowserRouter>
         </CartProvider>
       </AuthProvider>

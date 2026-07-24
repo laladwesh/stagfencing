@@ -8,6 +8,8 @@ const cartRouter = require("./cart");
 const paymentsRouter = require("./payments");
 const servicesRouter = require("./services");
 const adminRouter = require("./admin");
+const searchRouter = require("./search");
+const galleryRouter = require("./gallery");
 
 const router = express.Router();
 
@@ -24,5 +26,7 @@ router.use("/cart", cartRouter);
 router.use("/payments", paymentsRouter);
 router.use("/services", servicesRouter);
 router.use("/admin", adminRouter);
+router.use("/search", searchRouter);
+router.use("/gallery", galleryRouter);
 
 module.exports = router;

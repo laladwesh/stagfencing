@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useSearch } from "../context/SearchContext";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -29,6 +30,7 @@ const NAV_LINKS = [
 function Navbar() {
   const location = useLocation();
   const { itemCount } = useCart();
+  const { openSearch } = useSearch();
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeMobile = () => setMobileOpen(false);
 
@@ -94,6 +96,7 @@ function Navbar() {
           <button
             type="button"
             aria-label="Search"
+            onClick={openSearch}
             className="hidden sm:flex w-9 h-9 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 transition-colors"
           >
             <svg
@@ -266,6 +269,25 @@ function Navbar() {
         }
       >
         <div className="bg-white rounded-2xl shadow-lg shadow-black/5 border border-gray-100 overflow-hidden">
+          <button
+            type="button"
+            onClick={() => {
+              closeMobile();
+              openSearch();
+            }}
+            className="w-full flex items-center gap-2 px-5 py-3 text-sm font-medium text-gray-800 border-b border-gray-100"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M8.33333 14.1667C11.555 14.1667 14.1667 11.555 14.1667 8.33333C14.1667 5.11167 11.555 2.5 8.33333 2.5C5.11167 2.5 2.5 5.11167 2.5 8.33333C2.5 11.555 5.11167 14.1667 8.33333 14.1667Z"
+                stroke="black"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path d="M17.5 17.5L12.5 12.5" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Search
+          </button>
           <ul className="divide-y divide-gray-100">
             {NAV_LINKS.map((link) => (
               <li key={link.label}>

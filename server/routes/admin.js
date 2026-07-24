@@ -9,6 +9,8 @@ const Review = require("../models/Review");
 const ServiceCategory = require("../models/ServiceCategory");
 const Service = require("../models/Service");
 const Order = require("../models/Order");
+const GalleryProject = require("../models/GalleryProject");
+const SearchQuery = require("../models/SearchQuery");
 
 const router = express.Router();
 
@@ -160,6 +162,41 @@ router.put("/services/services/:id/styles/:styleId/icon", async (req, res) => {
   style.icon = icon;
   await service.save();
   res.json({ service });
+});
+
+// ---------- Gallery ----------
+router.get("/gallery", async (req, res) => {
+  const projects = await GalleryProject.find().sort({ sortOrder: 1, completedDate: -1 });
+  res.json({ projects });
+});
+
+router.post("/gallery", async (req, res) => {
+  const project = await GalleryProject.create(req.body);
+  res.status(201).json({ project });
+});
+
+router.put("/gallery/:id", async (req, res) => {
+  const project = await GalleryProject.findByIdAndUpdate(req.params.id, req.body, {
+    returnDocument: "after",
+  });
+  if (!project) return res.status(404).json({ error: "Project not found" });
+  res.json({ project });
+});
+
+router.delete("/gallery/:id", async (req, res) => {
+  await GalleryProject.findByIdAndDelete(req.params.id);
+  res.json({ ok: true });
+});
+
+// ---------- Search analytics ----------
+router.get("/search-queries", async (req, res) => {
+  const queries = await SearchQuery.find().sort({ count: -1 }).limit(100);
+  res.json({ queries });
+});
+
+router.delete("/search-queries/:id", async (req, res) => {
+  await SearchQuery.findByIdAndDelete(req.params.id);
+  res.json({ ok: true });
 });
 
 // ---------- Orders ----------

@@ -29,11 +29,13 @@ const EMPTY_PRODUCT = {
   images: [],
   unit: "each",
   basePrice: 0,
+  compareAtPrice: "",
   variantGroups: [],
   whatsIncluded: [],
   specifications: [],
   inStock: true,
   featured: false,
+  isPinned: false,
   relatedSlugs: [],
 };
 
@@ -296,6 +298,11 @@ function AdminShopProductFormPage() {
           <TextField label="Sub-category slug" value={form.subCategorySlug} onChange={set("subCategorySlug")} />
           <TextField label="Unit" value={form.unit} onChange={set("unit")} placeholder="each / per metre" />
           <NumberField label="Base price*" value={form.basePrice} onChange={set("basePrice")} />
+          <NumberField
+            label="Compare-at price (optional, shows as a strikethrough discount)"
+            value={form.compareAtPrice}
+            onChange={set("compareAtPrice")}
+          />
         </div>
 
         <TextField label="Short description" value={form.shortDescription} onChange={set("shortDescription")} />
@@ -304,6 +311,11 @@ function AdminShopProductFormPage() {
         <div className="flex items-center gap-6">
           <CheckboxField label="In stock" checked={form.inStock} onChange={set("inStock")} />
           <CheckboxField label="Featured" checked={form.featured} onChange={set("featured")} />
+          <CheckboxField
+            label="Pinned (always shows first in search recommendations)"
+            checked={form.isPinned}
+            onChange={set("isPinned")}
+          />
         </div>
 
         <ImagesField images={form.images} onChange={set("images")} />
