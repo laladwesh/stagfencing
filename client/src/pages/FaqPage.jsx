@@ -14,7 +14,12 @@ function FaqPage() {
 
   return (
     <Layout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }} />
+      <Seo
+        title="FAQs | Fencing Questions Answered"
+        description="Answers to what Perth homeowners ask before booking a fence measure — pricing, approvals, boundaries and more."
+        path="/faqs"
+        jsonLd={faqJsonLd(FAQS)}
+      />
 
       <div className="bg-white text-center pt-14 pb-8">
         <span className="inline-block border border-gray-200 rounded-full px-4 py-1.5 text-sm font-medium text-black">
