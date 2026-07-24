@@ -22,6 +22,11 @@ function QuoteCta({ label }) {
 function BlogPage() {
   return (
     <Layout transparentHeader>
+      <Seo
+        title="Fencing Blog | Advice & Guides"
+        description="Fencing advice, buying guides and WA regulations from the Stag Fencing crew."
+        path="/blog"
+      />
       <PageBanner
         breadcrumb="Home / Articles"
         title="Articles"
