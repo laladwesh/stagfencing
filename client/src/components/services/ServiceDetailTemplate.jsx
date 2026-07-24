@@ -28,14 +28,21 @@ function SwatchRow({ label, note, swatches }) {
         <p className="text-sm font-semibold text-black">{label}</p>
         {note && <p className="text-xs text-gray-400">{note}</p>}
       </div>
-      <div className="mt-4 grid grid-cols-5 sm:grid-cols-9 gap-3">
-        {swatches.map((s) => (
-          <div key={s.label} className="flex flex-col items-center gap-1.5">
+      <div className="mt-4 grid grid-cols-3 sm:grid-cols-9 gap-4">
+        {swatches.map((s, i) => (
+          <div key={s.label} className="flex flex-col items-center gap-2">
             <span
-              className="w-12 h-10 rounded-lg border border-black/10 shrink-0"
+              className="w-full aspect-square rounded-2xl border border-black/10"
               style={{ backgroundColor: s.hex }}
             />
-            <span className="text-[11px] text-gray-500 text-center leading-tight">{s.label}</span>
+            <span
+              className={
+                "text-xs text-center leading-tight " +
+                (i === 0 ? "font-semibold text-black" : "font-medium text-gray-500")
+              }
+            >
+              {s.label}
+            </span>
           </div>
         ))}
       </div>

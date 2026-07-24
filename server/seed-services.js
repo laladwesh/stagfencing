@@ -708,7 +708,7 @@ async function seed() {
         { label: "Monument", hex: "#3A3B3C" },
         { label: "Basalt", hex: "#4B4D4C" },
         { label: "Dune", hex: "#9C8768" },
-        { label: "Bass", hex: "#1B1B1B" },
+        { label: "Black", hex: "#1B1B1B" },
       ],
     })
   );
@@ -731,7 +731,7 @@ async function seed() {
         { label: "Monument", hex: "#3A3B3C" },
         { label: "Basalt", hex: "#4B4D4C" },
         { label: "Dune", hex: "#9C8768" },
-        { label: "Bass", hex: "#1B1B1B" },
+        { label: "Black", hex: "#1B1B1B" },
       ],
     })
   );
