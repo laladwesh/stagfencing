@@ -20,7 +20,7 @@ router.put("/", async (req, res) => {
   const cart = await Cart.findOneAndUpdate(
     { user: req.user._id },
     { items },
-    { upsert: true, new: true }
+    { upsert: true, returnDocument: "after" }
   );
 
   res.json({ items: cart.items });

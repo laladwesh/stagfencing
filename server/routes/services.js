@@ -47,10 +47,18 @@ router.put("/admin/:serviceSlug/styles/:styleId/icon", requireAuth, async (req, 
   if (!service) return res.status(404).json({ error: "Service not found" });
 
   const style = service.styles.id(req.params.styleId);
-  if (!style) return res.status(404).json({ error: "Style not found" });
+  if (!style) {
+    console.error(
+      `[icon-upload] style not found — service="${req.params.serviceSlug}" requestedId="${req.params.styleId}" availableIds=[${service.styles
+        .map((s) => `${s.name}:${s._id}`)
+        .join(", ")}]`
+    );
+    return res.status(404).json({ error: "Style not found" });
+  }
 
   style.icon = icon;
   await service.save();
+  console.log(`[icon-upload] OK — service="${req.params.serviceSlug}" style="${style.name}" icon="${icon}"`);
 
   res.json({ service });
 });

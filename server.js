@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const morgan = require("morgan");
 const path = require("path");
 const connectDB = require("./server/db");
 const apiRouter = require("./server/routes");
@@ -7,6 +8,7 @@ const apiRouter = require("./server/routes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(morgan("tiny"));
 app.use(express.json());
 app.use("/api", apiRouter);
 
