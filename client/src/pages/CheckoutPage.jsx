@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Elements } from "@stripe/react-stripe-js";
 import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { createOrder, createPaymentIntent, saveAddress } from "../lib/api";
@@ -181,6 +182,7 @@ function CheckoutPage() {
   if (confirmedOrder) {
     return (
       <Layout>
+        <Seo title="Checkout" noindex path="/checkout" />
         <div className="max-w-xl mx-auto px-4 sm:px-6 py-24 text-center">
           <h1 className="text-3xl font-semibold text-black">Order placed</h1>
           <p className="mt-3 text-gray-600">
@@ -204,6 +206,7 @@ function CheckoutPage() {
   if (loading) {
     return (
       <Layout>
+        <Seo title="Checkout" noindex path="/checkout" />
         <div className="max-w-xl mx-auto px-4 sm:px-6 py-24 text-center text-gray-500">Loading…</div>
       </Layout>
     );
@@ -212,6 +215,7 @@ function CheckoutPage() {
   if (!user) {
     return (
       <Layout>
+        <Seo title="Checkout" noindex path="/checkout" />
         <div className="max-w-xl mx-auto px-4 sm:px-6 py-24 text-center">
           <h1 className="text-3xl font-semibold text-black">Sign in to check out</h1>
           <p className="mt-3 text-gray-600">Your cart is saved — sign in or create an account to continue.</p>
@@ -229,6 +233,7 @@ function CheckoutPage() {
   if (items.length === 0) {
     return (
       <Layout>
+        <Seo title="Checkout" noindex path="/checkout" />
         <div className="max-w-xl mx-auto px-4 sm:px-6 py-24 text-center">
           <h1 className="text-3xl font-semibold text-black">Your cart is empty</h1>
           <Link
@@ -244,6 +249,7 @@ function CheckoutPage() {
 
   return (
     <Layout>
+      <Seo title="Checkout" noindex path="/checkout" />
       <div className="bg-white text-center pt-14 pb-8">
         <span className="inline-block border border-gray-200 rounded-full px-4 py-1.5 text-sm font-medium text-black">
           Home / Cart / Checkout

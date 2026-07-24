@@ -1,9 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { HelmetProvider } from "react-helmet-async";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Toaster } from "react-hot-toast";
 import ScrollToTop from "./components/ScrollToTop";
-import Seo from "./components/Seo";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import { SearchProvider } from "./context/SearchContext";
@@ -56,7 +55,9 @@ function App() {
           <CartProvider>
             <BrowserRouter>
               <ScrollToTop />
-              <Seo jsonLd={localBusinessJsonLd()} />
+              <Helmet>
+                <script type="application/ld+json">{JSON.stringify(localBusinessJsonLd())}</script>
+              </Helmet>
               <Toaster
                 position="top-right"
                 toastOptions={{

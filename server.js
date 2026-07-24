@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const path = require("path");
 const connectDB = require("./server/db");
 const apiRouter = require("./server/routes");
+const sitemapRouter = require("./server/routes/sitemap");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 5000;
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use("/api", apiRouter);
+app.use(sitemapRouter);
 
 connectDB().catch((err) => {
   console.error("MongoDB connection error:", err.message);

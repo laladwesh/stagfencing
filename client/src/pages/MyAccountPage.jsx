@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 import { useAuth } from "../context/AuthContext";
 import { requestOtp, verifyOtp, loginWithGoogle, getOrders } from "../lib/api";
 
@@ -233,6 +234,7 @@ function MyAccountPage() {
 
   return (
     <Layout>
+      <Seo title="My Account" noindex path="/my-account" />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
         {loading ? (
           <p className="text-center text-sm text-gray-500">Loading…</p>
