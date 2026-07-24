@@ -1,10 +1,13 @@
 const { Schema, model } = require("mongoose");
 
 const swatchSchema = new Schema({ label: String, hex: String }, { _id: false });
-const styleSchema = new Schema(
-  { name: String, fromPrice: Number, priceUnit: String, popular: { type: Boolean, default: false } },
-  { _id: false }
-);
+const styleSchema = new Schema({
+  name: String,
+  fromPrice: Number,
+  priceUnit: String,
+  popular: { type: Boolean, default: false },
+  icon: String,
+});
 const processStepSchema = new Schema({ title: String, description: String }, { _id: false });
 const recentJobSchema = new Schema({ image: String, caption: String }, { _id: false });
 const reviewSchema = new Schema(

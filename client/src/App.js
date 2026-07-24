@@ -27,6 +27,7 @@ import ProductReviewsPage from "./pages/ProductReviewsPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import MyAccountPage from "./pages/MyAccountPage";
+import AdminServiceIconsPage from "./pages/AdminServiceIconsPage";
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
 
@@ -79,6 +80,7 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/my-account" element={<MyAccountPage />} />
+              <Route path="/admin/service-icons" element={<AdminServiceIconsPage />} />
             </Routes>
           </BrowserRouter>
         </CartProvider>

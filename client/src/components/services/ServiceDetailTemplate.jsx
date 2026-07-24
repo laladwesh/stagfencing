@@ -50,7 +50,18 @@ function SwatchRow({ label, note, swatches }) {
   );
 }
 
-function StyleCard({ style }) {
+// Bar heights are derived from each style's own price relative to the other
+// options on the same service — no hardcoded pattern, so Colorbond's 1200mm vs
+// 2100mm (or Pool Fencing's completely different price range) naturally draw
+// differently since they're driven by real pricing data, not a fixed index.
+const BAR_JITTER = [0, 9, -6, 7, -9, 5, -3];
+
+function StyleCard({ style, minPrice, maxPrice }) {
+  const price = style.fromPrice || minPrice;
+  const range = Math.max(maxPrice - minPrice, 1);
+  const ratio = (price - minPrice) / range;
+  const baseHeight = 35 + ratio * 55;
+
   return (
     <div
       className={
@@ -62,11 +73,21 @@ function StyleCard({ style }) {
           Most popular
         </span>
       )}
-      <div className="flex items-end gap-0.5 h-8">
-        {Array.from({ length: 7 }).map((_, i) => (
-          <span key={i} className="w-1.5 bg-gray-300 rounded-sm" style={{ height: `${40 + ((i * 13) % 60)}%` }} />
-        ))}
-      </div>
+      {style.icon ? (
+        <div className="h-8 flex items-center">
+          <img src={style.icon} alt="" className="h-full w-auto object-contain" />
+        </div>
+      ) : (
+        <div className="flex items-end gap-0.5 h-8">
+          {BAR_JITTER.map((jitter, i) => (
+            <span
+              key={i}
+              className="w-1.5 bg-gray-300 rounded-sm"
+              style={{ height: `${Math.min(100, Math.max(15, baseHeight + jitter))}%` }}
+            />
+          ))}
+        </div>
+      )}
       <p className="mt-3 text-sm font-semibold text-black">{style.name}</p>
       <p className="mt-0.5 text-xs text-gray-500">
         {style.fromPrice ? `from $${style.fromPrice} ${style.priceUnit}` : style.priceUnit}
@@ -122,6 +143,10 @@ function ServiceDetailTemplate({ service, breadcrumb }) {
   const averageRating = service.reviews?.length
     ? service.reviews.reduce((sum, r) => sum + r.rating, 0) / service.reviews.length
     : null;
+
+  const stylePrices = (service.styles || []).map((s) => s.fromPrice).filter((p) => p > 0);
+  const minStylePrice = stylePrices.length ? Math.min(...stylePrices) : 0;
+  const maxStylePrice = stylePrices.length ? Math.max(...stylePrices) : 0;
 
   return (
     <>
@@ -189,7 +214,7 @@ function ServiceDetailTemplate({ service, breadcrumb }) {
             <p className="text-sm font-semibold text-black">{service.stylesLabel || "Styles & pricing"}</p>
             <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
               {service.styles.map((style) => (
-                <StyleCard key={style.name} style={style} />
+                <StyleCard key={style.name} style={style} minPrice={minStylePrice} maxPrice={maxStylePrice} />
               ))}
             </div>
           </div>

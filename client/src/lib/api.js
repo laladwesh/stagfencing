@@ -121,3 +121,22 @@ export function getServiceCategory(slug) {
 export function getServiceDetail(slug) {
   return request(`/services/detail/${slug}`);
 }
+
+export function getAllServicesAdmin() {
+  return request("/services/admin/all");
+}
+
+export function updateStyleIcon(serviceSlug, styleId, icon) {
+  return request(`/services/admin/${serviceSlug}/styles/${styleId}/icon`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ icon }),
+  });
+}
+
+export async function uploadFile(file) {
+  const formData = new FormData();
+  formData.append("files", file);
+  const data = await request("/uploads", { method: "POST", body: formData });
+  return data.files[0];
+}
