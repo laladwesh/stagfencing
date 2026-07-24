@@ -69,10 +69,6 @@ function RequestQuotePage() {
   const [submitted, setSubmitted] = useState(false);
   const [reference] = useState(() => `SF-${Math.floor(1000 + Math.random() * 9000)}`);
 
-  useEffect(() => {
-    document.title = submitted ? "Request a Quote — Confirmed" : "Request a Quote";
-  }, [submitted]);
-
   const monthLabel = `${MONTH_LABELS[days[0].getMonth()]} ${days[0].getFullYear()}`;
   const selectedDay = days[selectedDayIndex];
   const selectedDayLabel = selectedDay.toLocaleDateString("en-AU", {
@@ -164,7 +160,7 @@ function RequestQuotePage() {
   return (
     <Layout transparentHeader>
       <Seo
-        title="Request A Free Quote"
+        title={submitted ? "Quote Request Confirmed" : "Request A Free Quote"}
         description="Tell us about your fencing job and book a free on-site measure — get a price confirmed in writing within 48 hours."
         path="/request-a-quote"
       />
