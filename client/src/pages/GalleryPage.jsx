@@ -91,6 +91,14 @@ function ProjectModal({ project, onClose }) {
               View this service
             </Link>
           )}
+          {project.productSlug && (
+            <Link
+              to={`/product/${project.productSlug}`}
+              className="mt-3 block text-center border border-gray-300 hover:bg-gray-50 text-gray-900 font-medium py-2.5 rounded-full transition-colors"
+            >
+              Shop this product
+            </Link>
+          )}
           <Link
             to="/request-a-quote"
             className="mt-3 block text-center bg-black hover:bg-gray-800 text-white font-medium py-2.5 rounded-full transition-colors"

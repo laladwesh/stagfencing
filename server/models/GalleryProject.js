@@ -7,6 +7,7 @@ const galleryProjectSchema = new Schema(
     suburb: String,
     service: String,
     serviceSlug: String,
+    productSlug: String,
     colour: String,
     length: String,
     completedDate: Date,

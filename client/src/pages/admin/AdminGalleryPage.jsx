@@ -15,6 +15,7 @@ const EMPTY = {
   suburb: "",
   service: "",
   serviceSlug: "",
+  productSlug: "",
   colour: "",
   length: "",
   completedDate: "",
@@ -88,6 +89,12 @@ function ProjectForm({ initial, onSaved, onCancel }) {
           value={form.serviceSlug}
           onChange={set("serviceSlug")}
           placeholder="colorbond-fencing"
+        />
+        <TextField
+          label="Linked product slug (optional)"
+          value={form.productSlug}
+          onChange={set("productSlug")}
+          placeholder="colorbond-fencing-panel-24m"
         />
         <TextField label="Length" value={form.length} onChange={set("length")} placeholder="24 lm" />
         <TextField label="Colour" value={form.colour} onChange={set("colour")} />

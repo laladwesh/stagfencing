@@ -90,7 +90,7 @@ function ProductCarousel({ title, products, onNavigate }) {
   );
 }
 
-function SearchModal({ onClose }) {
+function SearchModal({ onClose, anchored = true }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [searching, setSearching] = useState(false);
@@ -129,11 +129,15 @@ function SearchModal({ onClose }) {
   }, [query]);
 
   return (
-    <div className="fixed inset-0 z-[70] bg-black/50 flex items-start justify-center p-4 sm:p-8" onClick={onClose}>
-      <div
-        className="bg-white rounded-2xl w-full max-w-4xl max-h-[85vh] flex flex-col overflow-hidden shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div
+      onMouseDown={(e) => e.stopPropagation()}
+      className={
+        "z-[70] bg-white rounded-2xl max-h-[80vh] flex flex-col overflow-hidden shadow-2xl border border-gray-100 " +
+        (anchored
+          ? "absolute top-full right-0 mt-3 w-[92vw] sm:w-[640px] max-w-[640px]"
+          : "fixed top-20 inset-x-4")
+      }
+    >
         <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100 shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none">
             <path
@@ -231,7 +235,6 @@ function SearchModal({ onClose }) {
           <span>↵ Search · Esc or click outside to close · &quot;/&quot; opens search anywhere</span>
           <span>Recommendations: admin-pinned first, then best-sellers. Popular searches: we query analytics.</span>
         </div>
-      </div>
     </div>
   );
 }

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useSearch } from "../context/SearchContext";
+import SearchModal from "./search/SearchModal";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -30,13 +31,23 @@ const NAV_LINKS = [
 function Navbar() {
   const location = useLocation();
   const { itemCount } = useCart();
-  const { openSearch } = useSearch();
+  const { isOpen: searchOpen, openSearch, closeSearch } = useSearch();
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeMobile = () => setMobileOpen(false);
+  const searchWrapperRef = useRef(null);
 
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (!searchOpen) return;
+    const handleClickOutside = (e) => {
+      if (searchWrapperRef.current && !searchWrapperRef.current.contains(e.target)) closeSearch();
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [searchOpen, closeSearch]);
 
   return (
     <div className="px-4 sm:px-6 pb-4">
@@ -93,11 +104,12 @@ function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2 shrink-0">
+          <div className="relative hidden sm:block" ref={searchWrapperRef}>
           <button
             type="button"
             aria-label="Search"
             onClick={openSearch}
-            className="hidden sm:flex w-9 h-9 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 transition-colors"
+            className="flex w-9 h-9 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -127,6 +139,8 @@ function Navbar() {
               </defs>
             </svg>
           </button>
+          {searchOpen && <SearchModal onClose={closeSearch} />}
+          </div>
           <Link
             to="/cart"
             aria-label="Cart"
@@ -334,6 +348,12 @@ function Navbar() {
           </div>
         </div>
       </div>
+
+      {searchOpen && (
+        <div className="sm:hidden">
+          <SearchModal onClose={closeSearch} anchored={false} />
+        </div>
+      )}
     </div>
   );
 }
