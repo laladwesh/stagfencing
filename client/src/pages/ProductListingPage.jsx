@@ -3,6 +3,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
+import Seo from "../components/Seo";
 import { getCategories, getCategory, getProducts } from "../lib/api";
 
 const PAGE_SIZE = 9;
@@ -93,6 +94,12 @@ function ProductListingPage() {
 
   return (
     <Layout transparentHeader>
+      <Seo
+        title={category?.name ? `${category.name} | Shop` : "Shop"}
+        description={category?.description || "DIY fencing supplies at trade prices, with Perth pickup or delivery."}
+        path={`/shop/${categorySlug}`}
+        image={category?.image}
+      />
       <PageBanner
         breadcrumb="Home / Shop"
         title={category?.name || "Shop"}

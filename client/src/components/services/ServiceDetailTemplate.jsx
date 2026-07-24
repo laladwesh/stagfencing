@@ -4,7 +4,9 @@ import PageBanner from "../PageBanner";
 import ArrowIcon from "../ArrowIcon";
 import StarRating from "../StarRating";
 import ReviewCard from "../reviews/ReviewCard";
+import Seo from "../Seo";
 import { FaChevronDown } from "react-icons/fa";
+import { faqJsonLd, serviceJsonLd } from "../../lib/seo";
 
 function StatTiles({ tiles }) {
   if (!tiles?.length) return null;
@@ -139,7 +141,7 @@ function FaqAccordion({ title, faqs }) {
   );
 }
 
-function ServiceDetailTemplate({ service, breadcrumb }) {
+function ServiceDetailTemplate({ service, breadcrumb, path }) {
   const averageRating = service.reviews?.length
     ? service.reviews.reduce((sum, r) => sum + r.rating, 0) / service.reviews.length
     : null;
@@ -148,8 +150,26 @@ function ServiceDetailTemplate({ service, breadcrumb }) {
   const minStylePrice = stylePrices.length ? Math.min(...stylePrices) : 0;
   const maxStylePrice = stylePrices.length ? Math.max(...stylePrices) : 0;
 
+  const jsonLd = [
+    serviceJsonLd({
+      name: service.name,
+      description: service.description,
+      path,
+      image: service.image || service.cardImage,
+      price: service.fromPrice,
+    }),
+  ];
+  if (service.faqs?.length) jsonLd.push(faqJsonLd(service.faqs));
+
   return (
     <>
+      <Seo
+        title={`${service.name} Perth`}
+        description={service.description || `${service.name} installation across Perth. Free on-site measure and a written quote within 48 hours.`}
+        path={path}
+        image={service.image || service.cardImage}
+        jsonLd={jsonLd}
+      />
       <PageBanner breadcrumb={breadcrumb} title={service.bannerTitle || service.name} subtitle={service.bannerSubtitle}>
         <Link
           to="/request-a-quote"

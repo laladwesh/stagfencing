@@ -6,9 +6,11 @@ import ArrowIcon from "../components/ArrowIcon";
 import ReviewCard from "../components/reviews/ReviewCard";
 import ReviewPhotoGrid from "../components/reviews/ReviewPhotoGrid";
 import WriteReviewForm from "../components/reviews/WriteReviewForm";
+import Seo from "../components/Seo";
 import { getCategory, getProduct } from "../lib/api";
 import { useCart } from "../context/CartContext";
 import { notifyAddedToCart } from "../lib/toast";
+import { productJsonLd } from "../lib/seo";
 
 const REVIEWS_PREVIEW_COUNT = 3;
 
@@ -134,6 +136,23 @@ function ProductDetailPage() {
 
   return (
     <Layout>
+      <Seo
+        title={product.name}
+        description={product.shortDescription || product.description}
+        path={`/product/${slug}`}
+        image={product.images?.[0]}
+        jsonLd={productJsonLd({
+          name: product.name,
+          description: product.shortDescription || product.description,
+          path: `/product/${slug}`,
+          image: product.images?.[0],
+          price: price.toFixed(2),
+          sku: product.sku,
+          ratingValue: averageRating,
+          reviewCount: reviews.length,
+          reviews: reviews.slice(0, 10).map((r) => ({ author: r.name, rating: r.rating, body: r.comment })),
+        })}
+      />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         <p className="text-xs text-gray-400">
           Home / Shop

@@ -5,7 +5,7 @@ import ServiceDetailTemplate from "../components/services/ServiceDetailTemplate"
 import { getServiceDetail } from "../lib/api";
 
 function ServiceDetailPage() {
-  const { serviceSlug } = useParams();
+  const { categorySlug, serviceSlug } = useParams();
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -50,7 +50,11 @@ function ServiceDetailPage() {
 
   return (
     <Layout transparentHeader>
-      <ServiceDetailTemplate service={service} breadcrumb={breadcrumb} />
+      <ServiceDetailTemplate
+        service={service}
+        breadcrumb={breadcrumb}
+        path={`/services/${categorySlug}/${serviceSlug}`}
+      />
     </Layout>
   );
 }

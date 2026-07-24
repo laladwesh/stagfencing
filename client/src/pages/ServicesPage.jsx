@@ -4,8 +4,10 @@ import { FaChevronDown } from "react-icons/fa";
 import Layout from "../components/Layout";
 import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
+import Seo from "../components/Seo";
 import { getServiceCategories } from "../lib/api";
 import { SERVICES_FAQS } from "../data/servicesFaqs";
+import { faqJsonLd } from "../lib/seo";
 
 function ServiceCategoryCard({ category }) {
   return (
@@ -39,6 +41,12 @@ function ServicesPage() {
 
   return (
     <Layout transparentHeader>
+      <Seo
+        title="Fencing Services Perth | Installation & Repairs"
+        description="Colorbond, pool, slat, security, retaining wall and gate installation across Perth. Free on-site measure and a written quote within 48 hours."
+        path="/services"
+        jsonLd={faqJsonLd(SERVICES_FAQS)}
+      />
       <PageBanner
         breadcrumb="Home / Services"
         title="Installation services"

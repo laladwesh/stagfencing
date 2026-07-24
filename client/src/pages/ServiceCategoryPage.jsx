@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
 import ServiceDetailTemplate from "../components/services/ServiceDetailTemplate";
+import Seo from "../components/Seo";
 import { getServiceCategory, getServiceDetail } from "../lib/api";
 
 function ServiceCard({ categorySlug, service }) {
@@ -84,13 +85,23 @@ function ServiceCategoryPage() {
     }
     return (
       <Layout transparentHeader>
-        <ServiceDetailTemplate service={singleService} breadcrumb={`Home / Services / ${category.name}`} />
+        <ServiceDetailTemplate
+          service={singleService}
+          breadcrumb={`Home / Services / ${category.name}`}
+          path={`/services/${categorySlug}`}
+        />
       </Layout>
     );
   }
 
   return (
     <Layout transparentHeader>
+      <Seo
+        title={`${category.name} Perth`}
+        description={category.rangeIntro || `${category.name} across Perth. Free on-site measure and a written quote within 48 hours.`}
+        path={`/services/${categorySlug}`}
+        image={category.image}
+      />
       <PageBanner
         breadcrumb={`Home / Services / ${category.name.replace(/ Range$/, "")}`}
         title={category.rangeBannerTitle || category.name}

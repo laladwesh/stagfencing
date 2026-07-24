@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 import { getCategories } from "../lib/api";
 
 function ShopPage() {
@@ -15,6 +16,11 @@ function ShopPage() {
 
   return (
     <Layout>
+      <Seo
+        title="Shop Fencing Supplies Online"
+        description="DIY fencing supplies at trade prices, with Perth pickup or delivery. Colorbond sheets, posts, gates and hardware."
+        path="/shop"
+      />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
         <h1 className="text-3xl sm:text-4xl font-semibold text-black">Shop</h1>
         <p className="mt-3 text-gray-600 max-w-xl">
