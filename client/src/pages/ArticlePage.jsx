@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 import { ARTICLES } from "../data/articles";
 
 const TOC = [
@@ -140,9 +141,17 @@ function ArticlePage() {
   const { slug } = useParams();
   const article = ARTICLES.find((a) => a.slug === slug);
 
+  const isFeatured = slug === "how-to-choose-the-right-fence";
+
   return (
     <Layout>
-      {slug === "how-to-choose-the-right-fence" ? (
+      <Seo
+        title={article?.title || "Article not found"}
+        description={article ? `${article.tag} — ${article.title}` : undefined}
+        path={`/blog/${slug}`}
+        noindex={!isFeatured}
+      />
+      {isFeatured ? (
         <FeaturedArticle />
       ) : article ? (
         <ComingSoonArticle article={article} />
