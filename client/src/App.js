@@ -68,54 +68,122 @@ function App() {
                     padding: "10px 18px",
                     fontSize: "14px",
                     fontWeight: 500,
-                    fontFamily: "Manrope, -apple-system, BlinkMacSystemFont, sans-serif",
+                    fontFamily:
+                      "Manrope, -apple-system, BlinkMacSystemFont, sans-serif",
                     boxShadow: "0 10px 25px -5px rgba(0,0,0,0.2)",
                   },
-                  success: { iconTheme: { primary: "#fff", secondary: "#000" } },
-                  error: { iconTheme: { primary: "#fff", secondary: "#B83A31" } },
+                  success: {
+                    iconTheme: { primary: "#fff", secondary: "#000" },
+                  },
+                  error: {
+                    iconTheme: { primary: "#fff", secondary: "#B83A31" },
+                  },
                 }}
               />
               <SearchProvider>
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/services" element={<ServicesPage />} />
-                  <Route path="/services/:categorySlug" element={<ServiceCategoryPage />} />
-                  <Route path="/services/:categorySlug/:serviceSlug" element={<ServiceDetailPage />} />
+                  <Route
+                    path="/services/:categorySlug"
+                    element={<ServiceCategoryPage />}
+                  />
+                  <Route
+                    path="/services/:categorySlug/:serviceSlug"
+                    element={<ServiceDetailPage />}
+                  />
                   <Route path="/shop" element={<ShopPage />} />
                   <Route path="/calculators" element={<CalculatorsPage />} />
                   <Route path="/gallery" element={<GalleryPage />} />
                   <Route path="/about-us" element={<AboutUsPage />} />
                   <Route path="/resources" element={<ResourcesPage />} />
-                  <Route path="/resources/colorbond-colours" element={<ColorbondColoursPage />} />
-                  <Route path="/resources/brochures" element={<BrochuresPage />} />
+                  <Route
+                    path="/resources/colorbond-colours"
+                    element={<ColorbondColoursPage />}
+                  />
+                  <Route
+                    path="/resources/brochures"
+                    element={<BrochuresPage />}
+                  />
                   <Route path="/contact-us" element={<ContactPage />} />
-                  <Route path="/request-a-quote" element={<RequestQuotePage />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+                  <Route
+                    path="/request-a-quote"
+                    element={<RequestQuotePage />}
+                  />
+                  <Route
+                    path="/privacy-policy"
+                    element={<PrivacyPolicyPage />}
+                  />
                   <Route path="/blog" element={<BlogPage />} />
                   <Route path="/blog/:slug" element={<ArticlePage />} />
-                  <Route path="/calculators/fence-calculator" element={<FenceCalculatorPage />} />
-                  <Route path="/calculators/retaining-calculator" element={<RetainingCalculatorPage />} />
+                  <Route
+                    path="/calculators/fence-calculator"
+                    element={<FenceCalculatorPage />}
+                  />
+                  <Route
+                    path="/calculators/retaining-calculator"
+                    element={<RetainingCalculatorPage />}
+                  />
                   <Route path="/faqs" element={<FaqPage />} />
-                  <Route path="/shop/:categorySlug" element={<ProductListingPage />} />
-                  <Route path="/product/:slug" element={<ProductDetailPage />} />
-                  <Route path="/product/:slug/reviews" element={<ProductReviewsPage />} />
+                  <Route
+                    path="/shop/:categorySlug"
+                    element={<ProductListingPage />}
+                  />
+                  <Route
+                    path="/product/:slug"
+                    element={<ProductDetailPage />}
+                  />
+                  <Route
+                    path="/product/:slug/reviews"
+                    element={<ProductReviewsPage />}
+                  />
                   <Route path="/cart" element={<CartPage />} />
                   <Route path="/checkout" element={<CheckoutPage />} />
                   <Route path="/my-account" element={<MyAccountPage />} />
                   <Route path="/admin" element={<AdminDashboardPage />} />
                   <Route path="/admin/users" element={<AdminUsersPage />} />
-                  <Route path="/admin/shop/categories" element={<AdminShopCategoriesPage />} />
-                  <Route path="/admin/shop/products" element={<AdminShopProductsPage />} />
-                  <Route path="/admin/shop/products/new" element={<AdminShopProductFormPage />} />
-                  <Route path="/admin/shop/products/:id/edit" element={<AdminShopProductFormPage />} />
-                  <Route path="/admin/shop/reviews" element={<AdminShopReviewsPage />} />
-                  <Route path="/admin/services/categories" element={<AdminServiceCategoriesPage />} />
-                  <Route path="/admin/services/services" element={<AdminServicesPage />} />
-                  <Route path="/admin/services/services/new" element={<AdminServiceFormPage />} />
-                  <Route path="/admin/services/services/:id/edit" element={<AdminServiceFormPage />} />
+                  <Route
+                    path="/admin/shop/categories"
+                    element={<AdminShopCategoriesPage />}
+                  />
+                  <Route
+                    path="/admin/shop/products"
+                    element={<AdminShopProductsPage />}
+                  />
+                  <Route
+                    path="/admin/shop/products/new"
+                    element={<AdminShopProductFormPage />}
+                  />
+                  <Route
+                    path="/admin/shop/products/:id/edit"
+                    element={<AdminShopProductFormPage />}
+                  />
+                  <Route
+                    path="/admin/shop/reviews"
+                    element={<AdminShopReviewsPage />}
+                  />
+                  <Route
+                    path="/admin/services/categories"
+                    element={<AdminServiceCategoriesPage />}
+                  />
+                  <Route
+                    path="/admin/services/services"
+                    element={<AdminServicesPage />}
+                  />
+                  <Route
+                    path="/admin/services/services/new"
+                    element={<AdminServiceFormPage />}
+                  />
+                  <Route
+                    path="/admin/services/services/:id/edit"
+                    element={<AdminServiceFormPage />}
+                  />
                   <Route path="/admin/orders" element={<AdminOrdersPage />} />
                   <Route path="/admin/gallery" element={<AdminGalleryPage />} />
-                  <Route path="/admin/search-analytics" element={<AdminSearchAnalyticsPage />} />
+                  <Route
+                    path="/admin/search-analytics"
+                    element={<AdminSearchAnalyticsPage />}
+                  />
                 </Routes>
               </SearchProvider>
             </BrowserRouter>
