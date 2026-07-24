@@ -32,7 +32,7 @@ function SwatchRow({ label, note, swatches }) {
         {swatches.map((s) => (
           <div key={s.label} className="flex flex-col items-center gap-1.5">
             <span
-              className="w-10 h-10 rounded-full border border-black/10 shrink-0"
+              className="w-12 h-10 rounded-lg border border-black/10 shrink-0"
               style={{ backgroundColor: s.hex }}
             />
             <span className="text-[11px] text-gray-500 text-center leading-tight">{s.label}</span>
