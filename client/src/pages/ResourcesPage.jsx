@@ -5,6 +5,7 @@ function ResourcesPage() {
     <PlaceholderPage
       title="Resources"
       description="Blog articles, Colorbond colours, brochures and FAQs are coming soon."
+      path="/resources"
     />
   );
 }

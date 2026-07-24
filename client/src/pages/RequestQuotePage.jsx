@@ -4,6 +4,7 @@ import { FaStar, FaPhoneAlt } from "react-icons/fa";
 import Layout from "../components/Layout";
 import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
+import Seo from "../components/Seo";
 
 const SERVICE_TYPES = [
   "Colorbond",
@@ -162,6 +163,11 @@ function RequestQuotePage() {
 
   return (
     <Layout transparentHeader>
+      <Seo
+        title="Request A Free Quote"
+        description="Tell us about your fencing job and book a free on-site measure — get a price confirmed in writing within 48 hours."
+        path="/request-a-quote"
+      />
       <PageBanner
         breadcrumb="Home / Request a Quote"
         title="Request a Quote"

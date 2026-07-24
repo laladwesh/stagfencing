@@ -5,6 +5,7 @@ function BrochuresPage() {
     <PlaceholderPage
       title="Brochures"
       description="Downloadable product and service brochures are coming soon."
+      path="/resources/brochures"
     />
   );
 }

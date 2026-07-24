@@ -106,7 +106,6 @@ function ServicesDropdownContent({ categories }) {
 function ShopDropdownContent({ categories }) {
   return (
     <div className="p-3">
-      <p className="px-3 pt-1 text-[11px] text-gray-400">Categories · admin-managed · fixed order</p>
       <div className="mt-1">
         {categories.map((category) => (
           <Link

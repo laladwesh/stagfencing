@@ -5,6 +5,7 @@ function ColorbondColoursPage() {
     <PlaceholderPage
       title="Colorbond Colours"
       description="The full BlueScope Colorbond colour range, with swatches and suggested pairings, is coming soon."
+      path="/resources/colorbond-colours"
     />
   );
 }

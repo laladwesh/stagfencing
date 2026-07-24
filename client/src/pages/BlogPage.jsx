@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
+import Seo from "../components/Seo";
 import { ARTICLES } from "../data/articles";
 
 function QuoteCta({ label }) {

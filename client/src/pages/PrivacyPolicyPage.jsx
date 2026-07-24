@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 
 const TOC = [
   { id: "interpretation-and-definitions", label: "Interpretation and Definitions" },
@@ -18,6 +19,7 @@ const TOC = [
 function PrivacyPolicyPage() {
   return (
     <Layout>
+      <Seo title="Privacy Policy" description="How Stag Fencing collects, uses and protects your personal data." path="/privacy-policy" />
       <div className="bg-white text-center pt-14 pb-8">
         <span className="inline-block border border-gray-200 rounded-full px-4 py-1.5 text-sm font-medium text-black">
           Privacy Policy

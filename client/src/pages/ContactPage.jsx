@@ -2,6 +2,7 @@ import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaRegClock, FaShieldAlt } from 
 import Layout from "../components/Layout";
 import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
+import Seo from "../components/Seo";
 
 const CONTACT_INFO = [
   {
@@ -31,6 +32,11 @@ const SERVICE_OPTIONS = ["Fence Installation", "Fence Repair", "Gate & Automatio
 function ContactPage() {
   return (
     <Layout transparentHeader>
+      <Seo
+        title="Contact Us"
+        description="Call, email or book a free on-site measure with Stag Fencing — Perth's local fencing contractor."
+        path="/contact-us"
+      />
       <PageBanner
         breadcrumb="Home / Contact Us"
         title="Contact Us"
