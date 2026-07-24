@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
-import { TextField, NumberField, AdminButton } from "../../components/admin/AdminFormFields";
+import { TextField, NumberField, SelectField, AdminButton } from "../../components/admin/AdminFormFields";
 import {
   getAdminGalleryProjects,
   createGalleryProject,
   updateGalleryProject,
   deleteGalleryProject,
   uploadAdminFile,
+  getShopProducts,
+  getAdminServices,
 } from "../../lib/adminApi";
 
 const EMPTY = {
@@ -27,7 +29,7 @@ function toDateInputValue(value) {
   return new Date(value).toISOString().slice(0, 10);
 }
 
-function ProjectForm({ initial, onSaved, onCancel }) {
+function ProjectForm({ initial, products, services, onSaved, onCancel }) {
   const [form, setForm] = useState(
     initial ? { ...initial, completedDate: toDateInputValue(initial.completedDate) } : EMPTY
   );
@@ -84,17 +86,17 @@ function ProjectForm({ initial, onSaved, onCancel }) {
         <TextField label="Title*" value={form.title} onChange={set("title")} required />
         <TextField label="Suburb" value={form.suburb} onChange={set("suburb")} />
         <TextField label="Service label (filter tag)" value={form.service} onChange={set("service")} placeholder="Colorbond" />
-        <TextField
-          label="Linked service slug (optional)"
+        <SelectField
+          label="Linked service (optional)"
           value={form.serviceSlug}
           onChange={set("serviceSlug")}
-          placeholder="colorbond-fencing"
+          options={[{ value: "", label: "None" }, ...services.map((s) => ({ value: s.slug, label: s.name }))]}
         />
-        <TextField
-          label="Linked product slug (optional)"
+        <SelectField
+          label="Linked product (optional)"
           value={form.productSlug}
           onChange={set("productSlug")}
-          placeholder="colorbond-fencing-panel-24m"
+          options={[{ value: "", label: "None" }, ...products.map((p) => ({ value: p.slug, label: p.name }))]}
         />
         <TextField label="Length" value={form.length} onChange={set("length")} placeholder="24 lm" />
         <TextField label="Colour" value={form.colour} onChange={set("colour")} />
@@ -125,14 +127,20 @@ function ProjectForm({ initial, onSaved, onCancel }) {
 
 function AdminGalleryPage() {
   const [projects, setProjects] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
   const [error, setError] = useState("");
 
   const load = () => {
     setLoading(true);
-    getAdminGalleryProjects()
-      .then((data) => setProjects(data.projects))
+    Promise.all([getAdminGalleryProjects(), getShopProducts(), getAdminServices()])
+      .then(([projectsData, productsData, servicesData]) => {
+        setProjects(projectsData.projects);
+        setProducts(productsData.products);
+        setServices(servicesData.services);
+      })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   };
@@ -175,7 +183,7 @@ function AdminGalleryPage() {
 
       {editing === "new" && (
         <div className="mt-6">
-          <ProjectForm onSaved={handleSaved} onCancel={() => setEditing(null)} />
+          <ProjectForm products={products} services={services} onSaved={handleSaved} onCancel={() => setEditing(null)} />
         </div>
       )}
 
@@ -188,6 +196,8 @@ function AdminGalleryPage() {
               <ProjectForm
                 key={project._id}
                 initial={project}
+                products={products}
+                services={services}
                 onSaved={handleSaved}
                 onCancel={() => setEditing(null)}
               />

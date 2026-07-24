@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import ArrowIcon from "../ArrowIcon";
 import { searchProducts, getSearchSuggestions } from "../../lib/api";
@@ -11,6 +12,7 @@ const QUICK_LINKS = [
 ];
 
 const VISIBLE_COUNT = 4;
+const PANEL_WIDTH = 640;
 
 function ProductCard({ product, onClick }) {
   const hasRange = product.priceMin !== product.priceMax;
@@ -90,12 +92,13 @@ function ProductCarousel({ title, products, onNavigate }) {
   );
 }
 
-function SearchModal({ onClose, anchored = true }) {
+function SearchModal({ onClose, anchorRect }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [searching, setSearching] = useState(false);
   const [suggestions, setSuggestions] = useState({ popularSearches: [], recommended: [] });
   const inputRef = useRef(null);
+  const panelRef = useRef(null);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -110,6 +113,14 @@ function SearchModal({ onClose, anchored = true }) {
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (panelRef.current && !panelRef.current.contains(e.target)) onClose();
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onClose]);
 
   useEffect(() => {
@@ -128,114 +139,134 @@ function SearchModal({ onClose, anchored = true }) {
     return () => clearTimeout(timeout);
   }, [query]);
 
-  return (
-    <div
-      onMouseDown={(e) => e.stopPropagation()}
-      className={
-        "z-[70] bg-white rounded-2xl max-h-[80vh] flex flex-col overflow-hidden shadow-2xl border border-gray-100 " +
-        (anchored
-          ? "absolute top-full right-0 mt-3 w-[92vw] sm:w-[640px] max-w-[640px]"
-          : "fixed top-20 inset-x-4")
-      }
-    >
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100 shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none">
-            <path
-              d="M8.33333 14.1667C11.555 14.1667 14.1667 11.555 14.1667 8.33333C14.1667 5.11167 11.555 2.5 8.33333 2.5C5.11167 2.5 2.5 5.11167 2.5 8.33333C2.5 11.555 5.11167 14.1667 8.33333 14.1667Z"
-              stroke="black"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path d="M17.5 17.5L12.5 12.5" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <input
-            ref={inputRef}
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search products…"
-            className="flex-1 min-w-0 text-base focus:outline-none"
-          />
-          <kbd className="hidden sm:inline-block text-[10px] font-medium text-gray-400 border border-gray-200 rounded px-1.5 py-0.5">
-            Esc
-          </kbd>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close search"
-            className="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
-          >
-            ×
-          </button>
-        </div>
+  const positionStyle = (() => {
+    if (!anchorRect) {
+      // No trigger element (e.g. opened via "/" or on mobile) — center-ish near the top.
+      return {
+        position: "fixed",
+        top: 88,
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: "min(92vw, " + PANEL_WIDTH + "px)",
+      };
+    }
+    const margin = 16;
+    let left = anchorRect.right - PANEL_WIDTH;
+    if (left < margin) left = margin;
+    if (left + PANEL_WIDTH > window.innerWidth - margin) left = window.innerWidth - margin - PANEL_WIDTH;
+    return {
+      position: "fixed",
+      top: anchorRect.bottom + 12,
+      left,
+      width: Math.min(PANEL_WIDTH, window.innerWidth - margin * 2),
+    };
+  })();
 
-        <div className="flex-1 min-h-0 overflow-y-auto">
-          {query.trim() ? (
-            <div className="p-5">
-              {searching ? (
-                <p className="text-sm text-gray-500">Searching…</p>
-              ) : results.length === 0 ? (
-                <p className="text-sm text-gray-500">No products found for &quot;{query}&quot;.</p>
-              ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
-                  {results.map((product) => (
-                    <ProductCard key={product._id} product={product} onClick={onClose} />
+  return createPortal(
+    <div
+      ref={panelRef}
+      style={positionStyle}
+      className="z-[70] bg-white rounded-2xl max-h-[80vh] flex flex-col overflow-hidden shadow-2xl border border-gray-100"
+    >
+      <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100 shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none">
+          <path
+            d="M8.33333 14.1667C11.555 14.1667 14.1667 11.555 14.1667 8.33333C14.1667 5.11167 11.555 2.5 8.33333 2.5C5.11167 2.5 2.5 5.11167 2.5 8.33333C2.5 11.555 5.11167 14.1667 8.33333 14.1667Z"
+            stroke="black"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path d="M17.5 17.5L12.5 12.5" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        <input
+          ref={inputRef}
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search products…"
+          className="flex-1 min-w-0 text-base focus:outline-none"
+        />
+        <kbd className="hidden sm:inline-block text-[10px] font-medium text-gray-400 border border-gray-200 rounded px-1.5 py-0.5">
+          Esc
+        </kbd>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close search"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
+        >
+          ×
+        </button>
+      </div>
+
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        {query.trim() ? (
+          <div className="p-5">
+            {searching ? (
+              <p className="text-sm text-gray-500">Searching…</p>
+            ) : results.length === 0 ? (
+              <p className="text-sm text-gray-500">No products found for &quot;{query}&quot;.</p>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
+                {results.map((product) => (
+                  <ProductCard key={product._id} product={product} onClick={onClose} />
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="flex flex-col sm:flex-row gap-6 p-5">
+            <div className="sm:w-48 shrink-0 space-y-6">
+              <div>
+                <p className="text-[11px] font-semibold tracking-wide text-gray-400">POPULAR SEARCHES</p>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {suggestions.popularSearches.map((term) => (
+                    <button
+                      key={term}
+                      type="button"
+                      onClick={() => setQuery(term)}
+                      className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full px-2.5 py-1 transition-colors"
+                    >
+                      {term}
+                    </button>
                   ))}
                 </div>
-              )}
-            </div>
-          ) : (
-            <div className="flex flex-col sm:flex-row gap-6 p-5">
-              <div className="sm:w-48 shrink-0 space-y-6">
-                <div>
-                  <p className="text-[11px] font-semibold tracking-wide text-gray-400">POPULAR SEARCHES</p>
-                  <div className="mt-2 flex flex-wrap gap-1.5">
-                    {suggestions.popularSearches.map((term) => (
-                      <button
-                        key={term}
-                        type="button"
-                        onClick={() => setQuery(term)}
-                        className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full px-2.5 py-1 transition-colors"
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold tracking-wide text-gray-400">QUICK LINKS</p>
+                <ul className="mt-2 space-y-1.5">
+                  {QUICK_LINKS.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        to={link.href}
+                        onClick={onClose}
+                        className="text-sm text-gray-700 hover:text-black transition-colors"
                       >
-                        {term}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-[11px] font-semibold tracking-wide text-gray-400">QUICK LINKS</p>
-                  <ul className="mt-2 space-y-1.5">
-                    {QUICK_LINKS.map((link) => (
-                      <li key={link.href}>
-                        <Link
-                          to={link.href}
-                          onClick={onClose}
-                          className="text-sm text-gray-700 hover:text-black transition-colors"
-                        >
-                          {link.label} →
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <ProductCarousel
-                  title="Recommended products"
-                  products={suggestions.recommended}
-                  onNavigate={onClose}
-                />
+                        {link.label} →
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-          )}
-        </div>
 
-        <div className="hidden sm:flex items-center justify-between px-5 py-3 border-t border-gray-100 text-[11px] text-gray-400 shrink-0">
-          <span>↵ Search · Esc or click outside to close · &quot;/&quot; opens search anywhere</span>
-          <span>Recommendations: admin-pinned first, then best-sellers. Popular searches: we query analytics.</span>
-        </div>
-    </div>
+            <div className="flex-1 min-w-0">
+              <ProductCarousel
+                title="Recommended products"
+                products={suggestions.recommended}
+                onNavigate={onClose}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="hidden sm:flex items-center justify-between px-5 py-3 border-t border-gray-100 text-[11px] text-gray-400 shrink-0">
+        <span>↵ Search · Esc or click outside to close · &quot;/&quot; opens search anywhere</span>
+        <span>Recommendations: admin-pinned first, then best-sellers. Popular searches: we query analytics.</span>
+      </div>
+    </div>,
+    document.body
   );
 }
 
