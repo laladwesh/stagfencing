@@ -1,20 +1,9 @@
 import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 import { FAQS } from "../data/faqs";
-
-const FAQ_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQS.map((faq) => ({
-    "@type": "Question",
-    name: faq.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: faq.answer,
-    },
-  })),
-};
+import { faqJsonLd } from "../lib/seo";
 
 function FaqPage() {
   const [openIndex, setOpenIndex] = useState(0);
