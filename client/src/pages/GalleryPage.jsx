@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import ArrowIcon from "../components/ArrowIcon";
+import Seo from "../components/Seo";
 import { getGalleryProjects } from "../lib/api";
 
 function QuoteCta({ label }) {
@@ -134,6 +135,11 @@ function GalleryPage() {
 
   return (
     <Layout>
+      <Seo
+        title="Fencing Gallery | Completed Projects in Perth"
+        description="Browse real Colorbond, pool, slat, security and retaining wall fencing projects completed across Perth by Stag Fencing."
+        path="/gallery"
+      />
       <div className="bg-white text-center pt-14 pb-8">
         <span className="inline-block border border-gray-200 rounded-full px-4 py-1.5 text-sm font-medium text-black">
           Gallery

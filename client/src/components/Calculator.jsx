@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Layout from "./Layout";
 import PageBanner from "./PageBanner";
 import ArrowIcon from "./ArrowIcon";
+import Seo from "./Seo";
 
 function Toggle({ options, value, onChange }) {
   return (
@@ -38,7 +39,7 @@ function QuoteCta() {
   );
 }
 
-function Calculator({ config, serviceType }) {
+function Calculator({ config, serviceType, path }) {
   const navigate = useNavigate();
   const allOptions = config.categories.flatMap((c) => c.options);
 
@@ -117,6 +118,11 @@ function Calculator({ config, serviceType }) {
 
   return (
     <Layout transparentHeader>
+      <Seo
+        title={config.title}
+        description={config.headingSubtitle || config.subtitle}
+        path={path}
+      />
       <PageBanner breadcrumb={config.breadcrumb} title={config.title} subtitle={config.subtitle}>
         <QuoteCta />
         <QuoteCta />

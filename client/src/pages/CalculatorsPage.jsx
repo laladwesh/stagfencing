@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 
 const CALCULATORS = [
   {
@@ -17,6 +18,11 @@ const CALCULATORS = [
 function CalculatorsPage() {
   return (
     <Layout>
+      <Seo
+        title="Free Fencing Cost Calculators"
+        description="Get an instant Colorbond or retaining wall price estimate for your Perth property — no form, no waiting."
+        path="/calculators"
+      />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
         <h1 className="text-3xl sm:text-4xl font-semibold text-black">Calculators</h1>
         <p className="mt-3 text-gray-600 max-w-xl">

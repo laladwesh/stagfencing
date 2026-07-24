@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import ReviewCard from "../components/reviews/ReviewCard";
 import ReviewPhotoGrid from "../components/reviews/ReviewPhotoGrid";
 import WriteReviewForm from "../components/reviews/WriteReviewForm";
+import Seo from "../components/Seo";
 import { getProduct } from "../lib/api";
 
 function ProductReviewsPage() {
@@ -60,6 +61,12 @@ function ProductReviewsPage() {
 
   return (
     <Layout>
+      <Seo
+        title={`Reviews for ${product.name}`}
+        description={`Read ${reviews.length} customer reviews for ${product.name}.`}
+        path={`/product/${slug}/reviews`}
+        image={product.images?.[0]}
+      />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         <Link to={`/product/${slug}`} className="text-xs text-gray-400 hover:text-black">
           ← Back to {product.name}

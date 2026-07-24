@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 
 function GoogleIcon(props) {
   return (
@@ -28,6 +29,11 @@ function GoogleIcon(props) {
 function AboutUsPage() {
   return (
     <Layout>
+      <Seo
+        title="About Stag Fencing"
+        description="Local Perth fencing contractor with 500+ fences built, a 5-star Google rating and a 10 year workmanship warranty."
+        path="/about-us"
+      />
       <div className="bg-white py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div>
