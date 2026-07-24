@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { FaStar, FaPhoneAlt } from "react-icons/fa";
 import Layout from "../components/Layout";

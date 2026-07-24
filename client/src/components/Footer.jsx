@@ -72,9 +72,7 @@ function FooterColumn({ title, links }) {
                   {label}
                 </Link>
               ) : (
-                <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
-                  {label}
-                </a>
+                <span className="text-sm text-gray-400">{label}</span>
               )}
             </li>
           );
@@ -163,13 +161,12 @@ function Footer() {
 
             <div className="mt-4 flex items-center gap-2">
               {SOCIAL_ICONS.map((Icon, i) => (
-                <a
+                <span
                   key={i}
-                  href="#"
-                  className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-gray-300 hover:text-white hover:border-white/30 transition-colors"
+                  className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-gray-300"
                 >
                   <Icon className="w-3.5 h-3.5" />
-                </a>
+                </span>
               ))}
             </div>
 
