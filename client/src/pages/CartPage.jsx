@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 import { useCart } from "../context/CartContext";
 
 const DELIVERY_METHODS = [
@@ -65,6 +66,7 @@ function CartPage() {
   if (items.length === 0) {
     return (
       <Layout>
+        <Seo title="Your Cart" noindex path="/cart" />
         <div className="bg-white text-center pt-14 pb-8">
           <span className="inline-block border border-gray-200 rounded-full px-4 py-1.5 text-sm font-medium text-black">
             Home / Cart
@@ -86,6 +88,7 @@ function CartPage() {
 
   return (
     <Layout>
+      <Seo title="Your Cart" noindex path="/cart" />
       <div className="bg-white text-center pt-14 pb-8">
         <span className="inline-block border border-gray-200 rounded-full px-4 py-1.5 text-sm font-medium text-black">
           Home / Cart

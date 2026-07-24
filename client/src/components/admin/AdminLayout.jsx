@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import Seo from "../Seo";
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/admin" },
@@ -19,41 +20,53 @@ function AdminLayout({ children }) {
   const location = useLocation();
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center text-sm text-gray-500">Loading…</div>;
+    return (
+      <>
+        <Seo title="Admin" noindex path="/admin" />
+        <div className="min-h-screen flex items-center justify-center text-sm text-gray-500">Loading…</div>
+      </>
+    );
   }
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-center px-4">
-        <div>
-          <h1 className="text-xl font-semibold text-black">Sign in required</h1>
-          <p className="mt-2 text-sm text-gray-500">You need an account to access this.</p>
-          <Link to="/my-account" className="mt-4 inline-block text-sm font-medium text-brand-orange">
-            Sign in
-          </Link>
+      <>
+        <Seo title="Admin" noindex path="/admin" />
+        <div className="min-h-screen flex items-center justify-center text-center px-4">
+          <div>
+            <h1 className="text-xl font-semibold text-black">Sign in required</h1>
+            <p className="mt-2 text-sm text-gray-500">You need an account to access this.</p>
+            <Link to="/my-account" className="mt-4 inline-block text-sm font-medium text-brand-orange">
+              Sign in
+            </Link>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   if (!user.isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-center px-4">
-        <div>
-          <h1 className="text-xl font-semibold text-black">Admin access required</h1>
-          <p className="mt-2 text-sm text-gray-500">
-            Signed in as {user.email}, but this account isn't an admin.
-          </p>
-          <Link to="/" className="mt-4 inline-block text-sm font-medium text-brand-orange">
-            ← Back to site
-          </Link>
+      <>
+        <Seo title="Admin" noindex path="/admin" />
+        <div className="min-h-screen flex items-center justify-center text-center px-4">
+          <div>
+            <h1 className="text-xl font-semibold text-black">Admin access required</h1>
+            <p className="mt-2 text-sm text-gray-500">
+              Signed in as {user.email}, but this account isn't an admin.
+            </p>
+            <Link to="/" className="mt-4 inline-block text-sm font-medium text-brand-orange">
+              ← Back to site
+            </Link>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
     <div className="min-h-screen bg-white flex flex-col lg:flex-row">
+      <Seo title="Admin" noindex path={location.pathname} />
       <aside className="lg:w-60 shrink-0 border-b lg:border-b-0 lg:border-r border-gray-200 p-5">
         <Link to="/" className="flex items-center gap-2">
           <img src="/stag-icon.svg" alt="Stag Fencing" className="h-8 w-auto" />
