@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import Breadcrumb from "../components/Breadcrumb";
+import ChevronIcon from "../components/ChevronIcon";
 import { useCart } from "../context/CartContext";
 
 const DELIVERY_METHODS = [
@@ -181,7 +182,7 @@ function CartPage() {
                 className="w-full flex items-center justify-between text-sm text-gray-700"
               >
                 Have a discount code?
-                <span className={"transition-transform " + (discountOpen ? "rotate-180" : "")}>⌄</span>
+                <ChevronIcon open={discountOpen} className="text-gray-500" />
               </button>
               {discountOpen && (
                 <div className="mt-2 flex gap-2">
