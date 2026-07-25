@@ -36,7 +36,17 @@ function PrivacyPolicyPage() {
     );
 
     headings.forEach((heading) => observer.observe(heading));
-    return () => observer.disconnect();
+
+    const handleScroll = () => {
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      if (atBottom) setActiveId(TOC[TOC.length - 1].id);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
