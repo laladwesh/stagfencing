@@ -75,7 +75,7 @@ function Services() {
             Whether you're after privacy, security, or a boundary that lifts the whole property, we build
             fences that do the job and last. New installs, repairs, and everything in between
           </p>
-          <div className="mt-6 aspect-square rounded-md overflow-hidden">
+          <div className="mt-6 aspect-square rounded-sm overflow-hidden">
             <img src="/hero-bg.png" alt="Fence installation" className="w-full h-full object-cover" />
           </div>
         </div>

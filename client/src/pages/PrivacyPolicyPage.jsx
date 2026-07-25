@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 
@@ -17,6 +18,27 @@ const TOC = [
 ];
 
 function PrivacyPolicyPage() {
+  const [activeId, setActiveId] = useState(TOC[0].id);
+
+  useEffect(() => {
+    const headings = TOC.map((item) => document.getElementById(item.id)).filter(Boolean);
+    if (!headings.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting);
+        if (visible.length > 0) {
+          const topMost = visible.reduce((a, b) => (a.boundingClientRect.top < b.boundingClientRect.top ? a : b));
+          setActiveId(topMost.target.id);
+        }
+      },
+      { rootMargin: "-96px 0px -70% 0px", threshold: 0 }
+    );
+
+    headings.forEach((heading) => observer.observe(heading));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <Layout>
       <Seo title="Privacy Policy" description="How Stag Fencing collects, uses and protects your personal data." path="/privacy-policy" />
@@ -32,13 +54,22 @@ function PrivacyPolicyPage() {
           <div className="lg:sticky lg:top-24">
             <p className="text-xs font-semibold tracking-wide text-black">ON THIS PAGE</p>
             <ul className="mt-3 space-y-2">
-              {TOC.map((item) => (
-                <li key={item.id}>
-                  <a href={`#${item.id}`} className="text-sm text-gray-500 hover:text-black transition-colors">
-                    {item.label}
-                  </a>
-                </li>
-              ))}
+              {TOC.map((item) => {
+                const isActive = item.id === activeId;
+                return (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      className={
+                        "text-sm transition-colors " +
+                        (isActive ? "font-semibold text-black" : "text-gray-500 hover:text-black")
+                      }
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </aside>

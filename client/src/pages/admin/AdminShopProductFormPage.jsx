@@ -89,14 +89,14 @@ function SpecificationsField({ specifications, onChange }) {
               value={spec.label}
               onChange={(e) => setAt(i, "label", e.target.value)}
               placeholder="Label"
-              className="flex-1 min-w-0 bg-[#F3EFE9] rounded-md px-3 py-2 text-sm focus:outline-none"
+              className="flex-1 min-w-0 bg-[#F3EFE9] rounded-sm px-3 py-2 text-sm focus:outline-none"
             />
             <input
               type="text"
               value={spec.value}
               onChange={(e) => setAt(i, "value", e.target.value)}
               placeholder="Value"
-              className="flex-1 min-w-0 bg-[#F3EFE9] rounded-md px-3 py-2 text-sm focus:outline-none"
+              className="flex-1 min-w-0 bg-[#F3EFE9] rounded-sm px-3 py-2 text-sm focus:outline-none"
             />
             <button type="button" onClick={() => removeAt(i)} className="w-8 h-8 shrink-0 text-gray-400 hover:text-red-600">
               ×
@@ -141,14 +141,14 @@ function VariantGroupsField({ variantGroups, onChange }) {
       <span className="text-xs font-medium text-gray-500">Variant groups</span>
       <div className="mt-2 space-y-4">
         {groups.map((group, gi) => (
-          <div key={gi} className="border border-gray-200 rounded-lg p-4">
+          <div key={gi} className="border border-gray-200 rounded-sm p-4">
             <div className="flex items-center gap-2">
               <input
                 type="text"
                 value={group.name}
                 onChange={(e) => setGroupName(gi, e.target.value)}
                 placeholder="Group name (e.g. Colour)"
-                className="flex-1 min-w-0 bg-[#F3EFE9] rounded-md px-3 py-2 text-sm font-medium focus:outline-none"
+                className="flex-1 min-w-0 bg-[#F3EFE9] rounded-sm px-3 py-2 text-sm font-medium focus:outline-none"
               />
               <button type="button" onClick={() => removeGroup(gi)} className="text-xs font-medium text-red-600">
                 Remove group
@@ -157,27 +157,27 @@ function VariantGroupsField({ variantGroups, onChange }) {
 
             <div className="mt-3 space-y-2">
               {group.options.map((opt, oi) => (
-                <div key={oi} className="flex flex-wrap items-center gap-2 bg-gray-50 rounded-lg p-2">
+                <div key={oi} className="flex flex-wrap items-center gap-2 bg-gray-50 rounded-sm p-2">
                   <input
                     type="text"
                     value={opt.label}
                     onChange={(e) => setOption(gi, oi, "label", e.target.value)}
                     placeholder="Label"
-                    className="flex-1 min-w-[100px] bg-white border border-gray-200 rounded-md px-2 py-1.5 text-xs focus:outline-none"
+                    className="flex-1 min-w-[100px] bg-white border border-gray-200 rounded-sm px-2 py-1.5 text-xs focus:outline-none"
                   />
                   <input
                     type="number"
                     value={opt.priceModifier}
                     onChange={(e) => setOption(gi, oi, "priceModifier", Number(e.target.value))}
                     placeholder="+/- price"
-                    className="w-24 bg-white border border-gray-200 rounded-md px-2 py-1.5 text-xs focus:outline-none"
+                    className="w-24 bg-white border border-gray-200 rounded-sm px-2 py-1.5 text-xs focus:outline-none"
                   />
                   <input
                     type="text"
                     value={opt.swatch || ""}
                     onChange={(e) => setOption(gi, oi, "swatch", e.target.value)}
                     placeholder="#hex (optional)"
-                    className="w-28 bg-white border border-gray-200 rounded-md px-2 py-1.5 text-xs focus:outline-none"
+                    className="w-28 bg-white border border-gray-200 rounded-sm px-2 py-1.5 text-xs focus:outline-none"
                   />
                   <label className="flex items-center gap-1 text-xs text-gray-600">
                     <input

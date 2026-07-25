@@ -81,7 +81,7 @@ function AdminLayout({ children }) {
                 key={item.href}
                 to={item.href}
                 className={
-                  "block px-3 py-2 rounded-lg transition-colors " +
+                  "block px-3 py-2 rounded-sm transition-colors " +
                   (isActive ? "bg-black text-white font-medium" : "text-gray-600 hover:bg-gray-100")
                 }
               >

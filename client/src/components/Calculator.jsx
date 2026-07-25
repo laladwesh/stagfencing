@@ -4,6 +4,7 @@ import Layout from "./Layout";
 import PageBanner from "./PageBanner";
 import ArrowIcon from "./ArrowIcon";
 import Seo from "./Seo";
+import Select from "./ui/Select";
 
 function Toggle({ options, value, onChange }) {
   return (
@@ -141,7 +142,7 @@ function Calculator({ config, serviceType, path }) {
           </div>
 
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 border border-gray-200 rounded-2xl p-5 sm:p-6">
+            <div className="lg:col-span-2 border border-gray-200 rounded-sm p-5 sm:p-6">
               <div className="flex items-center justify-between flex-wrap gap-3">
                 <p className="text-xs font-semibold tracking-wide text-black">PRICING</p>
                 <Toggle
@@ -158,7 +159,7 @@ function Calculator({ config, serviceType, path }) {
                     type="button"
                     onClick={() => setActiveTab(tab)}
                     className={
-                      "py-2 rounded-md text-sm font-medium transition-colors " +
+                      "py-2 rounded-sm text-sm font-medium transition-colors " +
                       (activeTab === tab ? "bg-black text-white" : "bg-[#F3EFE9] text-black hover:bg-gray-200")
                     }
                   >
@@ -195,7 +196,7 @@ function Calculator({ config, serviceType, path }) {
                                   if (config.styleOptions.includes(option.name)) setStyle(option.name);
                                 }}
                                 className={
-                                  "text-left rounded-md px-3 py-3 transition-colors " +
+                                  "text-left rounded-sm px-3 py-3 transition-colors " +
                                   (isSelected ? "bg-black text-white" : "bg-[#F3EFE9] text-black hover:bg-gray-200")
                                 }
                               >
@@ -224,43 +225,19 @@ function Calculator({ config, serviceType, path }) {
               <div className="mt-6 pt-6 border-t border-dashed border-gray-200">
                 <p className="text-xs font-semibold tracking-wide text-black">2. CONFIGURE</p>
                 <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+                  <div className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                     Style / profile
-                    <select
-                      value={style}
-                      onChange={(e) => setStyle(e.target.value)}
-                      className="bg-transparent text-sm text-gray-800 focus:outline-none"
-                    >
-                      {config.styleOptions.map((s) => (
-                        <option key={s}>{s}</option>
-                      ))}
-                    </select>
-                  </label>
-                  <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-gray-500">
+                    <Select value={style} onChange={setStyle} options={config.styleOptions} />
+                  </div>
+                  <div className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-gray-500">
                     Height
-                    <select
-                      value={height}
-                      onChange={(e) => setHeight(e.target.value)}
-                      className="bg-transparent text-sm text-gray-800 focus:outline-none"
-                    >
-                      {config.heightOptions.map((h) => (
-                        <option key={h}>{h}</option>
-                      ))}
-                    </select>
-                  </label>
+                    <Select value={height} onChange={setHeight} options={config.heightOptions} />
+                  </div>
                 </div>
-                <label className="mt-3 flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+                <div className="mt-3 flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                   {config.thirdDropdownLabel}
-                  <select
-                    value={thirdChoice}
-                    onChange={(e) => setThirdChoice(e.target.value)}
-                    className="bg-transparent text-sm text-gray-800 focus:outline-none"
-                  >
-                    {config.thirdDropdownOptions.map((o) => (
-                      <option key={o}>{o}</option>
-                    ))}
-                  </select>
-                </label>
+                  <Select value={thirdChoice} onChange={setThirdChoice} options={config.thirdDropdownOptions} />
+                </div>
 
                 <div className="mt-4">
                   <p className="text-xs font-medium text-gray-500">{config.lengthUnitLabel}</p>
@@ -273,7 +250,7 @@ function Calculator({ config, serviceType, path }) {
                       onChange={(e) => setLength(Number(e.target.value))}
                       className="flex-1 accent-black"
                     />
-                    <span className="w-20 shrink-0 bg-[#F3EFE9] rounded-md px-3 py-1.5 text-sm text-center text-black">
+                    <span className="w-20 shrink-0 bg-[#F3EFE9] rounded-sm px-3 py-1.5 text-sm text-center text-black">
                       {length} m
                     </span>
                   </div>
@@ -331,7 +308,7 @@ function Calculator({ config, serviceType, path }) {
             </div>
 
             <aside className="lg:col-span-1">
-              <div className="border border-gray-200 rounded-2xl p-5 lg:sticky lg:top-24">
+              <div className="border border-gray-200 rounded-sm p-5 lg:sticky lg:top-24">
                 <div className="flex items-center justify-between">
                   <p className="font-semibold text-black">Your estimate</p>
                   {items.length > 0 && (
@@ -352,7 +329,7 @@ function Calculator({ config, serviceType, path }) {
                     {items.map((item) => (
                       <li
                         key={item.id}
-                        className="flex items-start justify-between gap-2 bg-[#F3EFE9] rounded-md px-3 py-2"
+                        className="flex items-start justify-between gap-2 bg-[#F3EFE9] rounded-sm px-3 py-2"
                       >
                         <div>
                           <p className="text-sm font-medium text-black">{item.name}</p>

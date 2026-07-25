@@ -71,10 +71,10 @@ function RecentProjects() {
           </div>
         </div>
 
-        <div className="mt-8 relative rounded-2xl overflow-hidden">
-          <div className="overflow-hidden">
+        <div className="mt-8 relative rounded-sm overflow-hidden h-64 sm:h-96">
+          <div className="h-full overflow-hidden">
             <div
-              className="flex transition-transform duration-500 ease-out"
+              className="h-full flex transition-transform duration-500 ease-out"
               style={{ transform: `translateX(-${active * 100}%)` }}
             >
               {PROJECTS.map((project) => (
@@ -82,7 +82,7 @@ function RecentProjects() {
                   key={project.location}
                   src={project.image}
                   alt={project.location}
-                  className="w-full shrink-0 h-64 sm:h-96 object-cover"
+                  className="w-full h-full shrink-0 object-cover"
                 />
               ))}
             </div>

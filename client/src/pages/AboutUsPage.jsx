@@ -79,7 +79,7 @@ function AboutUsPage() {
             </div>
           </div>
 
-          <div className="rounded-2xl overflow-hidden">
+          <div className="rounded-sm overflow-hidden">
             <img src="/hero-bg.png" alt="" className="w-full h-64 object-cover" />
           </div>
         </div>
@@ -87,7 +87,7 @@ function AboutUsPage() {
 
       <div className="bg-[#F3EFE9] py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <div className="rounded-2xl overflow-hidden order-2 lg:order-1">
+          <div className="rounded-sm overflow-hidden order-2 lg:order-1">
             <img src="/hero-bg.png" alt="" className="w-full h-64 object-cover" />
           </div>
 

@@ -13,7 +13,7 @@ function StatTiles({ tiles }) {
   return (
     <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3">
       {tiles.map((tile, i) => (
-        <div key={i} className="bg-[#F3EFE9] rounded-xl p-4 text-center sm:text-left">
+        <div key={i} className="bg-[#F3EFE9] rounded-sm p-4 text-center sm:text-left">
           <p className="text-lg font-semibold text-black">{tile.value}</p>
           <p className="mt-0.5 text-xs text-gray-500">{tile.label}</p>
         </div>
@@ -34,7 +34,7 @@ function SwatchRow({ label, note, swatches }) {
         {swatches.map((s, i) => (
           <div key={s.label} className="flex flex-col items-center gap-2">
             <span
-              className="w-full aspect-square rounded-2xl border border-black/10"
+              className="w-full aspect-square rounded-sm border border-black/10"
               style={{ backgroundColor: s.hex }}
             />
             <span
@@ -67,7 +67,7 @@ function StyleCard({ style, minPrice, maxPrice }) {
   return (
     <div
       className={
-        "relative border rounded-xl p-4 " + (style.popular ? "border-black" : "border-gray-200")
+        "relative border rounded-sm p-4 " + (style.popular ? "border-black" : "border-gray-200")
       }
     >
       {style.popular && (
@@ -203,7 +203,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
 
           {service.fromPrice != null && (
             <div className="lg:col-span-1">
-              <div className="bg-[#F3EFE9] rounded-xl p-5">
+              <div className="bg-[#F3EFE9] rounded-sm p-5">
                 <p className="text-xs text-gray-500">FROM</p>
                 <p className="text-2xl font-semibold text-black">
                   ${service.fromPrice}
@@ -242,7 +242,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
 
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {service.everyInstallIncludes?.length > 0 && (
-            <div className="bg-[#F3EFE9] rounded-xl p-5">
+            <div className="bg-[#F3EFE9] rounded-sm p-5">
               <p className="text-sm font-semibold text-black">Every install includes</p>
               <ul className="mt-3 space-y-2 text-sm text-gray-600">
                 {service.everyInstallIncludes.map((item) => (
@@ -255,7 +255,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
             </div>
           )}
           {service.popularAddOns?.length > 0 && (
-            <div className="border border-gray-200 rounded-xl p-5">
+            <div className="border border-gray-200 rounded-sm p-5">
               <p className="text-sm font-semibold text-black">Popular add-ons</p>
               <ul className="mt-3 space-y-2 text-sm text-gray-600">
                 {service.popularAddOns.map((item) => (
@@ -270,7 +270,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
         </div>
 
         {service.waRules?.length > 0 && (
-          <div className="mt-8 border border-gray-200 border-l-4 border-l-brand-orange rounded-xl p-5">
+          <div className="mt-8 border border-gray-200 border-l-4 border-l-brand-orange rounded-sm p-5">
             <p className="text-sm font-semibold text-black">{service.waRulesTitle}</p>
             <ul className="mt-2 space-y-1.5 text-sm text-gray-600">
               {service.waRules.map((rule) => (
@@ -307,7 +307,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
             </div>
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-5">
               {service.recentJobs.map((job, i) => (
-                <div key={i} className="relative rounded-xl overflow-hidden bg-gray-100 h-40">
+                <div key={i} className="relative rounded-sm overflow-hidden bg-gray-100 h-40">
                   {job.image && <img src={job.image} alt="" className="w-full h-full object-cover" />}
                   <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent px-3 py-2">
                     <p className="text-xs font-medium text-white">{job.caption}</p>

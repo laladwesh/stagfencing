@@ -35,7 +35,7 @@ function CalculatorsPage() {
             <Link
               key={calc.to}
               to={calc.to}
-              className="block border border-gray-200 rounded-2xl p-6 hover:border-gray-400 transition-colors"
+              className="block border border-gray-200 rounded-sm p-6 hover:border-gray-400 transition-colors"
             >
               <h2 className="text-xl font-semibold text-black">{calc.title}</h2>
               <p className="mt-2 text-sm text-gray-600">{calc.description}</p>

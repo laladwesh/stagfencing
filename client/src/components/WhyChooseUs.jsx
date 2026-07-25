@@ -41,7 +41,7 @@ function WhyChooseUs() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-          <div className="aspect-square rounded-lg overflow-hidden">
+          <div className="aspect-square rounded-sm overflow-hidden">
             <img src="/hero-bg.png" alt="Fence installation" className="w-full h-full object-cover" />
           </div>
 

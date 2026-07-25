@@ -84,7 +84,7 @@ function FooterColumn({ title, links }) {
 
 function LocationCard({ city, address, hours, phone }) {
   return (
-    <div className="bg-white/5 border border-white/10 rounded-xl p-5">
+    <div className="bg-white/5 border border-white/10 rounded-sm p-5">
       <p className="flex items-center gap-2 text-white font-semibold">
         <FaMapMarkerAlt className="w-4 h-4 text-brand-orange" />
         {city}
@@ -196,7 +196,7 @@ function Footer() {
             phone="0431 703 770"
           />
 
-          <div className="bg-white/5 border border-white/10 rounded-xl p-5">
+          <div className="bg-white/5 border border-white/10 rounded-sm p-5">
             <p className="text-white font-semibold">Stay in the loop</p>
             <p className="mt-1 text-sm text-gray-400">Seasonal fencing deals and the odd DIY tip. No spam.</p>
             <form className="mt-4 flex items-center gap-2">
@@ -220,8 +220,10 @@ function Footer() {
           Proudly servicing Perth metro · Joondalup · Wanneroo · Rockingham · Mandurah · Bunbury & the South
           West
         </p>
+      </div>
 
-        <div className="mt-8 border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
+      <div className="mt-8 border-t border-white/10">
+        <div className="px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
           <p>© {new Date().getFullYear()} Stag Fencing · ABN TBC · All prices incl GST</p>
           <div className="flex items-center gap-4">
             <a href="/terms-and-conditions" className="hover:text-white transition-colors">

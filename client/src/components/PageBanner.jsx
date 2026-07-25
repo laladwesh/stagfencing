@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import TopBar from "./TopBar";
 import Navbar from "./Navbar";
+import Breadcrumb from "./Breadcrumb";
 
 function PageBanner({ breadcrumb, title, subtitle, children }) {
   const [showStickyNav, setShowStickyNav] = useState(false);
@@ -39,7 +40,7 @@ function PageBanner({ breadcrumb, title, subtitle, children }) {
         <div ref={sentinelRef} />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center text-white">
-          <p className="text-xs text-gray-300">{breadcrumb}</p>
+          <Breadcrumb>{breadcrumb}</Breadcrumb>
           <h1 className="mt-3 text-4xl sm:text-5xl font-semibold">{title}</h1>
           {subtitle && <p className="mt-3 text-gray-200">{subtitle}</p>}
           {children && <div className="mt-6 flex items-center justify-center gap-3">{children}</div>}

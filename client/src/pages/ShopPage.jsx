@@ -35,9 +35,9 @@ function ShopPage() {
               <Link
                 key={category.slug}
                 to={`/shop/${category.slug}`}
-                className="block rounded-xl overflow-hidden border border-gray-200 hover:border-gray-400 transition-colors"
+                className="block rounded-sm overflow-hidden border border-gray-200 hover:border-gray-400 transition-colors"
               >
-                <div className="rounded-t-xl overflow-hidden bg-gray-100">
+                <div className="rounded-t-sm overflow-hidden bg-gray-100">
                   <img src={category.image} alt={category.name} className="w-full h-40 object-cover" />
                 </div>
                 <div className="p-4">

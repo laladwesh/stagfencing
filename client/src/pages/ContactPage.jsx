@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaRegClock, FaShieldAlt } from "react-icons/fa";
 import Layout from "../components/Layout";
 import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
 import Seo from "../components/Seo";
+import Select from "../components/ui/Select";
 
 const CONTACT_INFO = [
   {
@@ -30,6 +32,7 @@ const CONTACT_INFO = [
 const SERVICE_OPTIONS = ["Fence Installation", "Fence Repair", "Gate & Automation", "Retaining Wall", "Other"];
 
 function ContactPage() {
+  const [serviceNeeded, setServiceNeeded] = useState("");
   return (
     <Layout transparentHeader>
       <Seo
@@ -82,12 +85,12 @@ function ContactPage() {
             </p>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-2xl shadow-xl p-6 sm:p-8">
+          <div className="bg-white border border-gray-200 rounded-sm shadow-xl p-6 sm:p-8">
             <h3 className="text-xl font-semibold text-black">Send us a message</h3>
             <p className="mt-1 text-sm text-gray-600">Fill it in and we'll call you back with a price.</p>
 
             <form className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+              <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                 Full name*
                 <input
                   type="text"
@@ -96,7 +99,7 @@ function ContactPage() {
                   className="bg-transparent text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none"
                 />
               </label>
-              <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+              <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                 Phone*
                 <input
                   type="tel"
@@ -106,7 +109,7 @@ function ContactPage() {
                 />
               </label>
 
-              <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange sm:col-span-2">
+              <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange sm:col-span-2">
                 Email*
                 <input
                   type="email"
@@ -116,7 +119,7 @@ function ContactPage() {
                 />
               </label>
 
-              <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+              <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                 Suburb*
                 <input
                   type="text"
@@ -125,17 +128,17 @@ function ContactPage() {
                   className="bg-transparent text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none"
                 />
               </label>
-              <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-gray-500">
+              <div className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-gray-500">
                 Service needed
-                <select className="bg-transparent text-sm text-gray-800 focus:outline-none">
-                  <option value="">Select a service</option>
-                  {SERVICE_OPTIONS.map((option) => (
-                    <option key={option}>{option}</option>
-                  ))}
-                </select>
-              </label>
+                <Select
+                  value={serviceNeeded}
+                  onChange={setServiceNeeded}
+                  options={SERVICE_OPTIONS}
+                  placeholder="Select a service"
+                />
+              </div>
 
-              <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-gray-500 sm:col-span-2">
+              <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-gray-500 sm:col-span-2">
                 Your message
                 <textarea
                   rows={2}

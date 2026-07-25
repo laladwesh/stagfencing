@@ -18,7 +18,7 @@ function ProductCard({ product, onClick }) {
   const hasRange = product.priceMin !== product.priceMax;
   return (
     <Link to={`/product/${product.slug}`} onClick={onClick} className="block group">
-      <div className="rounded-xl overflow-hidden bg-gray-100 aspect-square">
+      <div className="rounded-sm overflow-hidden bg-gray-100 aspect-square">
         {product.images?.[0] && (
           <img
             src={product.images[0]}
@@ -166,7 +166,7 @@ function SearchModal({ onClose, anchorRect }) {
     <div
       ref={panelRef}
       style={positionStyle}
-      className="z-[70] bg-white rounded-2xl max-h-[80vh] flex flex-col overflow-hidden shadow-2xl border border-gray-100"
+      className="z-[70] bg-white rounded-sm max-h-[80vh] flex flex-col overflow-hidden shadow-2xl border border-gray-100"
     >
       <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100 shrink-0">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none">

@@ -26,7 +26,7 @@ function ReviewCard({ review }) {
       {review.photos?.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-2">
           {review.photos.map((src, i) => (
-            <div key={i} className="w-14 h-14 rounded-lg overflow-hidden bg-gray-100">
+            <div key={i} className="w-14 h-14 rounded-sm overflow-hidden bg-gray-100">
               <img src={src} alt="" className="w-full h-full object-cover" />
             </div>
           ))}

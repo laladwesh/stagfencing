@@ -1,3 +1,5 @@
+import Select from "../ui/Select";
+
 export function TextField({ label, value, onChange, placeholder, required, className = "" }) {
   return (
     <label className={`block ${className}`}>
@@ -8,7 +10,7 @@ export function TextField({ label, value, onChange, placeholder, required, class
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         required={required}
-        className="mt-1 w-full bg-[#F3EFE9] rounded-md px-3 py-2 text-sm focus:outline-none"
+        className="mt-1 w-full bg-[#F3EFE9] rounded-sm px-3 py-2 text-sm focus:outline-none"
       />
     </label>
   );
@@ -22,7 +24,7 @@ export function NumberField({ label, value, onChange, className = "" }) {
         type="number"
         value={value ?? ""}
         onChange={(e) => onChange(e.target.value === "" ? "" : Number(e.target.value))}
-        className="mt-1 w-full bg-[#F3EFE9] rounded-md px-3 py-2 text-sm focus:outline-none"
+        className="mt-1 w-full bg-[#F3EFE9] rounded-sm px-3 py-2 text-sm focus:outline-none"
       />
     </label>
   );
@@ -36,7 +38,7 @@ export function TextAreaField({ label, value, onChange, rows = 3, className = ""
         value={value ?? ""}
         onChange={(e) => onChange(e.target.value)}
         rows={rows}
-        className="mt-1 w-full bg-[#F3EFE9] rounded-md px-3 py-2 text-sm resize-none focus:outline-none"
+        className="mt-1 w-full bg-[#F3EFE9] rounded-sm px-3 py-2 text-sm resize-none focus:outline-none"
       />
     </label>
   );
@@ -53,20 +55,16 @@ export function CheckboxField({ label, checked, onChange, className = "" }) {
 
 export function SelectField({ label, value, onChange, options, className = "" }) {
   return (
-    <label className={`block ${className}`}>
+    <div className={`block ${className}`}>
       <span className="text-xs font-medium text-gray-500">{label}</span>
-      <select
+      <Select
         value={value ?? ""}
-        onChange={(e) => onChange(e.target.value)}
-        className="mt-1 w-full bg-[#F3EFE9] rounded-md px-3 py-2 text-sm focus:outline-none"
-      >
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-    </label>
+        onChange={onChange}
+        options={options}
+        className="mt-1"
+        buttonClassName="w-full bg-[#F3EFE9] rounded-sm px-3 py-2 text-sm text-gray-800"
+      />
+    </div>
   );
 }
 
@@ -87,7 +85,7 @@ export function StringListField({ label, values, onChange, placeholder }) {
               value={item}
               onChange={(e) => setAt(i, e.target.value)}
               placeholder={placeholder}
-              className="flex-1 min-w-0 bg-[#F3EFE9] rounded-md px-3 py-2 text-sm focus:outline-none"
+              className="flex-1 min-w-0 bg-[#F3EFE9] rounded-sm px-3 py-2 text-sm focus:outline-none"
             />
             <button
               type="button"

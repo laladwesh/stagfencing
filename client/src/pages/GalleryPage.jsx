@@ -27,7 +27,7 @@ function ProjectModal({ project, onClose }) {
   return (
     <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4" onClick={onClose}>
       <div
-        className="bg-white rounded-2xl max-w-3xl w-full overflow-hidden grid grid-cols-1 sm:grid-cols-2"
+        className="bg-white rounded-sm max-w-3xl w-full overflow-hidden grid grid-cols-1 sm:grid-cols-2"
         onClick={(e) => e.stopPropagation()}
       >
         <div>
@@ -181,7 +181,7 @@ function GalleryPage() {
                     onClick={() => setSelectedProject(project)}
                     className="text-left"
                   >
-                    <div className="rounded-xl overflow-hidden">
+                    <div className="rounded-sm overflow-hidden">
                       <img src={project.image} alt={project.title} className="w-full h-48 object-cover" />
                     </div>
                     <p className="mt-2 text-sm text-gray-600">

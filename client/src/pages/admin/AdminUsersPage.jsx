@@ -39,7 +39,7 @@ function AdminUsersPage() {
       {loading ? (
         <p className="mt-6 text-sm text-gray-500">Loading…</p>
       ) : (
-        <div className="mt-6 border border-gray-200 rounded-xl overflow-hidden">
+        <div className="mt-6 border border-gray-200 rounded-sm overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 text-left text-xs text-gray-500">
               <tr>

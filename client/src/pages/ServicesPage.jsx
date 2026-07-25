@@ -12,7 +12,7 @@ import { faqJsonLd } from "../lib/seo";
 function ServiceCategoryCard({ category }) {
   return (
     <Link to={`/services/${category.slug}`} className="block group">
-      <div className="rounded-xl overflow-hidden bg-gray-100">
+      <div className="rounded-sm overflow-hidden bg-gray-100">
         <img
           src={category.image}
           alt={category.name}

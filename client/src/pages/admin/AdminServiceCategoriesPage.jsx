@@ -52,7 +52,7 @@ function CategoryForm({ initial, onSaved, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="border border-gray-200 rounded-xl p-5 space-y-3">
+    <form onSubmit={handleSubmit} className="border border-gray-200 rounded-sm p-5 space-y-3">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <TextField label="Name*" value={form.name} onChange={set("name")} required />
         <TextField label="Slug*" value={form.slug} onChange={set("slug")} required />
@@ -162,7 +162,7 @@ function AdminServiceCategoriesPage() {
             ) : (
               <div
                 key={category._id}
-                className="flex items-center justify-between gap-3 border border-gray-200 rounded-xl px-4 py-3"
+                className="flex items-center justify-between gap-3 border border-gray-200 rounded-sm px-4 py-3"
               >
                 <div>
                   <p className="text-sm font-medium text-black">

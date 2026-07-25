@@ -7,6 +7,7 @@ import ReviewCard from "../components/reviews/ReviewCard";
 import ReviewPhotoGrid from "../components/reviews/ReviewPhotoGrid";
 import WriteReviewForm from "../components/reviews/WriteReviewForm";
 import Seo from "../components/Seo";
+import Breadcrumb from "../components/Breadcrumb";
 import { getCategory, getProduct } from "../lib/api";
 import { useCart } from "../context/CartContext";
 import { notifyAddedToCart } from "../lib/toast";
@@ -27,7 +28,7 @@ function ProductCard({ product }) {
   const range = product.priceRange;
   return (
     <Link to={`/product/${product.slug}`} className="block">
-      <div className="rounded-xl overflow-hidden bg-gray-100">
+      <div className="rounded-sm overflow-hidden bg-gray-100">
         <img src={product.images?.[0]} alt={product.name} className="w-full h-40 object-cover" />
       </div>
       <p className="mt-2 text-xs text-gray-500">{product.shortDescription}</p>
@@ -154,16 +155,16 @@ function ProductDetailPage() {
         })}
       />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        <p className="text-xs text-gray-400">
+        <Breadcrumb>
           Home / Shop
           {categoryPath && ` / ${categoryPath.name}`}
           {subCategoryName && ` / ${subCategoryName}`}
           {` / ${product.name}`}
-        </p>
+        </Breadcrumb>
 
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
-            <div className="rounded-xl overflow-hidden bg-gray-100">
+            <div className="rounded-sm overflow-hidden bg-gray-100">
               <img
                 src={product.images?.[activeImage] || product.images?.[0]}
                 alt={product.name}
@@ -178,7 +179,7 @@ function ProductDetailPage() {
                     type="button"
                     onClick={() => setActiveImage(i)}
                     className={
-                      "rounded-lg overflow-hidden border-2 " +
+                      "rounded-sm overflow-hidden border-2 " +
                       (i === activeImage ? "border-black" : "border-transparent")
                     }
                   >
@@ -211,7 +212,7 @@ function ProductDetailPage() {
                           disabled={option.inStock === false}
                           onClick={() => setSelections((prev) => ({ ...prev, [group.name]: option.label }))}
                           className={
-                            "inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium border transition-colors " +
+                            "inline-flex items-center gap-2 px-3 py-1.5 rounded-sm text-xs font-medium border transition-colors " +
                             (option.inStock === false
                               ? "opacity-40 cursor-not-allowed border-transparent text-gray-400"
                               : isSelected
@@ -299,7 +300,7 @@ function ProductDetailPage() {
 
           {product.specifications?.length > 0 && (
             <div className="lg:col-span-1">
-              <div className="bg-gray-50 rounded-xl p-5">
+              <div className="bg-gray-50 rounded-sm p-5">
                 <h3 className="text-sm font-semibold text-black">Specifications</h3>
                 <dl className="mt-3 space-y-2 text-sm">
                   {product.specifications.map((spec) => (

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
+import Breadcrumb from "../components/Breadcrumb";
 import { useCart } from "../context/CartContext";
 
 const DELIVERY_METHODS = [
@@ -68,9 +69,7 @@ function CartPage() {
       <Layout>
         <Seo title="Your Cart" noindex path="/cart" />
         <div className="bg-white text-center pt-14 pb-8">
-          <span className="inline-block border border-gray-200 rounded-full px-4 py-1.5 text-sm font-medium text-black">
-            Home / Cart
-          </span>
+          <Breadcrumb>Home / Cart</Breadcrumb>
         </div>
         <div className="max-w-xl mx-auto px-4 sm:px-6 py-16 text-center">
           <h1 className="text-2xl font-semibold text-black">Your cart is empty</h1>
@@ -90,14 +89,12 @@ function CartPage() {
     <Layout>
       <Seo title="Your Cart" noindex path="/cart" />
       <div className="bg-white text-center pt-14 pb-8">
-        <span className="inline-block border border-gray-200 rounded-full px-4 py-1.5 text-sm font-medium text-black">
-          Home / Cart
-        </span>
+        <Breadcrumb>Home / Cart</Breadcrumb>
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-16 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <div className="border border-gray-200 rounded-2xl divide-y divide-gray-100">
+          <div className="border border-gray-200 rounded-sm divide-y divide-gray-100">
             {items.map((item) => (
               <div key={item.id} className="flex items-start gap-4 p-4">
                 <button
@@ -108,7 +105,7 @@ function CartPage() {
                 >
                   ✕
                 </button>
-                <div className="w-20 h-20 rounded-lg bg-gray-100 overflow-hidden shrink-0">
+                <div className="w-20 h-20 rounded-sm bg-gray-100 overflow-hidden shrink-0">
                   {item.image && <img src={item.image} alt={item.name} className="w-full h-full object-cover" />}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -145,7 +142,7 @@ function CartPage() {
             ))}
           </div>
 
-          <div className="border border-gray-200 rounded-2xl p-5">
+          <div className="border border-gray-200 rounded-sm p-5">
             <p className="font-semibold text-black">Delivery</p>
             <div className="mt-3 space-y-2">
               {DELIVERY_METHODS.map((method) => (
@@ -154,7 +151,7 @@ function CartPage() {
                   type="button"
                   onClick={() => setDeliveryMethodId(method.id)}
                   className={
-                    "w-full flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left transition-colors " +
+                    "w-full flex items-center justify-between gap-3 rounded-sm border px-4 py-3 text-left transition-colors " +
                     (deliveryMethodId === method.id
                       ? "border-black bg-[#F3EFE9]"
                       : "border-gray-200 hover:border-gray-300")
@@ -174,7 +171,7 @@ function CartPage() {
         </div>
 
         <div className="lg:col-span-1">
-          <div className="border border-gray-200 rounded-2xl p-5 lg:sticky lg:top-24">
+          <div className="border border-gray-200 rounded-sm p-5 lg:sticky lg:top-24">
             <p className="font-semibold text-black">Order Summary</p>
 
             <div className="mt-4">
@@ -193,12 +190,12 @@ function CartPage() {
                     value={discountInput}
                     onChange={(e) => setDiscountInput(e.target.value)}
                     placeholder="e.g. WELCOME10"
-                    className="flex-1 min-w-0 bg-[#F3EFE9] rounded-md px-3 py-2 text-sm focus:outline-none"
+                    className="flex-1 min-w-0 bg-[#F3EFE9] rounded-sm px-3 py-2 text-sm focus:outline-none"
                   />
                   <button
                     type="button"
                     onClick={applyDiscount}
-                    className="bg-black hover:bg-gray-800 text-white text-sm font-medium px-4 rounded-md transition-colors"
+                    className="bg-black hover:bg-gray-800 text-white text-sm font-medium px-4 rounded-sm transition-colors"
                   >
                     Apply
                   </button>

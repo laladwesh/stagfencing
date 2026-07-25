@@ -10,7 +10,7 @@ import { getServiceCategory, getServiceDetail } from "../lib/api";
 function ServiceCard({ categorySlug, service }) {
   return (
     <Link to={`/services/${categorySlug}/${service.slug}`} className="block group">
-      <div className="rounded-xl overflow-hidden bg-gray-100">
+      <div className="rounded-sm overflow-hidden bg-gray-100">
         <img
           src={service.cardImage}
           alt={service.name}

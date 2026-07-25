@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaStar } from "react-icons/fa";
 
 function ArrowIcon(props) {
@@ -96,15 +96,32 @@ const REVIEWS = [
   },
 ];
 
-const VISIBLE_COUNT = 4;
-const MAX_START = REVIEWS.length - VISIBLE_COUNT;
-const SLIDES = Array.from({ length: MAX_START + 1 }, (_, s) => REVIEWS.slice(s, s + VISIBLE_COUNT));
-
 function Reviews() {
-  const [start, setStart] = useState(0);
+  const trackRef = useRef(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
 
-  const showPrev = () => setStart((s) => Math.max(0, s - 1));
-  const showNext = () => setStart((s) => Math.min(MAX_START, s + 1));
+  const updateEdges = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    setAtStart(el.scrollLeft <= 4);
+    setAtEnd(el.scrollLeft >= el.scrollWidth - el.clientWidth - 4);
+  };
+
+  useEffect(() => {
+    updateEdges();
+  }, []);
+
+  const scrollByOneCard = (direction) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const card = el.firstElementChild;
+    const step = card ? card.getBoundingClientRect().width : el.clientWidth;
+    el.scrollBy({ left: direction * step, behavior: "smooth" });
+  };
+
+  const showPrev = () => scrollByOneCard(-1);
+  const showNext = () => scrollByOneCard(1);
 
   return (
     <section className="bg-brand-dark py-16 sm:py-24">
@@ -131,7 +148,7 @@ function Reviews() {
               <button
                 type="button"
                 onClick={showPrev}
-                disabled={start === 0}
+                disabled={atStart}
                 aria-label="Previous review"
                 className="w-9 h-9 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
               >
@@ -140,7 +157,7 @@ function Reviews() {
               <button
                 type="button"
                 onClick={showNext}
-                disabled={start === MAX_START}
+                disabled={atEnd}
                 aria-label="Next review"
                 className="w-9 h-9 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
               >
@@ -150,50 +167,44 @@ function Reviews() {
           </div>
         </div>
 
-        <div className="mt-10 overflow-hidden">
-          <div
-            className="flex transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${start * 100}%)` }}
-          >
-            {SLIDES.map((slide, slideIndex) => (
-              <div
-                key={slideIndex}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full shrink-0 pr-5"
-              >
-                {slide.map((review) => (
-                  <div key={review.name} className="bg-white rounded-xl overflow-hidden">
-                    <img src="/hero-bg.png" alt="" className="w-full h-32 object-cover" />
-                    <div className="p-4">
-                      <div className="flex items-center gap-1.5">
-                        <GoogleIcon />
-                        <FaStar className="w-3.5 h-3.5 text-yellow-400" />
-                        <span className="text-sm font-medium text-gray-900">{review.rating}</span>
-                      </div>
-                      <p className="mt-2 text-sm text-gray-600 leading-snug">
-                        {review.text}
-                        {"… "}
-                        <span className="text-gray-400 underline cursor-pointer">read more</span>
-                      </p>
-                      <div className="mt-4 flex items-center gap-2">
-                        <span
-                          className={
-                            "w-8 h-8 rounded-full text-white text-xs font-semibold flex items-center justify-center shrink-0 " +
-                            review.avatarColor
-                          }
-                        >
-                          {review.avatarLetter}
-                        </span>
-                        <div>
-                          <p className="text-sm font-medium text-gray-900">{review.name}</p>
-                          <p className="text-xs text-gray-500">Home owner</p>
-                        </div>
-                      </div>
+        <div
+          ref={trackRef}
+          onScroll={updateEdges}
+          className="mt-10 flex overflow-x-auto scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {REVIEWS.map((review) => (
+            <div key={review.name} className="snap-start shrink-0 w-full sm:w-1/2 lg:w-1/4 pr-5">
+              <div className="bg-white rounded-sm overflow-hidden h-full">
+                <img src="/hero-bg.png" alt="" className="w-full h-32 object-cover" />
+                <div className="p-4">
+                  <div className="flex items-center gap-1.5">
+                    <GoogleIcon />
+                    <FaStar className="w-3.5 h-3.5 text-yellow-400" />
+                    <span className="text-sm font-medium text-gray-900">{review.rating}</span>
+                  </div>
+                  <p className="mt-2 text-sm text-gray-600 leading-snug">
+                    {review.text}
+                    {"… "}
+                    <span className="text-gray-400 underline cursor-pointer">read more</span>
+                  </p>
+                  <div className="mt-4 flex items-center gap-2">
+                    <span
+                      className={
+                        "w-8 h-8 rounded-full text-white text-xs font-semibold flex items-center justify-center shrink-0 " +
+                        review.avatarColor
+                      }
+                    >
+                      {review.avatarLetter}
+                    </span>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">{review.name}</p>
+                      <p className="text-xs text-gray-500">Home owner</p>
                     </div>
                   </div>
-                ))}
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

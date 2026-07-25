@@ -36,7 +36,7 @@ function AdminDashboardPage() {
           <Link
             key={card.key}
             to={card.href}
-            className="border border-gray-200 rounded-xl p-5 hover:border-black transition-colors"
+            className="border border-gray-200 rounded-sm p-5 hover:border-black transition-colors"
           >
             <p className="text-2xl font-semibold text-black">{counts[card.key] ?? "—"}</p>
             <p className="mt-1 text-sm text-gray-500">{card.label}</p>

@@ -71,9 +71,9 @@ function ProjectForm({ initial, products, services, onSaved, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="border border-gray-200 rounded-xl p-5 space-y-3">
+    <form onSubmit={handleSubmit} className="border border-gray-200 rounded-sm p-5 space-y-3">
       <div className="flex items-center gap-3">
-        <div className="w-24 h-16 rounded-lg bg-gray-50 border border-gray-200 overflow-hidden shrink-0">
+        <div className="w-24 h-16 rounded-sm bg-gray-50 border border-gray-200 overflow-hidden shrink-0">
           {form.image && <img src={form.image} alt="" className="w-full h-full object-cover" />}
         </div>
         <label className="text-xs font-medium text-white bg-black hover:bg-gray-800 rounded-full px-3 py-1.5 cursor-pointer transition-colors">
@@ -106,7 +106,7 @@ function ProjectForm({ initial, products, services, onSaved, onCancel }) {
             type="date"
             value={form.completedDate}
             onChange={(e) => set("completedDate")(e.target.value)}
-            className="mt-1 w-full bg-[#F3EFE9] rounded-md px-3 py-2 text-sm focus:outline-none"
+            className="mt-1 w-full bg-[#F3EFE9] rounded-sm px-3 py-2 text-sm focus:outline-none"
           />
         </label>
         <NumberField label="Sort order" value={form.sortOrder} onChange={set("sortOrder")} />
@@ -204,10 +204,10 @@ function AdminGalleryPage() {
             ) : (
               <div
                 key={project._id}
-                className="flex items-center justify-between gap-3 border border-gray-200 rounded-xl px-4 py-3"
+                className="flex items-center justify-between gap-3 border border-gray-200 rounded-sm px-4 py-3"
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-14 h-10 rounded-lg bg-gray-50 border border-gray-200 overflow-hidden shrink-0">
+                  <div className="w-14 h-10 rounded-sm bg-gray-50 border border-gray-200 overflow-hidden shrink-0">
                     {project.image && <img src={project.image} alt="" className="w-full h-full object-cover" />}
                   </div>
                   <div className="min-w-0">

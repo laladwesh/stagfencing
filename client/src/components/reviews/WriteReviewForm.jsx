@@ -48,7 +48,7 @@ function WriteReviewForm({ slug, onReviewAdded }) {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-5">
+    <div className="bg-white border border-gray-200 rounded-sm p-5">
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <p className="font-semibold text-black">Write a review</p>
         {user && (
@@ -94,19 +94,19 @@ function WriteReviewForm({ slug, onReviewAdded }) {
             onChange={(e) => setComment(e.target.value)}
             placeholder="Tell others how it held up — quality, delivery, install…"
             rows={3}
-            className="mt-4 w-full border border-gray-300 rounded-lg px-4 py-3 text-sm resize-none focus:outline-none focus:border-black"
+            className="mt-4 w-full border border-gray-300 rounded-sm px-4 py-3 text-sm resize-none focus:outline-none focus:border-black"
           />
 
           <p className="mt-4 text-sm font-medium text-black">Add photos</p>
           <div className="mt-2 flex items-center gap-3 flex-wrap">
             {photos.length < MAX_REVIEW_PHOTOS && (
-              <label className="w-16 h-16 shrink-0 rounded-lg border border-dashed border-gray-300 flex items-center justify-center text-xl text-gray-400 cursor-pointer hover:border-gray-400">
+              <label className="w-16 h-16 shrink-0 rounded-sm border border-dashed border-gray-300 flex items-center justify-center text-xl text-gray-400 cursor-pointer hover:border-gray-400">
                 +
                 <input type="file" accept="image/*" multiple className="hidden" onChange={handlePhotoUpload} />
               </label>
             )}
             {photos.map((src, i) => (
-              <div key={i} className="relative w-16 h-16 shrink-0 rounded-lg overflow-hidden bg-gray-100">
+              <div key={i} className="relative w-16 h-16 shrink-0 rounded-sm overflow-hidden bg-gray-100">
                 <img src={src} alt="" className="w-full h-full object-cover" />
                 <button
                   type="button"

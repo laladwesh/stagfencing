@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
+import Select from "../../components/ui/Select";
 import { getAdminOrders, setOrderStatus } from "../../lib/adminApi";
 
 const STATUS_OPTIONS = ["Pending payment", "Paid", "Processing", "Shipped", "Completed", "Cancelled"];
@@ -38,7 +39,7 @@ function AdminOrdersPage() {
       ) : (
         <div className="mt-6 space-y-3">
           {orders.map((order) => (
-            <div key={order._id} className="border border-gray-200 rounded-xl p-4">
+            <div key={order._id} className="border border-gray-200 rounded-sm p-4">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div>
                   <p className="text-sm font-semibold text-black">#{order.reference}</p>
@@ -47,17 +48,14 @@ function AdminOrdersPage() {
                     {new Date(order.createdAt).toLocaleDateString("en-AU")}
                   </p>
                 </div>
-                <select
+                <Select
                   value={order.status}
-                  onChange={(e) => handleStatusChange(order, e.target.value)}
-                  className="bg-[#F3EFE9] rounded-full px-3 py-1.5 text-xs font-medium focus:outline-none"
-                >
-                  {STATUS_OPTIONS.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(value) => handleStatusChange(order, value)}
+                  options={STATUS_OPTIONS}
+                  className="w-44"
+                  buttonClassName="bg-[#F3EFE9] rounded-full px-3 py-1.5 text-xs font-medium text-gray-800"
+                  align="right"
+                />
               </div>
 
               <div className="mt-3 divide-y divide-gray-100">

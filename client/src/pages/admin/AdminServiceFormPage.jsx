@@ -67,7 +67,7 @@ function RepeatableRows({ label, items, onChange, fields, renderExtra, newItem }
       <span className="text-xs font-medium text-gray-500">{label}</span>
       <div className="mt-2 space-y-3">
         {list.map((item, i) => (
-          <div key={i} className="border border-gray-200 rounded-lg p-3">
+          <div key={i} className="border border-gray-200 rounded-sm p-3">
             <div className="flex flex-wrap items-start gap-2">
               {fields.map((f) => (
                 <div key={f.key} className={f.className || "flex-1 min-w-[120px]"}>
@@ -77,7 +77,7 @@ function RepeatableRows({ label, items, onChange, fields, renderExtra, newItem }
                       onChange={(e) => setAt(i, f.key, e.target.value)}
                       placeholder={f.placeholder}
                       rows={2}
-                      className="w-full bg-[#F3EFE9] rounded-md px-2 py-1.5 text-xs resize-none focus:outline-none"
+                      className="w-full bg-[#F3EFE9] rounded-sm px-2 py-1.5 text-xs resize-none focus:outline-none"
                     />
                   ) : f.type === "number" ? (
                     <input
@@ -85,7 +85,7 @@ function RepeatableRows({ label, items, onChange, fields, renderExtra, newItem }
                       value={item[f.key] ?? ""}
                       onChange={(e) => setAt(i, f.key, Number(e.target.value))}
                       placeholder={f.placeholder}
-                      className="w-full bg-[#F3EFE9] rounded-md px-2 py-1.5 text-xs focus:outline-none"
+                      className="w-full bg-[#F3EFE9] rounded-sm px-2 py-1.5 text-xs focus:outline-none"
                     />
                   ) : f.type === "checkbox" ? (
                     <label className="flex items-center gap-1 text-xs text-gray-600 pt-1.5">
@@ -102,7 +102,7 @@ function RepeatableRows({ label, items, onChange, fields, renderExtra, newItem }
                       value={item[f.key] ?? ""}
                       onChange={(e) => setAt(i, f.key, e.target.value)}
                       placeholder={f.placeholder}
-                      className="w-full bg-[#F3EFE9] rounded-md px-2 py-1.5 text-xs focus:outline-none"
+                      className="w-full bg-[#F3EFE9] rounded-sm px-2 py-1.5 text-xs focus:outline-none"
                     />
                   )}
                 </div>
@@ -141,9 +141,9 @@ function StylesField({ serviceId, styles, onChange }) {
       <span className="text-xs font-medium text-gray-500">Styles &amp; pricing</span>
       <div className="mt-2 space-y-3">
         {list.map((style, i) => (
-          <div key={i} className="border border-gray-200 rounded-lg p-3">
+          <div key={i} className="border border-gray-200 rounded-sm p-3">
             <div className="flex flex-wrap items-start gap-2">
-              <div className="w-14 h-10 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0">
+              <div className="w-14 h-10 rounded-sm bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0">
                 {style.icon ? (
                   <img src={style.icon} alt="" className="max-h-8 max-w-full object-contain" />
                 ) : (
@@ -155,21 +155,21 @@ function StylesField({ serviceId, styles, onChange }) {
                 value={style.name}
                 onChange={(e) => setAt(i, "name", e.target.value)}
                 placeholder="Name"
-                className="flex-1 min-w-[100px] bg-[#F3EFE9] rounded-md px-2 py-1.5 text-xs focus:outline-none"
+                className="flex-1 min-w-[100px] bg-[#F3EFE9] rounded-sm px-2 py-1.5 text-xs focus:outline-none"
               />
               <input
                 type="number"
                 value={style.fromPrice}
                 onChange={(e) => setAt(i, "fromPrice", Number(e.target.value))}
                 placeholder="Price"
-                className="w-20 bg-[#F3EFE9] rounded-md px-2 py-1.5 text-xs focus:outline-none"
+                className="w-20 bg-[#F3EFE9] rounded-sm px-2 py-1.5 text-xs focus:outline-none"
               />
               <input
                 type="text"
                 value={style.priceUnit}
                 onChange={(e) => setAt(i, "priceUnit", e.target.value)}
                 placeholder="Unit"
-                className="w-28 bg-[#F3EFE9] rounded-md px-2 py-1.5 text-xs focus:outline-none"
+                className="w-28 bg-[#F3EFE9] rounded-sm px-2 py-1.5 text-xs focus:outline-none"
               />
               <label className="flex items-center gap-1 text-xs text-gray-600 pt-1.5">
                 <input
@@ -219,14 +219,14 @@ function SwatchesField({ swatches, onChange }) {
       <span className="text-xs font-medium text-gray-500">Swatches</span>
       <div className="mt-2 flex flex-wrap gap-2">
         {list.map((s, i) => (
-          <div key={i} className="flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-lg p-1.5">
+          <div key={i} className="flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-sm p-1.5">
             <input type="color" value={s.hex || "#888888"} onChange={(e) => setAt(i, "hex", e.target.value)} className="w-6 h-6 rounded" />
             <input
               type="text"
               value={s.label}
               onChange={(e) => setAt(i, "label", e.target.value)}
               placeholder="Label"
-              className="w-20 bg-white border border-gray-200 rounded-md px-1.5 py-1 text-xs focus:outline-none"
+              className="w-20 bg-white border border-gray-200 rounded-sm px-1.5 py-1 text-xs focus:outline-none"
             />
             <button type="button" onClick={() => removeAt(i)} className="text-gray-400 hover:text-red-600">
               ×

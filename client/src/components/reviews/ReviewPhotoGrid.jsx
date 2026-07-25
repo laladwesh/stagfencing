@@ -10,7 +10,7 @@ function ReviewPhotoGrid({ photos, max = 6 }) {
         {visible.map((src, i) => {
           const isLast = i === visible.length - 1 && remaining > 0;
           return (
-            <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-gray-100">
+            <div key={i} className="relative aspect-square rounded-sm overflow-hidden bg-gray-100">
               <img src={src} alt="" className="w-full h-full object-cover" />
               {isLast && (
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-sm font-semibold">

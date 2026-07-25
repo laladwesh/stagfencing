@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
+import Breadcrumb from "../components/Breadcrumb";
 import { ARTICLES } from "../data/articles";
 
 const TOC = [
@@ -28,7 +29,7 @@ function FeaturedArticle() {
   return (
     <>
       <div className="bg-white text-center py-14">
-        <p className="text-xs text-gray-400">Home / Article</p>
+        <Breadcrumb>Home / Article</Breadcrumb>
         <div className="mt-3 flex items-center justify-center gap-3 text-xs">
           <span className="bg-gray-900 text-white px-2.5 py-1 rounded-full">Buying Guide</span>
           <span className="text-gray-400">13 Feb 2026</span>
@@ -43,7 +44,7 @@ function FeaturedArticle() {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        <div className="rounded-2xl overflow-hidden bg-gray-100">
+        <div className="rounded-sm overflow-hidden bg-gray-100">
           <img src="/hero-bg.png" alt="" className="w-full h-64 sm:h-80 object-cover" />
         </div>
       </div>

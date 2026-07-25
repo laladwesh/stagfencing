@@ -105,7 +105,7 @@ function Hero() {
             </div>
           </div>
 
-          <div className="hidden md:flex absolute right-0 top-64 lg:top-72 max-w-xs backdrop-blur-md border border-white/10 rounded-md p-4 gap-3 text-white">
+          <div className="hidden md:flex absolute right-0 top-64 lg:top-72 max-w-xs backdrop-blur-md border border-white/10 rounded-sm p-4 gap-3 text-white">
             <img
               src="/founder.png"
               alt=""

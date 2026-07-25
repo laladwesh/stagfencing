@@ -37,7 +37,7 @@ function AdminShopReviewsPage() {
       ) : (
         <div className="mt-6 space-y-3">
           {reviews.map((review) => (
-            <div key={review._id} className="border border-gray-200 rounded-xl p-4">
+            <div key={review._id} className="border border-gray-200 rounded-sm p-4">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <StarRating value={review.rating} size="w-3 h-3" />

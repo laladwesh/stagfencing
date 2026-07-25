@@ -61,7 +61,7 @@ function LoginPanel() {
   };
 
   return (
-    <div className="max-w-sm mx-auto bg-white border border-gray-200 rounded-2xl p-6">
+    <div className="max-w-sm mx-auto bg-white border border-gray-200 rounded-sm p-6">
       <h1 className="text-xl font-semibold text-black">Sign in</h1>
       <p className="mt-1 text-sm text-gray-500">Track orders and manage your details.</p>
 
@@ -86,7 +86,7 @@ function LoginPanel() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@email.com"
-            className="w-full bg-[#F3EFE9] rounded-md px-4 py-2.5 text-sm focus:outline-none"
+            className="w-full bg-[#F3EFE9] rounded-sm px-4 py-2.5 text-sm focus:outline-none"
           />
           <button
             type="submit"
@@ -109,7 +109,7 @@ function LoginPanel() {
             value={code}
             onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
             placeholder="6-digit code"
-            className="w-full bg-[#F3EFE9] rounded-md px-4 py-2.5 text-sm tracking-widest focus:outline-none"
+            className="w-full bg-[#F3EFE9] rounded-sm px-4 py-2.5 text-sm tracking-widest focus:outline-none"
           />
           <button
             type="submit"
@@ -149,7 +149,7 @@ function AccountPanel() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="flex items-center justify-between gap-4 border border-gray-200 rounded-2xl p-5">
+      <div className="flex items-center justify-between gap-4 border border-gray-200 rounded-sm p-5">
         <div className="flex items-center gap-3">
           {user.avatar && !avatarFailed ? (
             <img
@@ -186,7 +186,7 @@ function AccountPanel() {
       ) : (
         <div className="mt-4 space-y-4">
           {orders.map((order) => (
-            <div key={order._id} className="border border-gray-200 rounded-2xl p-5">
+            <div key={order._id} className="border border-gray-200 rounded-sm p-5">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <p className="font-semibold text-black">Order #{order.reference}</p>
                 <span className="text-xs font-medium bg-[#F3EFE9] text-black px-3 py-1 rounded-full">

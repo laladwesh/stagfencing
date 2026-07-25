@@ -5,11 +5,11 @@ export function notifyAddedToCart({ name, image }) {
     (t) => (
       <div
         className={
-          "flex items-center gap-3 w-full max-w-sm bg-white border border-gray-200 shadow-lg rounded-2xl px-4 py-3 transition-all " +
+          "flex items-center gap-3 w-full max-w-sm bg-white border border-gray-200 shadow-lg rounded-sm px-4 py-3 transition-all " +
           (t.visible ? "opacity-100" : "opacity-0")
         }
       >
-        <div className="w-11 h-11 rounded-lg bg-gray-100 overflow-hidden shrink-0">
+        <div className="w-11 h-11 rounded-sm bg-gray-100 overflow-hidden shrink-0">
           {image && <img src={image} alt="" className="w-full h-full object-cover" />}
         </div>
         <div className="flex-1 min-w-0">

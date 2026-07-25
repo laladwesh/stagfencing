@@ -8,6 +8,8 @@ import { useCart } from "../context/CartContext";
 import { createOrder, createPaymentIntent, saveAddress } from "../lib/api";
 import { getStripePromise } from "../lib/stripeClient";
 import { CardPaymentElement, CardPayButton } from "../components/checkout/StripePaymentForm";
+import Select from "../components/ui/Select";
+import Breadcrumb from "../components/Breadcrumb";
 
 const DELIVERY_METHODS = [
   {
@@ -47,7 +49,7 @@ function Field({ label, value, onChange, type = "text", placeholder, className =
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="mt-1 w-full bg-[#F3EFE9] rounded-lg px-3 py-2.5 text-sm focus:outline-none"
+        className="mt-1 w-full bg-[#F3EFE9] rounded-sm px-3 py-2.5 text-sm focus:outline-none"
       />
     </label>
   );
@@ -55,20 +57,16 @@ function Field({ label, value, onChange, type = "text", placeholder, className =
 
 function SelectField({ label, value, onChange, options, className = "" }) {
   return (
-    <label className={`block ${className}`}>
+    <div className={`block ${className}`}>
       <span className="text-xs font-medium text-brand-orange">{label}</span>
-      <select
+      <Select
         value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="mt-1 w-full bg-[#F3EFE9] rounded-lg px-3 py-2.5 text-sm focus:outline-none"
-      >
-        {options.map((opt) => (
-          <option key={opt} value={opt}>
-            {opt}
-          </option>
-        ))}
-      </select>
-    </label>
+        onChange={onChange}
+        options={options}
+        className="mt-1"
+        buttonClassName="w-full bg-[#F3EFE9] rounded-sm px-3 py-2.5 text-sm text-gray-800"
+      />
+    </div>
   );
 }
 
@@ -251,9 +249,7 @@ function CheckoutPage() {
     <Layout>
       <Seo title="Checkout" noindex path="/checkout" />
       <div className="bg-white text-center pt-14 pb-8">
-        <span className="inline-block border border-gray-200 rounded-full px-4 py-1.5 text-sm font-medium text-black">
-          Home / Cart / Checkout
-        </span>
+        <Breadcrumb>Home / Cart / Checkout</Breadcrumb>
       </div>
 
       <Elements
@@ -286,7 +282,7 @@ function CheckoutPage() {
                     type="button"
                     onClick={() => setDeliveryMethodId(method.id)}
                     className={
-                      "w-full flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left transition-colors " +
+                      "w-full flex items-center justify-between gap-3 rounded-sm border px-4 py-3 text-left transition-colors " +
                       (deliveryMethodId === method.id
                         ? deliveryMethodId === "delivery"
                           ? "border-black bg-black text-white"
@@ -352,7 +348,7 @@ function CheckoutPage() {
                   type="button"
                   onClick={() => setPaymentMethod("card")}
                   className={
-                    "w-full flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left transition-colors " +
+                    "w-full flex items-center justify-between gap-3 rounded-sm border px-4 py-3 text-left transition-colors " +
                     (paymentMethod === "card" ? "border-black bg-black text-white" : "border-gray-200 hover:border-gray-300")
                   }
                 >
@@ -375,7 +371,7 @@ function CheckoutPage() {
                   type="button"
                   onClick={() => setPaymentMethod("bank_transfer")}
                   className={
-                    "w-full flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left transition-colors " +
+                    "w-full flex items-center justify-between gap-3 rounded-sm border px-4 py-3 text-left transition-colors " +
                     (paymentMethod === "bank_transfer"
                       ? "border-black bg-[#F3EFE9]"
                       : "border-gray-200 hover:border-gray-300")
@@ -389,7 +385,7 @@ function CheckoutPage() {
               </div>
 
               {paymentMethod === "card" && (
-                <div className="mt-4 border border-gray-200 rounded-xl p-4">
+                <div className="mt-4 border border-gray-200 rounded-sm p-4">
                   {!stripePromise ? (
                     <p className="text-sm text-amber-700">
                       Card payments aren't configured yet — add a Stripe publishable key to enable this.
@@ -403,7 +399,7 @@ function CheckoutPage() {
               )}
 
               {paymentMethod === "bank_transfer" && (
-                <div className="mt-4 border border-gray-200 rounded-xl p-4 text-sm text-gray-600">
+                <div className="mt-4 border border-gray-200 rounded-sm p-4 text-sm text-gray-600">
                   Bank details will be emailed to you once your order is placed. Your order ships once payment
                   clears in our account.
                 </div>
@@ -422,7 +418,7 @@ function CheckoutPage() {
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Gate codes, dog on site, where to leave panels, etc."
                   rows={3}
-                  className="mt-3 w-full bg-[#F3EFE9] rounded-lg px-3 py-2.5 text-sm resize-none focus:outline-none"
+                  className="mt-3 w-full bg-[#F3EFE9] rounded-sm px-3 py-2.5 text-sm resize-none focus:outline-none"
                 />
               )}
 
@@ -445,7 +441,7 @@ function CheckoutPage() {
           </div>
 
           <aside className="lg:col-span-1">
-            <div className="border border-gray-200 rounded-2xl p-5 lg:sticky lg:top-24">
+            <div className="border border-gray-200 rounded-sm p-5 lg:sticky lg:top-24">
               <div className="flex items-center justify-between">
                 <p className="font-semibold text-black">Your estimate</p>
                 <Link to="/cart" className="text-xs text-gray-500 underline">
@@ -456,7 +452,7 @@ function CheckoutPage() {
               <div className="mt-4 space-y-3">
                 {items.map((item) => (
                   <div key={item.id} className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-md bg-gray-100 overflow-hidden shrink-0">
+                    <div className="w-9 h-9 rounded-sm bg-gray-100 overflow-hidden shrink-0">
                       {item.image && <img src={item.image} alt="" className="w-full h-full object-cover" />}
                     </div>
                     <div className="flex-1 min-w-0">

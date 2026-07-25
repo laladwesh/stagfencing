@@ -106,7 +106,7 @@ function RequestQuotePage() {
               before we arrive.
             </p>
 
-            <div className="mt-6 bg-[#F3EFE9] rounded-xl px-6 py-5">
+            <div className="mt-6 bg-[#F3EFE9] rounded-sm px-6 py-5">
               <p className="font-semibold text-black">
                 {selectedDayLabel} · {selectedTime} arrival window
               </p>
@@ -194,7 +194,7 @@ function RequestQuotePage() {
                       type="button"
                       onClick={() => setService(type)}
                       className={
-                        "rounded-md px-4 py-3 text-sm font-medium text-left transition-colors " +
+                        "rounded-sm px-4 py-3 text-sm font-medium text-left transition-colors " +
                         (isSelected ? "bg-black text-white" : "bg-[#F3EFE9] text-black hover:bg-gray-200")
                       }
                     >
@@ -231,7 +231,7 @@ function RequestQuotePage() {
               </div>
 
               <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                   Approx. length*
                   <input
                     type="text"
@@ -242,7 +242,7 @@ function RequestQuotePage() {
                     className="bg-transparent text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none"
                   />
                 </label>
-                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-gray-500">
+                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-gray-500">
                   Timeframe
                   <input
                     type="text"
@@ -253,7 +253,7 @@ function RequestQuotePage() {
               </div>
 
               {estimateAttached && calculatorEstimate && (
-                <div className="mt-3 flex items-start justify-between gap-3 border border-brand-orange rounded-md px-4 py-3">
+                <div className="mt-3 flex items-start justify-between gap-3 border border-brand-orange rounded-sm px-4 py-3">
                   <div>
                     <p className="text-sm font-semibold text-black">
                       {calculatorEstimate.label} Calculator estimate attached
@@ -273,7 +273,7 @@ function RequestQuotePage() {
                 </div>
               )}
 
-              <label className="mt-3 flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+              <label className="mt-3 flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                 Anything else we should know?
                 <textarea
                   rows={2}
@@ -284,7 +284,7 @@ function RequestQuotePage() {
 
               <button
                 type="button"
-                className="mt-3 w-full border border-dashed border-gray-300 rounded-md py-4 text-center hover:border-gray-400 transition-colors"
+                className="mt-3 w-full border border-dashed border-gray-300 rounded-sm py-4 text-center hover:border-gray-400 transition-colors"
               >
                 <span className="text-sm font-medium text-black">+ Add site photos (up to 5)</span>
                 <p className="text-xs text-gray-500 mt-1">
@@ -296,7 +296,7 @@ function RequestQuotePage() {
             <section>
               <h2 className="text-xs font-semibold tracking-wide text-black">3. YOUR DETAILS</h2>
               <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                   First name*
                   <input
                     type="text"
@@ -307,7 +307,7 @@ function RequestQuotePage() {
                     className="bg-transparent text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none"
                   />
                 </label>
-                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                   Last name*
                   <input
                     type="text"
@@ -316,7 +316,7 @@ function RequestQuotePage() {
                     className="bg-transparent text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none"
                   />
                 </label>
-                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                   Mobile*
                   <input
                     type="tel"
@@ -325,7 +325,7 @@ function RequestQuotePage() {
                     className="bg-transparent text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none"
                   />
                 </label>
-                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                   Email*
                   <input
                     type="email"
@@ -334,7 +334,7 @@ function RequestQuotePage() {
                     className="bg-transparent text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none"
                   />
                 </label>
-                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange sm:col-span-2">
+                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange sm:col-span-2">
                   Site address*
                   <input
                     type="text"
@@ -343,7 +343,7 @@ function RequestQuotePage() {
                     className="bg-transparent text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none"
                   />
                 </label>
-                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+                <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                   Suburb*
                   <input
                     type="text"
@@ -355,7 +355,7 @@ function RequestQuotePage() {
                   />
                 </label>
                 <div className="grid grid-cols-2 gap-3">
-                  <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+                  <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                     State*
                     <input
                       type="text"
@@ -364,7 +364,7 @@ function RequestQuotePage() {
                       className="bg-transparent text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none"
                     />
                   </label>
-                  <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-md px-4 py-3 text-xs font-medium text-brand-orange">
+                  <label className="flex flex-col gap-1 bg-[#F3EFE9] rounded-sm px-4 py-3 text-xs font-medium text-brand-orange">
                     Postcode*
                     <input
                       type="text"
@@ -394,7 +394,7 @@ function RequestQuotePage() {
                       disabled={isSunday}
                       onClick={() => setSelectedDayIndex(i)}
                       className={
-                        "rounded-md py-3 text-center transition-colors " +
+                        "rounded-sm py-3 text-center transition-colors " +
                         (isSunday
                           ? "bg-gray-50 text-gray-300 cursor-not-allowed"
                           : isSelected
@@ -453,7 +453,7 @@ function RequestQuotePage() {
           </form>
 
           <aside className="lg:col-span-1">
-            <div className="bg-[#F3EFE9] rounded-2xl p-6 lg:sticky lg:top-24">
+            <div className="bg-[#F3EFE9] rounded-sm p-6 lg:sticky lg:top-24">
               <p className="text-xs font-semibold tracking-wide text-black">WHAT HAPPENS NEXT</p>
               <ol className="mt-4 space-y-4">
                 {NEXT_STEPS.map((step, i) => (

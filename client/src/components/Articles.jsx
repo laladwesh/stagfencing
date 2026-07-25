@@ -68,7 +68,7 @@ function Articles() {
               <div key={slideIndex} className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full shrink-0 pr-6">
                 {slide.map((article) => (
                   <Link key={article.slug} to={`/blog/${article.slug}`} className="block">
-                    <div className="relative rounded-xl overflow-hidden">
+                    <div className="relative rounded-sm overflow-hidden">
                       <img src="/hero-bg.png" alt="" className="w-full h-48 object-cover" />
                       <span className="absolute top-3 left-3 flex items-center gap-1.5 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full">
                         🕐 {article.readTime}

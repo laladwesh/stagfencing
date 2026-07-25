@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
 import Seo from "../components/Seo";
+import Select from "../components/ui/Select";
 import { getCategories, getCategory, getProducts } from "../lib/api";
 
 const PAGE_SIZE = 9;
@@ -122,21 +123,24 @@ function ProductListingPage() {
               placeholder="Search"
               className="w-full sm:w-64 bg-[#F3EFE9] rounded-full px-4 py-2 text-sm focus:outline-none"
             />
-            <select
+            <Select
               value={sort}
-              onChange={(e) => updateParam("sort", e.target.value)}
-              className="bg-white border border-gray-200 rounded-full px-3 py-2 text-sm text-gray-700 focus:outline-none"
-            >
-              <option value="">Sort: Default</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="newest">Newest</option>
-            </select>
+              onChange={(value) => updateParam("sort", value)}
+              options={[
+                { value: "", label: "Sort: Default" },
+                { value: "price-asc", label: "Price: Low to High" },
+                { value: "price-desc", label: "Price: High to Low" },
+                { value: "newest", label: "Newest" },
+              ]}
+              className="w-full sm:w-auto"
+              buttonClassName="bg-white border border-gray-200 rounded-full px-3 py-2 text-sm text-gray-700"
+              align="right"
+            />
           </div>
 
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-4 gap-8">
             <aside className="lg:col-span-1">
-              <div className="border border-gray-200 rounded-2xl p-5">
+              <div className="border border-gray-200 rounded-sm p-5">
                 <p className="font-semibold text-black">Filter Products</p>
 
                 <div className="mt-5">
@@ -160,7 +164,7 @@ function ProductListingPage() {
                         key={cat.slug}
                         to={`/shop/${cat.slug}`}
                         className={
-                          "px-3 py-1.5 rounded-md text-xs font-medium transition-colors " +
+                          "px-3 py-1.5 rounded-sm text-xs font-medium transition-colors " +
                           (cat.slug === categorySlug
                             ? "bg-black text-white"
                             : "bg-[#F3EFE9] text-black hover:bg-gray-200")
@@ -182,7 +186,7 @@ function ProductListingPage() {
                           type="button"
                           onClick={() => updateParam("sub", subCategory === sub.slug ? "" : sub.slug)}
                           className={
-                            "text-left px-3 py-1.5 rounded-md text-xs font-medium transition-colors " +
+                            "text-left px-3 py-1.5 rounded-sm text-xs font-medium transition-colors " +
                             (subCategory === sub.slug
                               ? "bg-black text-white"
                               : "bg-[#F3EFE9] text-black hover:bg-gray-200")
@@ -210,7 +214,7 @@ function ProductListingPage() {
                       to={`/product/${product.slug}`}
                       className={"group block " + (product.inStock === false ? "opacity-50" : "")}
                     >
-                      <div className="relative rounded-xl overflow-hidden bg-gray-100">
+                      <div className="relative rounded-sm overflow-hidden bg-gray-100">
                         <img
                           src={product.images?.[0]}
                           alt={product.name}

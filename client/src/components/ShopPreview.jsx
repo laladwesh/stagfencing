@@ -109,7 +109,7 @@ function ProductRow({ title, products, showIntro }) {
             <div key={slideIndex} className="grid grid-cols-2 sm:grid-cols-4 gap-5 w-full shrink-0 pr-5">
               {slide.map((product) => (
                 <div key={product.title}>
-                  <div className="aspect-square bg-gray-100 rounded-lg" />
+                  <div className="aspect-square bg-gray-100 rounded-sm" />
                   <p className="mt-3 text-sm text-black leading-snug line-clamp-2">{product.title}</p>
                   <p className="mt-1 text-sm text-black">{product.price}</p>
                 </div>

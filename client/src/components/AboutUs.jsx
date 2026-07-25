@@ -49,7 +49,7 @@ function AboutUs() {
           </div>
         </div>
 
-        <div className="mt-10 rounded-2xl overflow-hidden">
+        <div className="mt-10 rounded-sm overflow-hidden">
           <img src="/hero-bg.png" alt="Fence installation" className="w-full h-64 sm:h-[420px] object-cover" />
         </div>
       </div>
