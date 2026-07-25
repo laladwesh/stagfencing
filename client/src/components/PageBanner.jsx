@@ -39,7 +39,7 @@ function PageBanner({ breadcrumb, title, subtitle, children }) {
         </header>
         <div ref={sentinelRef} />
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center text-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center text-white">
           <Breadcrumb>{breadcrumb}</Breadcrumb>
           <h1 className="mt-3 text-4xl sm:text-5xl font-semibold">{title}</h1>
           {subtitle && <p className="mt-3 text-gray-200">{subtitle}</p>}
