@@ -240,6 +240,30 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
           </div>
         )}
 
+        {service.identificationCards?.length > 0 && (
+          <div className="mt-10">
+            <div className="flex items-baseline justify-between flex-wrap gap-2">
+              <p className="text-sm font-semibold text-black">{service.identificationTitle}</p>
+              {service.identificationSubtitle && (
+                <p className="text-xs text-gray-400">{service.identificationSubtitle}</p>
+              )}
+            </div>
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {service.identificationCards.map((card, i) => (
+                <div key={i} className="border border-gray-200 rounded-sm p-4">
+                  <div className="rounded-sm overflow-hidden bg-gray-100 h-28 mb-3">
+                    {card.image && (
+                      <img src={card.image} alt={card.title} className="w-full h-full object-cover" />
+                    )}
+                  </div>
+                  <p className="text-sm font-semibold text-black">{card.title}</p>
+                  <p className="mt-1 text-xs text-gray-500 leading-relaxed">{card.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {service.everyInstallIncludes?.length > 0 && (
             <div className="bg-[#F3EFE9] rounded-sm p-5">

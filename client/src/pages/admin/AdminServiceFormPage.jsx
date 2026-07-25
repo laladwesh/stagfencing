@@ -52,6 +52,9 @@ const EMPTY_SERVICE = {
   reviews: [],
   faqTitle: "",
   faqs: [],
+  identificationTitle: "",
+  identificationSubtitle: "",
+  identificationCards: [],
   relatedServices: [],
   areasServiced: [],
 };
@@ -204,6 +207,70 @@ function StylesField({ serviceId, styles, onChange }) {
           + Add style
         </button>
       </div>
+    </div>
+  );
+}
+
+function IdentificationCardsField({ items, onChange }) {
+  const list = items || [];
+  const setAt = (i, key, value) => onChange(list.map((item, idx) => (idx === i ? { ...item, [key]: value } : item)));
+  const removeAt = (i) => onChange(list.filter((_, idx) => idx !== i));
+  const add = () => onChange([...list, { image: "", title: "", description: "" }]);
+
+  const uploadImage = async (i, file) => {
+    const url = await uploadAdminFile(file);
+    setAt(i, "image", url);
+  };
+
+  return (
+    <div>
+      <span className="text-xs font-medium text-gray-500">Identification cards</span>
+      <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {list.map((card, i) => (
+          <div key={i} className="border border-gray-200 rounded-sm p-3">
+            <div className="flex items-start gap-3">
+              <div className="w-16 h-16 rounded-sm bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 overflow-hidden">
+                {card.image ? (
+                  <img src={card.image} alt="" className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-[9px] text-gray-400">none</span>
+                )}
+              </div>
+              <div className="flex-1 min-w-0 space-y-2">
+                <input
+                  type="text"
+                  value={card.title}
+                  onChange={(e) => setAt(i, "title", e.target.value)}
+                  placeholder="Title"
+                  className="w-full bg-[#F3EFE9] rounded-sm px-2 py-1.5 text-xs focus:outline-none"
+                />
+                <textarea
+                  value={card.description}
+                  onChange={(e) => setAt(i, "description", e.target.value)}
+                  placeholder="Description"
+                  rows={2}
+                  className="w-full bg-[#F3EFE9] rounded-sm px-2 py-1.5 text-xs resize-none focus:outline-none"
+                />
+              </div>
+              <button type="button" onClick={() => removeAt(i)} className="text-gray-400 hover:text-red-600 shrink-0">
+                ×
+              </button>
+            </div>
+            <label className="mt-2 inline-block text-[11px] font-medium text-white bg-black hover:bg-gray-800 rounded-full px-2.5 py-1 cursor-pointer transition-colors">
+              Upload image
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                className="hidden"
+                onChange={(e) => e.target.files?.[0] && uploadImage(i, e.target.files[0])}
+              />
+            </label>
+          </div>
+        ))}
+      </div>
+      <button type="button" onClick={add} className="mt-2 text-xs font-medium text-black underline underline-offset-2">
+        + Add card
+      </button>
     </div>
   );
 }
@@ -404,6 +471,20 @@ function AdminServiceFormPage() {
             { key: "answer", type: "textarea", placeholder: "Answer", className: "w-full basis-full" },
           ]}
         />
+
+        <TextField
+          label="Identification section title"
+          value={form.identificationTitle}
+          onChange={set("identificationTitle")}
+          placeholder="e.g. Is my fence asbestos?"
+        />
+        <TextField
+          label="Identification section subtitle"
+          value={form.identificationSubtitle}
+          onChange={set("identificationSubtitle")}
+          placeholder="e.g. Three quick tells — then text us a photo and we'll confirm for free"
+        />
+        <IdentificationCardsField items={form.identificationCards} onChange={set("identificationCards")} />
 
         <StringListField label="Related services" values={form.relatedServices} onChange={set("relatedServices")} />
         <StringListField label="Areas serviced" values={form.areasServiced} onChange={set("areasServiced")} />

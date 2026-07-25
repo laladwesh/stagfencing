@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
+.prose h2[id],
+.prose h3[id] {
+  scroll-margin-top: 6rem;
+}
+
 body {
   margin: 0;
   font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",

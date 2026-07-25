@@ -15,6 +15,7 @@ const reviewSchema = new Schema(
   { _id: false }
 );
 const faqSchema = new Schema({ question: String, answer: String }, { _id: false });
+const identificationCardSchema = new Schema({ image: String, title: String, description: String }, { _id: false });
 
 const serviceSchema = new Schema(
   {
@@ -60,6 +61,10 @@ const serviceSchema = new Schema(
 
     faqTitle: String,
     faqs: [faqSchema],
+
+    identificationTitle: String,
+    identificationSubtitle: String,
+    identificationCards: [identificationCardSchema],
 
     relatedServices: [String],
     areasServiced: [String],
