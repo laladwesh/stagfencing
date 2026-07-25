@@ -5,7 +5,7 @@ import ArrowIcon from "../ArrowIcon";
 import StarRating from "../StarRating";
 import ReviewCard from "../reviews/ReviewCard";
 import Seo from "../Seo";
-import { FaChevronDown } from "react-icons/fa";
+import { FaChevronDown, FaImage } from "react-icons/fa";
 import { faqJsonLd, serviceJsonLd } from "../../lib/seo";
 
 function StatTiles({ tiles }) {
@@ -251,9 +251,11 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
               {service.identificationCards.map((card, i) => (
                 <div key={i} className="border border-gray-200 rounded-sm p-4">
-                  <div className="rounded-sm overflow-hidden bg-gray-100 h-28 mb-3">
-                    {card.image && (
+                  <div className="rounded-sm overflow-hidden bg-gray-100 h-28 mb-3 flex items-center justify-center">
+                    {card.image ? (
                       <img src={card.image} alt={card.title} className="w-full h-full object-cover" />
+                    ) : (
+                      <FaImage className="w-6 h-6 text-gray-300" />
                     )}
                   </div>
                   <p className="text-sm font-semibold text-black">{card.title}</p>
