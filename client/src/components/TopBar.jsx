@@ -1,6 +1,6 @@
 function TopBar() {
   return (
-    <div className="bg-transparent text-gray-200 text-xs sm:text-sm">
+    <div className="hidden sm:block bg-transparent text-gray-200 text-xs sm:text-sm">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 py-2 flex flex-col sm:flex-row items-center justify-between gap-1">
         <p>Looking for fencing experts in Perth? We're just a call away!</p>
         <div className="flex items-center gap-4">

@@ -23,7 +23,7 @@ function Layout({ children, transparentHeader = false }) {
         <>
           <div
             className={
-              "fixed top-4 inset-x-0 z-50 bg-transparent transition-transform duration-300 " +
+              "fixed top-0 sm:top-4 inset-x-0 z-50 bg-transparent transition-transform duration-300 " +
               (showStickyNav ? "translate-y-0" : "-translate-y-[calc(100%+1rem)]")
             }
           >

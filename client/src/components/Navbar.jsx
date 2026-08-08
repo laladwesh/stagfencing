@@ -260,8 +260,8 @@ function Navbar() {
   };
 
   return (
-    <div className="px-4 sm:px-6 pb-4">
-      <nav className="relative max-w-8xl mx-auto bg-white rounded-full shadow-lg shadow-black/5 flex items-center justify-between gap-4 pl-4 pr-2 py-1">
+    <div className="sm:px-6 sm:pb-4">
+      <nav className="relative max-w-8xl mx-auto bg-white rounded-none sm:rounded-full shadow-none sm:shadow-lg sm:shadow-black/5 border-b border-gray-100 sm:border-none flex items-center justify-between gap-4 pl-4 pr-2 py-2 sm:py-1">
         <Link to="/" className="flex items-center shrink-0">
           <img src="/stag-icon.svg" alt="Stag Fencing" className="h-14 w-auto" />
         </Link>

@@ -224,16 +224,10 @@ function Footer() {
           />
         </div>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5">
           <LocationCard
-            city="Perth · Balcatta"
-            address="8 Mumford Place, Balcatta WA 6021"
-            hours="Mon-Fri 7:30am - 3:00pm"
-            phone="0431 703 770"
-          />
-          <LocationCard
-            city="Bunbury · South West"
-            address="12 Halifax Drive, Davenport WA 6230"
+            city="Perth · WA"
+            address="79 Millstream Drive, Southern River WA 6110"
             hours="Mon-Fri 7:30am - 3:00pm"
             phone="0431 703 770"
           />
