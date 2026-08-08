@@ -566,7 +566,13 @@ function Navbar() {
                               onClick={closeMobile}
                               className="flex items-center gap-2.5 rounded-lg px-2 py-2 text-sm text-gray-700"
                             >
-                              <ServiceCategoryIcon slug={c.slug} className="w-4 h-4 shrink-0" />
+                              <span className="w-5 h-5 flex items-center justify-center shrink-0">
+                                {c.icon ? (
+                                  <img src={c.icon} alt="" className="max-w-4 max-h-4 w-auto h-auto object-contain" />
+                                ) : (
+                                  <ServiceCategoryIcon slug={c.slug} className="w-4 h-4" />
+                                )}
+                              </span>
                               {c.name}
                             </Link>
                           ))}

@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { getServiceCategories } from "../lib/api";
 
 function ArrowUpRightIcon(props) {
   return (
@@ -31,10 +33,41 @@ const SERVICES = [
 
 function Services() {
   const [activeIndex, setActiveIndex] = useState(2);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    getServiceCategories()
+      .then((data) => setCategories(data.categories))
+      .catch(() => {});
+  }, []);
 
   return (
     <section className="bg-white py-16 sm:py-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+      <div className="lg:hidden max-w-6xl mx-auto px-4 sm:px-6">
+        <span className="inline-flex items-center gap-2 border border-gray-200 rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide text-gray-600">
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
+          WHAT WE BUILD
+        </span>
+        <h2 className="mt-4 text-3xl font-semibold text-gray-900">Every fence, wall and gate</h2>
+        <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-6">
+          {categories.map((category) => (
+            <Link key={category.slug} to={`/services/${category.slug}`} className="block">
+              <div className="rounded-sm overflow-hidden bg-gray-100 aspect-square">
+                <img src={category.image} alt={category.name} className="w-full h-full object-cover" />
+              </div>
+              <p className="mt-2 text-sm font-semibold text-black">{category.name}</p>
+              <p className="mt-0.5 text-xs text-gray-500">
+                {category.fromPrice ? `from $${category.fromPrice} / ${category.priceUnit?.replace("per ", "")}` : ""}
+              </p>
+            </Link>
+          ))}
+        </div>
+        <Link to="/services" className="mt-6 inline-block text-sm font-semibold text-brand-orange">
+          All services →
+        </Link>
+      </div>
+
+      <div className="hidden lg:grid max-w-6xl mx-auto px-4 sm:px-6 grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
         <div>
           <span className="inline-flex items-center gap-2 border border-gray-200 rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide text-gray-600">
             <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />

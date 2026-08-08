@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import TopBar from "./TopBar";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import MobileCtaBar from "./MobileCtaBar";
 
 function Layout({ children, transparentHeader = false }) {
   const [showStickyNav, setShowStickyNav] = useState(false);
@@ -38,6 +39,8 @@ function Layout({ children, transparentHeader = false }) {
       )}
       <main className="flex-1">{children}</main>
       <Footer />
+      <div className="h-16 sm:hidden" />
+      <MobileCtaBar />
     </div>
   );
 }

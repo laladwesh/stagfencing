@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   FaStar,
@@ -8,6 +9,8 @@ import {
   FaPhoneAlt,
   FaMapMarkerAlt,
   FaRegClock,
+  FaPlus,
+  FaMinus,
 } from "react-icons/fa";
 
 function ArrowIcon(props) {
@@ -54,30 +57,46 @@ const SUPPORT_LINKS = [
 
 const SOCIAL_ICONS = [FaFacebookF, FaInstagram, FaGoogle];
 
-function FooterColumn({ title, links }) {
+function FooterColumn({ title, links, open, onToggle }) {
   return (
-    <div>
-      <p className="flex items-center gap-2 text-xs font-semibold tracking-wide text-white">
-        <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
-        {title}
-      </p>
-      <ul className="mt-4 space-y-2.5">
-        {links.map((link, i) => {
-          const label = typeof link === "string" ? link : link.label;
-          const href = typeof link === "string" ? null : link.href;
-          return (
-            <li key={`${label}-${i}`}>
-              {href ? (
-                <Link to={href} className="text-sm text-gray-400 hover:text-white transition-colors">
-                  {label}
-                </Link>
-              ) : (
-                <span className="text-sm text-gray-400">{label}</span>
-              )}
-            </li>
-          );
-        })}
-      </ul>
+    <div className="border-b border-white/10 sm:border-none pb-4 sm:pb-0">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="w-full flex items-center justify-between gap-2 text-xs font-semibold tracking-wide text-white sm:pointer-events-none"
+      >
+        <span className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
+          {title}
+        </span>
+        <span className="sm:hidden text-gray-400">
+          {open ? <FaMinus className="w-2.5 h-2.5" /> : <FaPlus className="w-2.5 h-2.5" />}
+        </span>
+      </button>
+      <div
+        className={
+          "grid transition-[grid-template-rows] duration-300 ease-in-out sm:!grid-rows-[1fr] " +
+          (open ? "grid-rows-[1fr]" : "grid-rows-[0fr]")
+        }
+      >
+        <ul className="overflow-hidden mt-4 space-y-2.5">
+          {links.map((link, i) => {
+            const label = typeof link === "string" ? link : link.label;
+            const href = typeof link === "string" ? null : link.href;
+            return (
+              <li key={`${label}-${i}`}>
+                {href ? (
+                  <Link to={href} className="text-sm text-gray-400 hover:text-white transition-colors">
+                    {label}
+                  </Link>
+                ) : (
+                  <span className="text-sm text-gray-400">{label}</span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }
@@ -108,6 +127,9 @@ function LocationCard({ city, address, hours, phone }) {
 }
 
 function Footer() {
+  const [openColumn, setOpenColumn] = useState(null);
+  const toggleColumn = (title) => setOpenColumn((prev) => (prev === title ? null : title));
+
   return (
     <footer className="bg-black text-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
@@ -139,7 +161,7 @@ function Footer() {
 
         <div className="mt-8 border-t border-white/10" />
 
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-6 gap-10">
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-6 gap-6 lg:gap-10">
           <div className="lg:col-span-2">
             <img src="/stag-icon.svg" alt="Stag Fencing" className="h-12 w-auto" />
             <p className="mt-1 text-xs font-semibold tracking-wide text-brand-orange">PERTH · WA</p>
@@ -176,10 +198,30 @@ function Footer() {
             </p>
           </div>
 
-          <FooterColumn title="FENCING" links={FENCING_LINKS} />
-          <FooterColumn title="SHOP" links={SHOP_LINKS} />
-          <FooterColumn title="COMPANY" links={COMPANY_LINKS} />
-          <FooterColumn title="SUPPORT" links={SUPPORT_LINKS} />
+          <FooterColumn
+            title="FENCING"
+            links={FENCING_LINKS}
+            open={openColumn === "FENCING"}
+            onToggle={() => toggleColumn("FENCING")}
+          />
+          <FooterColumn
+            title="SHOP"
+            links={SHOP_LINKS}
+            open={openColumn === "SHOP"}
+            onToggle={() => toggleColumn("SHOP")}
+          />
+          <FooterColumn
+            title="COMPANY"
+            links={COMPANY_LINKS}
+            open={openColumn === "COMPANY"}
+            onToggle={() => toggleColumn("COMPANY")}
+          />
+          <FooterColumn
+            title="SUPPORT"
+            links={SUPPORT_LINKS}
+            open={openColumn === "SUPPORT"}
+            onToggle={() => toggleColumn("SUPPORT")}
+          />
         </div>
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">

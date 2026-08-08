@@ -31,7 +31,7 @@ function SwatchRow({ label, note, swatches, selectedLabel, onSelect }) {
         <p className="text-sm font-semibold text-black">{label}</p>
         {note && <p className="text-xs text-gray-400">{note}</p>}
       </div>
-      <div className="mt-4 grid grid-cols-3 sm:grid-cols-9 gap-4">
+      <div className="mt-4 flex sm:grid sm:grid-cols-9 gap-4 overflow-x-auto sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 pb-1 snap-x snap-mandatory sm:snap-none">
         {swatches.map((s) => {
           const isSelected = s.label === selectedLabel;
           return (
@@ -39,11 +39,11 @@ function SwatchRow({ label, note, swatches, selectedLabel, onSelect }) {
               key={s.label}
               type="button"
               onClick={() => onSelect(s.label)}
-              className="flex flex-col items-center gap-2"
+              className="flex flex-col items-center gap-1.5 sm:gap-2 shrink-0 sm:shrink w-14 sm:w-auto snap-start"
             >
               <span
                 className={
-                  "relative w-full aspect-square rounded-sm border transition-all " +
+                  "relative w-10 h-10 sm:w-full sm:h-auto rounded-full sm:rounded-sm sm:aspect-square border transition-all " +
                   (isSelected ? "border-black ring-2 ring-black ring-offset-2" : "border-black/10 hover:border-black/30")
                 }
                 style={{ backgroundColor: s.hex }}
@@ -56,7 +56,7 @@ function SwatchRow({ label, note, swatches, selectedLabel, onSelect }) {
               </span>
               <span
                 className={
-                  "text-xs text-center leading-tight " +
+                  "text-[10px] sm:text-xs text-center leading-tight " +
                   (isSelected ? "font-semibold text-black" : "font-medium text-gray-500")
                 }
               >

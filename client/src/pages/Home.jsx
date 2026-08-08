@@ -8,6 +8,7 @@ import ShopPreview from "../components/ShopPreview";
 import AboutUs from "../components/AboutUs";
 import Articles from "../components/Articles";
 import Footer from "../components/Footer";
+import MobileCtaBar from "../components/MobileCtaBar";
 import Seo from "../components/Seo";
 
 function Home() {
@@ -28,6 +29,8 @@ function Home() {
       <AboutUs />
       <Articles />
       <Footer />
+      <div className="h-16 sm:hidden" />
+      <MobileCtaBar />
     </div>
   );
 }
