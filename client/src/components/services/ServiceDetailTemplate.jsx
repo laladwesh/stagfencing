@@ -5,8 +5,9 @@ import ArrowIcon from "../ArrowIcon";
 import StarRating from "../StarRating";
 import ReviewCard from "../reviews/ReviewCard";
 import Seo from "../Seo";
-import { FaChevronDown, FaImage } from "react-icons/fa";
+import { FaChevronDown, FaImage, FaCheck } from "react-icons/fa";
 import { faqJsonLd, serviceJsonLd } from "../../lib/seo";
+import { SERVICE_CATEGORY_TO_QUOTE_LABEL } from "../../lib/serviceQuoteLabels";
 
 function StatTiles({ tiles }) {
   if (!tiles?.length) return null;
@@ -22,7 +23,7 @@ function StatTiles({ tiles }) {
   );
 }
 
-function SwatchRow({ label, note, swatches }) {
+function SwatchRow({ label, note, swatches, selectedLabel, onSelect }) {
   if (!swatches?.length) return null;
   return (
     <div className="mt-10">
@@ -31,22 +32,39 @@ function SwatchRow({ label, note, swatches }) {
         {note && <p className="text-xs text-gray-400">{note}</p>}
       </div>
       <div className="mt-4 grid grid-cols-3 sm:grid-cols-9 gap-4">
-        {swatches.map((s, i) => (
-          <div key={s.label} className="flex flex-col items-center gap-2">
-            <span
-              className="w-full aspect-square rounded-sm border border-black/10"
-              style={{ backgroundColor: s.hex }}
-            />
-            <span
-              className={
-                "text-xs text-center leading-tight " +
-                (i === 0 ? "font-semibold text-black" : "font-medium text-gray-500")
-              }
+        {swatches.map((s) => {
+          const isSelected = s.label === selectedLabel;
+          return (
+            <button
+              key={s.label}
+              type="button"
+              onClick={() => onSelect(s.label)}
+              className="flex flex-col items-center gap-2"
             >
-              {s.label}
-            </span>
-          </div>
-        ))}
+              <span
+                className={
+                  "relative w-full aspect-square rounded-sm border transition-all " +
+                  (isSelected ? "border-black ring-2 ring-black ring-offset-2" : "border-black/10 hover:border-black/30")
+                }
+                style={{ backgroundColor: s.hex }}
+              >
+                {isSelected && (
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <FaCheck className="w-3.5 h-3.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] text-white" />
+                  </span>
+                )}
+              </span>
+              <span
+                className={
+                  "text-xs text-center leading-tight " +
+                  (isSelected ? "font-semibold text-black" : "font-medium text-gray-500")
+                }
+              >
+                {s.label}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -58,22 +76,35 @@ function SwatchRow({ label, note, swatches }) {
 // differently since they're driven by real pricing data, not a fixed index.
 const BAR_JITTER = [0, 9, -6, 7, -9, 5, -3];
 
-function StyleCard({ style, minPrice, maxPrice }) {
+function StyleCard({ style, minPrice, maxPrice, selected, onSelect }) {
   const price = style.fromPrice || minPrice;
   const range = Math.max(maxPrice - minPrice, 1);
   const ratio = (price - minPrice) / range;
   const baseHeight = 35 + ratio * 55;
 
   return (
-    <div
+    <button
+      type="button"
+      onClick={onSelect}
       className={
-        "relative border rounded-sm p-4 " + (style.popular ? "border-black" : "border-gray-200")
+        "relative w-full text-left border rounded-sm p-4 transition-colors " +
+        (selected
+          ? "border-black ring-2 ring-black ring-offset-2"
+          : style.popular
+          ? "border-black"
+          : "border-gray-200 hover:border-gray-400")
       }
     >
-      {style.popular && (
-        <span className="absolute top-3 right-3 bg-black text-white text-[10px] font-semibold px-2 py-1 rounded-full">
-          Most popular
+      {selected ? (
+        <span className="absolute top-3 right-3 w-5 h-5 rounded-full bg-black text-white flex items-center justify-center">
+          <FaCheck className="w-2.5 h-2.5" />
         </span>
+      ) : (
+        style.popular && (
+          <span className="absolute top-3 right-3 bg-black text-white text-[10px] font-semibold px-2 py-1 rounded-full">
+            Most popular
+          </span>
+        )
       )}
       {style.icon ? (
         <div className="h-8 flex items-center">
@@ -94,7 +125,7 @@ function StyleCard({ style, minPrice, maxPrice }) {
       <p className="mt-0.5 text-xs text-gray-500">
         {style.fromPrice ? `from $${style.fromPrice} ${style.priceUnit}` : style.priceUnit}
       </p>
-    </div>
+    </button>
   );
 }
 
@@ -150,6 +181,24 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
   const minStylePrice = stylePrices.length ? Math.min(...stylePrices) : 0;
   const maxStylePrice = stylePrices.length ? Math.max(...stylePrices) : 0;
 
+  const [selectedColor, setSelectedColor] = useState(service.swatches?.[0]?.label || null);
+  const [selectedStyleName, setSelectedStyleName] = useState(
+    service.styles?.find((s) => s.popular)?.name || service.styles?.[0]?.name || null
+  );
+  const selectedStyle = service.styles?.find((s) => s.name === selectedStyleName) || null;
+  const quoteLabel = SERVICE_CATEGORY_TO_QUOTE_LABEL[service.category?.slug] || null;
+
+  const serviceSelectionState = {
+    serviceSelection: {
+      label: quoteLabel,
+      serviceName: service.name,
+      style: selectedStyle?.name || null,
+      color: selectedColor || null,
+      price: selectedStyle?.fromPrice ?? service.fromPrice ?? null,
+      priceUnit: selectedStyle?.priceUnit || service.priceUnit || null,
+    },
+  };
+
   const jsonLd = [
     serviceJsonLd({
       name: service.name,
@@ -173,6 +222,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
       <PageBanner breadcrumb={breadcrumb} title={service.bannerTitle || service.name} subtitle={service.bannerSubtitle}>
         <Link
           to="/request-a-quote"
+          state={serviceSelectionState}
           className="group inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
         >
           {service.bannerCta || "Get A Free Quote"}
@@ -206,12 +256,25 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
               <div className="bg-[#F3EFE9] rounded-sm p-5">
                 <p className="text-xs text-gray-500">FROM</p>
                 <p className="text-2xl font-semibold text-black">
-                  ${service.fromPrice}
-                  <span className="text-xs font-normal text-gray-500"> {service.priceUnit}</span>
+                  ${selectedStyle?.fromPrice ?? service.fromPrice}
+                  <span className="text-xs font-normal text-gray-500">
+                    {" "}
+                    {selectedStyle?.priceUnit || service.priceUnit}
+                  </span>
                 </p>
                 <p className="mt-1 text-xs text-gray-500">Supplied & installed · fixed written quote</p>
+
+                {(selectedStyle || selectedColor) && (
+                  <div className="mt-3 pt-3 border-t border-black/10 text-xs text-gray-600">
+                    <p className="font-medium text-black">Your selection</p>
+                    {selectedStyle && <p className="mt-1">{selectedStyle.name}</p>}
+                    {selectedColor && <p>{selectedColor}</p>}
+                  </div>
+                )}
+
                 <Link
                   to="/request-a-quote"
+                  state={serviceSelectionState}
                   className="group mt-4 inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors"
                 >
                   Get A Free Quote
@@ -227,14 +290,27 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
 
         <StatTiles tiles={service.statTiles} />
 
-        <SwatchRow label={service.swatchGroupLabel} note={service.swatchNote} swatches={service.swatches} />
+        <SwatchRow
+          label={service.swatchGroupLabel}
+          note={service.swatchNote}
+          swatches={service.swatches}
+          selectedLabel={selectedColor}
+          onSelect={setSelectedColor}
+        />
 
         {service.styles?.length > 0 && (
           <div className="mt-10">
             <p className="text-sm font-semibold text-black">{service.stylesLabel || "Styles & pricing"}</p>
             <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
               {service.styles.map((style) => (
-                <StyleCard key={style.name} style={style} minPrice={minStylePrice} maxPrice={maxStylePrice} />
+                <StyleCard
+                  key={style.name}
+                  style={style}
+                  minPrice={minStylePrice}
+                  maxPrice={maxStylePrice}
+                  selected={style.name === selectedStyleName}
+                  onSelect={() => setSelectedStyleName(style.name)}
+                />
               ))}
             </div>
           </div>
