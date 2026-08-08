@@ -300,17 +300,21 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
 
         {service.styles?.length > 0 && (
           <div className="mt-10">
-            <p className="text-sm font-semibold text-black">{service.stylesLabel || "Styles & pricing"}</p>
-            <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="flex items-baseline justify-between flex-wrap gap-2">
+              <p className="text-sm font-semibold text-black">{service.stylesLabel || "Styles & pricing"}</p>
+              <p className="sm:hidden text-xs text-gray-400">← swipe · all prices incl. GST</p>
+            </div>
+            <div className="mt-4 flex sm:grid sm:grid-cols-4 gap-3 overflow-x-auto sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 pb-1 snap-x snap-mandatory sm:snap-none">
               {service.styles.map((style) => (
-                <StyleCard
-                  key={style.name}
-                  style={style}
-                  minPrice={minStylePrice}
-                  maxPrice={maxStylePrice}
-                  selected={style.name === selectedStyleName}
-                  onSelect={() => setSelectedStyleName(style.name)}
-                />
+                <div key={style.name} className="w-36 sm:w-auto shrink-0 sm:shrink snap-start">
+                  <StyleCard
+                    style={style}
+                    minPrice={minStylePrice}
+                    maxPrice={maxStylePrice}
+                    selected={style.name === selectedStyleName}
+                    onSelect={() => setSelectedStyleName(style.name)}
+                  />
+                </div>
               ))}
             </div>
           </div>
