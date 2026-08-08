@@ -107,11 +107,11 @@ function StyleCard({ style, minPrice, maxPrice, selected, onSelect }) {
         )
       )}
       {style.icon ? (
-        <div className="h-8 flex items-center">
-          <img src={style.icon} alt="" className="h-full w-auto object-contain" />
+        <div className="h-14 flex items-center">
+          <img src={style.icon} alt="" className="max-h-14 max-w-full w-auto h-auto object-contain" />
         </div>
       ) : (
-        <div className="flex items-end gap-0.5 h-8">
+        <div className="flex items-end gap-0.5 h-14">
           {BAR_JITTER.map((jitter, i) => (
             <span
               key={i}

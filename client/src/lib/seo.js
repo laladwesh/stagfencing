@@ -3,6 +3,13 @@ export const SITE_URL = "https://stagfencing.com.au";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/hero-bg.png`;
 export const BUSINESS_PHONE = "+61431703770";
 export const BUSINESS_EMAIL = "quote@stagfencing.com.au";
+export const BUSINESS_ADDRESS = {
+  streetAddress: "79 Millstream Drive",
+  addressLocality: "Southern River",
+  addressRegion: "WA",
+  postalCode: "6110",
+  addressCountry: "AU",
+};
 export const SERVICE_AREAS = [
   "Perth",
   "Joondalup",
@@ -30,8 +37,7 @@ export function localBusinessJsonLd() {
     areaServed: SERVICE_AREAS.map((suburb) => ({ "@type": "City", name: suburb })),
     address: {
       "@type": "PostalAddress",
-      addressRegion: "WA",
-      addressCountry: "AU",
+      ...BUSINESS_ADDRESS,
     },
     aggregateRating: {
       "@type": "AggregateRating",

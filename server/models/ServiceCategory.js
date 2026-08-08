@@ -5,6 +5,7 @@ const serviceCategorySchema = new Schema(
     name: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
     image: String,
+    icon: String,
     tagline: String,
     fromPrice: Number,
     priceUnit: String,

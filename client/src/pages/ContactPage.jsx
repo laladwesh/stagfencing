@@ -19,6 +19,11 @@ const CONTACT_INFO = [
   },
   {
     icon: FaMapMarkerAlt,
+    title: "Office",
+    detail: "79 Millstream Drive, Southern River WA 6110",
+  },
+  {
+    icon: FaMapMarkerAlt,
     title: "Service area",
     detail: "Perth metro · Joondalup · Wanneroo · Rockingham · Mandurah · Bunbury & the South West",
   },

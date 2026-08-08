@@ -6,6 +6,22 @@ const Service = require("./models/Service");
 
 const IMG = "/hero-bg.png";
 
+const ICON_URLS = JSON.parse(
+  require("fs").readFileSync(require("path").join(__dirname, "service-icon-urls.json"), "utf8")
+);
+const CATEGORY_ICON = {
+  colorbond: ICON_URLS["colorbond-1800mm"],
+  slat: ICON_URLS["slat-1"],
+  pool: ICON_URLS["pool-3"],
+  retaining: ICON_URLS["retaining-1"],
+  gates: ICON_URLS["gates-1"],
+  security: ICON_URLS["security-1"],
+  blade: ICON_URLS["blade-1"],
+  asbestos: ICON_URLS["asbestos-pricing-2"],
+  pvc: ICON_URLS["pvc-1"],
+  modular: ICON_URLS["pvc-1"],
+};
+
 const AREAS = ["Perth metro", "Joondalup", "Wanneroo", "Rockingham", "Mandurah", "Bunbury & the South West"];
 
 const FENCE_COLOURS = [
@@ -140,7 +156,7 @@ async function seed() {
       name: "Gates & Automation",
       slug: "gates-automation",
       image: IMG,
-      fromPrice: 690,
+      fromPrice: 810,
       priceUnit: "installed",
       sortOrder: 5,
       hasRange: true,
@@ -148,7 +164,7 @@ async function seed() {
       rangeBannerSubtitle: "Swing, sliding and automated gates to match your fence",
       rangeBannerCta: "Book A Free Measure",
       rangeIntro:
-        "Gates made to match your fence — swing, sliding and full automation. Every gate below is fabricated to your opening and can be automated with Centurion motors, wired or solar.",
+        "Gates made to match your fence — swing, sliding and full automation. Every gate below is fabricated to your opening and can be automated with Centsys & FAAC motors, wired or solar.",
     },
     {
       name: "Security Fencing",
@@ -177,7 +193,7 @@ async function seed() {
       name: "Asbestos Fence Removal",
       slug: "asbestos-fence-removal",
       image: IMG,
-      fromPrice: 30,
+      fromPrice: 80,
       priceUnit: "per lineal metre",
       sortOrder: 8,
       hasRange: false,
