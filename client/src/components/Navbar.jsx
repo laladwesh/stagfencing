@@ -81,8 +81,16 @@ function ServicesDropdownContent({ categories }) {
             to={`/services/${category.slug}`}
             className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-[#F3EFE9] transition-colors"
           >
-            <span className="w-9 h-9 rounded-lg bg-[#F3EFE9] text-gray-500 flex items-center justify-center shrink-0">
-              <ServiceCategoryIcon slug={category.slug} className="w-5 h-5" />
+            <span className="w-9 h-9 rounded-lg bg-[#F3EFE9] text-gray-500 flex items-center justify-center shrink-0 overflow-hidden">
+              {category.icon ? (
+                <img
+                  src={category.icon}
+                  alt=""
+                  className="max-w-6 max-h-6 w-auto h-auto object-contain"
+                />
+              ) : (
+                <ServiceCategoryIcon slug={category.slug} className="w-5 h-5" />
+              )}
             </span>
             <span className="min-w-0">
               <span className="block text-sm font-medium text-black truncate">{category.name}</span>
