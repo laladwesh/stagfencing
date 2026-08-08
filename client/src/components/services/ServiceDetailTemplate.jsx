@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PageBanner from "../PageBanner";
 import ArrowIcon from "../ArrowIcon";
@@ -8,6 +8,7 @@ import Seo from "../Seo";
 import { FaChevronDown, FaImage, FaCheck } from "react-icons/fa";
 import { faqJsonLd, serviceJsonLd } from "../../lib/seo";
 import { SERVICE_CATEGORY_TO_QUOTE_LABEL } from "../../lib/serviceQuoteLabels";
+import { getGalleryProjects } from "../../lib/api";
 
 function StatTiles({ tiles }) {
   if (!tiles?.length) return null;
@@ -176,6 +177,14 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
   const averageRating = service.reviews?.length
     ? service.reviews.reduce((sum, r) => sum + r.rating, 0) / service.reviews.length
     : null;
+
+  const [linkedProjects, setLinkedProjects] = useState([]);
+  useEffect(() => {
+    if (!service.slug) return;
+    getGalleryProjects({ serviceSlug: service.slug })
+      .then((data) => setLinkedProjects(data.projects || []))
+      .catch(() => {});
+  }, [service.slug]);
 
   const stylePrices = (service.styles || []).map((s) => s.fromPrice).filter((p) => p > 0);
   const minStylePrice = stylePrices.length ? Math.min(...stylePrices) : 0;
@@ -403,25 +412,53 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
           </div>
         )}
 
-        {service.recentJobs?.length > 0 && (
+        {linkedProjects.length > 0 ? (
           <div className="mt-14">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-black">{service.recentJobsTitle}</p>
+              <p className="text-sm font-semibold text-black">{service.recentJobsTitle || "Recent work"}</p>
               <Link to="/gallery" className="text-xs font-medium text-black underline">
                 View full gallery →
               </Link>
             </div>
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-5">
-              {service.recentJobs.map((job, i) => (
-                <div key={i} className="relative rounded-sm overflow-hidden bg-gray-100 h-40">
-                  {job.image && <img src={job.image} alt="" className="w-full h-full object-cover" />}
+              {linkedProjects.slice(0, 3).map((project) => (
+                <Link
+                  key={project._id}
+                  to="/gallery"
+                  className="relative rounded-sm overflow-hidden bg-gray-100 h-40 block"
+                >
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
                   <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent px-3 py-2">
-                    <p className="text-xs font-medium text-white">{job.caption}</p>
+                    <p className="text-xs font-medium text-white">
+                      {project.title}
+                      {project.suburb ? ` · ${project.suburb}` : ""}
+                    </p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
+        ) : (
+          service.recentJobs?.length > 0 && (
+            <div className="mt-14">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-semibold text-black">{service.recentJobsTitle}</p>
+                <Link to="/gallery" className="text-xs font-medium text-black underline">
+                  View full gallery →
+                </Link>
+              </div>
+              <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-5">
+                {service.recentJobs.map((job, i) => (
+                  <div key={i} className="relative rounded-sm overflow-hidden bg-gray-100 h-40">
+                    {job.image && <img src={job.image} alt="" className="w-full h-full object-cover" />}
+                    <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent px-3 py-2">
+                      <p className="text-xs font-medium text-white">{job.caption}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
         )}
 
         {service.reviews?.length > 0 && (

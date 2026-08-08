@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function MobileCtaBar() {
+  const location = useLocation();
+  if (location.pathname === "/request-a-quote") return null;
+
   return (
     <div className="sm:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-gray-200 px-4 py-3 flex items-center gap-3">
       <a

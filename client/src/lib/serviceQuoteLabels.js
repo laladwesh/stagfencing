@@ -5,6 +5,8 @@ export const SERVICE_CATEGORY_TO_QUOTE_LABEL = {
   "retaining-walls": "Retaining walls",
   "gates-automation": "Gates & automation",
   "security-fencing": "Security fencing",
-  "blade-fencing-designer-range": "Blade range",
+  "blade-fencing": "Blade range",
   "asbestos-fence-removal": "Asbestos removal",
+  "pvc-fencing": "PVC fencing",
+  "modular-walls": "Modular walls",
 };

@@ -14,6 +14,7 @@ import {
 const EMPTY = {
   title: "",
   image: "",
+  images: [],
   suburb: "",
   service: "",
   serviceSlug: "",
@@ -31,21 +32,26 @@ function toDateInputValue(value) {
 
 function ProjectForm({ initial, products, services, onSaved, onCancel }) {
   const [form, setForm] = useState(
-    initial ? { ...initial, completedDate: toDateInputValue(initial.completedDate) } : EMPTY
+    initial
+      ? { ...initial, images: initial.images?.length ? initial.images : initial.image ? [initial.image] : [], completedDate: toDateInputValue(initial.completedDate) }
+      : EMPTY
   );
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const set = (key) => (value) => setForm((prev) => ({ ...prev, [key]: value }));
 
-  const handleFile = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleFiles = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
     setUploading(true);
     setError("");
     try {
-      const url = await uploadAdminFile(file);
-      set("image")(url);
+      const urls = await Promise.all(files.map((file) => uploadAdminFile(file)));
+      setForm((prev) => {
+        const images = [...(prev.images || []), ...urls];
+        return { ...prev, images, image: prev.image || images[0] };
+      });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -54,14 +60,26 @@ function ProjectForm({ initial, products, services, onSaved, onCancel }) {
     }
   };
 
+  const removeImage = (i) => {
+    setForm((prev) => {
+      const images = prev.images.filter((_, idx) => idx !== i);
+      return { ...prev, images, image: images[0] || "" };
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!form.images?.length) {
+      setError("Add at least one image.");
+      return;
+    }
     setSaving(true);
     setError("");
     try {
+      const payload = { ...form, image: form.images[0] };
       const saved = initial?._id
-        ? (await updateGalleryProject(initial._id, form)).project
-        : (await createGalleryProject(form)).project;
+        ? (await updateGalleryProject(initial._id, payload)).project
+        : (await createGalleryProject(payload)).project;
       onSaved(saved);
     } catch (err) {
       setError(err.message);
@@ -72,14 +90,33 @@ function ProjectForm({ initial, products, services, onSaved, onCancel }) {
 
   return (
     <form onSubmit={handleSubmit} className="border border-gray-200 rounded-sm p-5 space-y-3">
-      <div className="flex items-center gap-3">
-        <div className="w-24 h-16 rounded-sm bg-gray-50 border border-gray-200 overflow-hidden shrink-0">
-          {form.image && <img src={form.image} alt="" className="w-full h-full object-cover" />}
+      <div>
+        <span className="text-xs font-medium text-gray-500">Photos</span>
+        <div className="mt-1 flex flex-wrap items-center gap-2">
+          {(form.images || []).map((url, i) => (
+            <div key={i} className="relative w-20 h-16 rounded-sm bg-gray-50 border border-gray-200 overflow-hidden shrink-0">
+              <img src={url} alt="" className="w-full h-full object-cover" />
+              <button
+                type="button"
+                onClick={() => removeImage(i)}
+                aria-label="Remove image"
+                className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-black/70 text-white text-xs flex items-center justify-center"
+              >
+                ×
+              </button>
+              {i === 0 && (
+                <span className="absolute bottom-0 inset-x-0 bg-black/70 text-white text-[9px] text-center py-0.5">
+                  Cover
+                </span>
+              )}
+            </div>
+          ))}
+          <label className="text-xs font-medium text-white bg-black hover:bg-gray-800 rounded-full px-3 py-1.5 cursor-pointer transition-colors shrink-0">
+            {uploading ? "Uploading…" : "+ Add photos"}
+            <input type="file" accept="image/*" multiple className="hidden" onChange={handleFiles} disabled={uploading} />
+          </label>
         </div>
-        <label className="text-xs font-medium text-white bg-black hover:bg-gray-800 rounded-full px-3 py-1.5 cursor-pointer transition-colors">
-          {uploading ? "Uploading…" : "Upload image"}
-          <input type="file" accept="image/*" className="hidden" onChange={handleFile} disabled={uploading} />
-        </label>
+        <p className="mt-1 text-xs text-gray-400">First photo is used as the cover thumbnail.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -89,7 +126,10 @@ function ProjectForm({ initial, products, services, onSaved, onCancel }) {
         <SelectField
           label="Linked service (optional)"
           value={form.serviceSlug}
-          onChange={set("serviceSlug")}
+          onChange={(slug) => {
+            const matched = services.find((s) => s.slug === slug);
+            setForm((prev) => ({ ...prev, serviceSlug: slug, categorySlug: matched?.category?.slug || "" }));
+          }}
           options={[{ value: "", label: "None" }, ...services.map((s) => ({ value: s.slug, label: s.name }))]}
         />
         <SelectField

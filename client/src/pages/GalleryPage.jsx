@@ -20,6 +20,8 @@ function QuoteCta({ label }) {
 }
 
 function ProjectModal({ project, onClose }) {
+  const images = project.images?.length ? project.images : [project.image];
+  const [activeImage, setActiveImage] = useState(0);
   const completed = project.completedDate
     ? new Date(project.completedDate).toLocaleDateString("en-AU", { month: "long", year: "numeric" })
     : null;
@@ -27,16 +29,25 @@ function ProjectModal({ project, onClose }) {
   return (
     <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4" onClick={onClose}>
       <div
-        className="bg-white rounded-sm max-w-3xl w-full overflow-hidden grid grid-cols-1 sm:grid-cols-2"
+        className="bg-white rounded-sm max-w-3xl w-full overflow-hidden grid grid-cols-1 sm:grid-cols-2 max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div>
-          <img src={project.image} alt={project.title} className="w-full h-56 sm:h-full object-cover" />
-          <div className="grid grid-cols-3 gap-1 p-1 bg-white sm:hidden">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <img key={i} src={project.image} alt="" className="w-full h-14 object-cover rounded" />
-            ))}
-          </div>
+          <img src={images[activeImage]} alt={project.title} className="w-full h-56 sm:h-full object-cover" />
+          {images.length > 1 && (
+            <div className="grid grid-cols-4 gap-1 p-1 bg-white">
+              {images.map((img, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setActiveImage(i)}
+                  className={"rounded overflow-hidden border-2 " + (i === activeImage ? "border-black" : "border-transparent")}
+                >
+                  <img src={img} alt="" className="w-full h-14 object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="p-6 relative">
@@ -86,7 +97,11 @@ function ProjectModal({ project, onClose }) {
 
           {project.serviceSlug && (
             <Link
-              to={`/services/${project.serviceSlug}`}
+              to={
+                project.categorySlug && project.categorySlug !== project.serviceSlug
+                  ? `/services/${project.categorySlug}/${project.serviceSlug}`
+                  : `/services/${project.serviceSlug}`
+              }
               className="mt-3 block text-center border border-gray-300 hover:bg-gray-50 text-gray-900 font-medium py-2.5 rounded-full transition-colors"
             >
               View this service

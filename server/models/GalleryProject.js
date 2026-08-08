@@ -4,9 +4,11 @@ const galleryProjectSchema = new Schema(
   {
     title: { type: String, required: true },
     image: { type: String, required: true },
+    images: [String],
     suburb: String,
     service: String,
     serviceSlug: String,
+    categorySlug: String,
     productSlug: String,
     colour: String,
     length: String,

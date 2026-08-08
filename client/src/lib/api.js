@@ -129,8 +129,11 @@ export async function uploadFile(file) {
   return data.files[0];
 }
 
-export function getGalleryProjects() {
-  return request("/gallery");
+export function getGalleryProjects(params = {}) {
+  const query = new URLSearchParams(
+    Object.entries(params).filter(([, value]) => value !== undefined && value !== null && value !== "")
+  ).toString();
+  return request(`/gallery${query ? `?${query}` : ""}`);
 }
 
 export function searchProducts(q) {
