@@ -1,10 +1,13 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaStar, FaPhoneAlt, FaChevronLeft } from "react-icons/fa";
+import { FaStar, FaPhoneAlt, FaChevronLeft, FaCheck, FaExclamationTriangle } from "react-icons/fa";
 import Layout from "../components/Layout";
 import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
 import Seo from "../components/Seo";
+import { useAuth } from "../context/AuthContext";
+import { createQuoteRequest, uploadFile, getServiceCategories } from "../lib/api";
+import { SERVICE_CATEGORY_TO_QUOTE_LABEL } from "../lib/serviceQuoteLabels";
 
 const SERVICE_TYPES = [
   "Colorbond",
@@ -112,23 +115,58 @@ function PhotoUpload({ photos, onChange }) {
   );
 }
 
-function ServicePicker({ value, onChange }) {
+function ServicePicker({ value, onChange, categories }) {
+  const options = categories.length
+    ? categories.map((category) => ({
+        key: category.slug,
+        label: SERVICE_CATEGORY_TO_QUOTE_LABEL[category.slug] || category.name,
+        name: category.name,
+        icon: category.icon,
+        fromPrice: category.fromPrice,
+        priceUnit: category.priceUnit,
+        hazard: category.slug === "asbestos-fence-removal",
+      }))
+    : SERVICE_TYPES.map((type) => ({ key: type, label: type, name: type }));
+
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-      {SERVICE_TYPES.map((type) => {
-        const isSelected = value === type;
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {options.map((option) => {
+        const isSelected = value === option.label;
         return (
           <button
-            key={type}
+            key={option.key}
             type="button"
-            onClick={() => onChange(type)}
+            onClick={() => onChange(option.label)}
             className={
-              "rounded-sm px-4 py-3 text-sm font-medium text-left transition-colors " +
-              (isSelected ? "bg-black text-white" : "bg-[#F3EFE9] text-black hover:bg-gray-200")
+              "flex items-center gap-3 rounded-sm border px-4 py-3 text-left transition-colors " +
+              (isSelected ? "border-black bg-[#F3EFE9]" : "border-gray-200 hover:border-gray-300")
             }
           >
-            {type}
-            {isSelected && <span className="block text-xs text-gray-300 font-normal mt-0.5">Selected</span>}
+            <span
+              className={
+                "w-4 h-4 rounded-sm border flex items-center justify-center shrink-0 " +
+                (isSelected ? "bg-black border-black" : "border-gray-300")
+              }
+            >
+              {isSelected && <FaCheck className="w-2.5 h-2.5 text-white" />}
+            </span>
+            <span className="w-9 h-9 rounded-sm bg-[#F3EFE9] flex items-center justify-center shrink-0 overflow-hidden">
+              {option.hazard ? (
+                <FaExclamationTriangle className="w-4 h-4 text-red-500" />
+              ) : option.icon ? (
+                <img src={option.icon} alt="" className="max-w-6 max-h-6 w-auto h-auto object-contain" />
+              ) : (
+                <span className="w-2 h-2 rounded-full bg-gray-300" />
+              )}
+            </span>
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold text-black truncate">{option.name}</span>
+              {option.fromPrice && (
+                <span className="block text-xs text-gray-500">
+                  from ${option.fromPrice} / {option.priceUnit?.replace("per ", "") || "lm"}
+                </span>
+              )}
+            </span>
           </button>
         );
       })}
@@ -234,11 +272,19 @@ function ReviewRow({ title, detail, onEdit }) {
 function RequestQuotePage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const calculatorEstimate = location.state?.calculatorEstimate ?? null;
   const serviceSelection = location.state?.serviceSelection ?? null;
 
   const days = getWeekDays();
   const todayIndex = days.findIndex((d) => d.toDateString() === new Date().toDateString());
+
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    getServiceCategories()
+      .then((data) => setCategories(data.categories))
+      .catch(() => {});
+  }, []);
 
   const [service, setService] = useState(() => {
     if (serviceSelection?.label && SERVICE_TYPES.includes(serviceSelection.label)) return serviceSelection.label;
@@ -267,17 +313,57 @@ function RequestQuotePage() {
   const [currentStep, setCurrentStep] = useState(1);
 
   const [submitted, setSubmitted] = useState(false);
-  const [reference] = useState(() => `SF-${Math.floor(1000 + Math.random() * 9000)}`);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [reference, setReference] = useState("");
 
   const monthLabel = `${MONTH_LABELS[days[0].getMonth()]} ${days[0].getFullYear()}`;
   const selectedDay = days[selectedDayIndex];
   const selectedDayLabel = `${selectedDay.toLocaleDateString("en-AU", { weekday: "long" })} ${selectedDay.getDate()} ${MONTH_LABELS[selectedDay.getMonth()]}`;
   const selectedDayShort = `${selectedDay.toLocaleDateString("en-AU", { weekday: "short" })} ${selectedDay.getDate()} ${MONTH_LABELS[selectedDay.getMonth()]}`;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (submitting) return;
+    setSubmitting(true);
+    setSubmitError("");
+
+    try {
+      let photoUrls = [];
+      if (user && photos.length) {
+        photoUrls = await Promise.all(photos.map((file) => uploadFile(file)));
+      }
+
+      const { quote } = await createQuoteRequest({
+        service,
+        propertyType,
+        approxLength,
+        timeframe,
+        notes,
+        photos: photoUrls,
+        selection: selectionAttached && serviceSelection ? serviceSelection : undefined,
+        calculatorEstimate: estimateAttached && calculatorEstimate ? calculatorEstimate : undefined,
+        firstName,
+        lastName,
+        mobile,
+        email,
+        siteAddress,
+        suburb,
+        state: stateRegion,
+        postcode,
+        preferredDate: selectedDay,
+        preferredTime: selectedTime,
+        noPreference,
+      });
+
+      setReference(quote.reference);
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (err) {
+      setSubmitError(err.message || "Something went wrong — please try again or call us.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const canGoNext =
@@ -333,7 +419,7 @@ function RequestQuotePage() {
                 {approxLength ? ` · approx. ${approxLength}` : ""}
               </p>
               <p className="mt-2 text-xs text-gray-400">
-                Reference #{reference} · Confirmation sent by SMS and email via ServiceM8
+                Reference #{reference} · Confirmation email sent
               </p>
             </div>
 
@@ -409,7 +495,7 @@ function RequestQuotePage() {
 
           {currentStep === 1 && (
             <div className="mt-5">
-              <ServicePicker value={service} onChange={setService} />
+              <ServicePicker value={service} onChange={setService} categories={categories} />
               <p className="mt-3 text-xs text-gray-500">Pick the closest match — we'll confirm the details on site.</p>
             </div>
           )}
@@ -538,7 +624,8 @@ function RequestQuotePage() {
                 />
                 I agree to the terms &amp; conditions and understand a free measure confirms the final price.
               </label>
-              <p className="text-xs text-gray-400">Free &amp; no obligation · confirmation by SMS and email via ServiceM8.</p>
+              <p className="text-xs text-gray-400">Free &amp; no obligation · confirmation sent by email.</p>
+              {submitError && <p className="text-xs text-red-600">{submitError}</p>}
             </div>
           )}
         </form>
@@ -551,10 +638,10 @@ function RequestQuotePage() {
             <button
               type="submit"
               form="quote-wizard-form"
-              disabled={!agreedToTerms}
+              disabled={!agreedToTerms || submitting}
               className="flex-1 bg-black disabled:opacity-40 text-white text-sm font-semibold py-3 rounded-full text-center transition-opacity"
             >
-              Request My Quote
+              {submitting ? "Sending…" : "Request My Quote"}
             </button>
           ) : (
             <button
@@ -593,7 +680,7 @@ function RequestQuotePage() {
               <section>
                 <h2 className="text-xs font-semibold tracking-wide text-black">1. WHAT DO YOU NEED?</h2>
                 <div className="mt-3">
-                  <ServicePicker value={service} onChange={setService} />
+                  <ServicePicker value={service} onChange={setService} categories={categories} />
                 </div>
                 <p className="mt-2 text-xs text-gray-500">
                   Pick the closest match — we'll confirm the details on site.
@@ -711,9 +798,10 @@ function RequestQuotePage() {
                 <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-3">
                   <button
                     type="submit"
-                    className="group inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors shrink-0"
+                    disabled={submitting}
+                    className="group inline-flex items-center gap-2 bg-black hover:bg-gray-800 disabled:opacity-50 text-white text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full transition-colors shrink-0"
                   >
-                    Request My Quote
+                    {submitting ? "Sending…" : "Request My Quote"}
                     <span className="w-7 h-7 rounded-full bg-white text-gray-900 flex items-center justify-center">
                       <ArrowIcon className="transition-transform duration-300 group-hover:rotate-45" />
                     </span>
@@ -722,6 +810,7 @@ function RequestQuotePage() {
                     Free & no obligation. We'll call within one business day to confirm your measure booking.
                   </p>
                 </div>
+                {submitError && <p className="mt-2 text-xs text-red-600">{submitError}</p>}
               </section>
             </form>
 
@@ -760,7 +849,7 @@ function RequestQuotePage() {
                   </a>
                   <p className="text-xs text-gray-500">Mon-Sat, 7am-5pm</p>
                   <p className="mt-3 text-xs text-gray-500">
-                    Measure bookings run on Mon-Sat, 7am-5pm — you'll get SMS and email confirmation
+                    Measure bookings run on Mon-Sat, 7am-5pm — you'll get an email confirmation
                     automatically.
                   </p>
                 </div>

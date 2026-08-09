@@ -88,24 +88,23 @@ function StyleCard({ style, minPrice, maxPrice, selected, onSelect }) {
       type="button"
       onClick={onSelect}
       className={
-        "relative w-full text-left border rounded-sm p-4 transition-colors " +
+        "relative w-full h-full text-left border rounded-sm p-4 transition-colors " +
         (selected
-          ? "border-black ring-2 ring-black ring-offset-2"
+          ? "border-brand-orange"
           : style.popular
           ? "border-black"
           : "border-gray-200 hover:border-gray-400")
       }
     >
-      {selected ? (
-        <span className="absolute top-3 right-3 w-5 h-5 rounded-full bg-black text-white flex items-center justify-center">
+      {selected && (
+        <span className="absolute top-3 right-3 w-5 h-5 rounded-full bg-brand-orange text-white flex items-center justify-center">
           <FaCheck className="w-2.5 h-2.5" />
         </span>
-      ) : (
-        style.popular && (
-          <span className="absolute top-3 right-3 bg-black text-white text-[10px] font-semibold px-2 py-1 rounded-full">
-            Most popular
-          </span>
-        )
+      )}
+      {style.popular && !selected && (
+        <span className="absolute top-3 right-3 bg-black text-white text-[10px] font-semibold px-2 py-1 rounded-full">
+          Most popular
+        </span>
       )}
       {style.icon ? (
         <div className="h-14 flex items-center">
@@ -122,7 +121,14 @@ function StyleCard({ style, minPrice, maxPrice, selected, onSelect }) {
           ))}
         </div>
       )}
-      <p className="mt-3 text-sm font-semibold text-black">{style.name}</p>
+      <p className="mt-3 text-sm font-semibold text-black flex items-center flex-wrap gap-1.5">
+        {style.name}
+        {style.popular && selected && (
+          <span className="text-[9px] font-semibold text-brand-orange bg-brand-orange/10 px-1.5 py-0.5 rounded-full">
+            Most popular
+          </span>
+        )}
+      </p>
       <p className="mt-0.5 text-xs text-gray-500">
         {style.fromPrice ? `from $${style.fromPrice} ${style.priceUnit}` : style.priceUnit}
       </p>

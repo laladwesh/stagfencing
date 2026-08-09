@@ -136,6 +136,18 @@ export function getGalleryProjects(params = {}) {
   return request(`/gallery${query ? `?${query}` : ""}`);
 }
 
+export function createQuoteRequest(payload) {
+  return request("/quotes", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+}
+
+export function getMyQuotes() {
+  return request("/quotes/mine");
+}
+
 export function searchProducts(q) {
   return request(`/search?q=${encodeURIComponent(q)}`);
 }

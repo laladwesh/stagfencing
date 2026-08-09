@@ -10,6 +10,7 @@ const servicesRouter = require("./services");
 const adminRouter = require("./admin");
 const searchRouter = require("./search");
 const galleryRouter = require("./gallery");
+const quotesRouter = require("./quotes");
 
 const router = express.Router();
 
@@ -28,5 +29,6 @@ router.use("/services", servicesRouter);
 router.use("/admin", adminRouter);
 router.use("/search", searchRouter);
 router.use("/gallery", galleryRouter);
+router.use("/quotes", quotesRouter);
 
 module.exports = router;

@@ -11,6 +11,7 @@ const Service = require("../models/Service");
 const Order = require("../models/Order");
 const GalleryProject = require("../models/GalleryProject");
 const SearchQuery = require("../models/SearchQuery");
+const QuoteRequest = require("../models/QuoteRequest");
 
 const router = express.Router();
 
@@ -186,6 +187,21 @@ router.put("/gallery/:id", async (req, res) => {
 router.delete("/gallery/:id", async (req, res) => {
   await GalleryProject.findByIdAndDelete(req.params.id);
   res.json({ ok: true });
+});
+
+// ---------- Quote requests ----------
+router.get("/quotes", async (req, res) => {
+  const quotes = await QuoteRequest.find().sort({ createdAt: -1 });
+  res.json({ quotes });
+});
+
+router.put("/quotes/:id", async (req, res) => {
+  const quote = await QuoteRequest.findByIdAndUpdate(
+    req.params.id,
+    { status: req.body.status },
+    { new: true }
+  );
+  res.json({ quote });
 });
 
 // ---------- Search analytics ----------

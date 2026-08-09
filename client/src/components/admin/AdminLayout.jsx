@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { label: "Gallery", href: "/admin/gallery" },
   { label: "Search analytics", href: "/admin/search-analytics" },
   { label: "Orders", href: "/admin/orders" },
+  { label: "Quote requests", href: "/admin/quotes" },
 ];
 
 function AdminLayout({ children }) {

@@ -290,18 +290,20 @@ function Navbar() {
                     link.dropdown && setOpenDropdown((cur) => (cur === link.dropdown ? null : cur))
                   }
                   className={
-                    "relative inline-flex items-center gap-1 py-1 " +
+                    "group relative inline-flex items-center gap-1 py-1 " +
                     (isActive ? "text-gray-900 font-semibold" : "hover:text-gray-900 transition-colors")
                   }
                 >
-                  {link.label}
+                  <span className="relative">
+                    {link.label}
+                    <span
+                      className={
+                        "absolute left-1/2 -bottom-1 h-0.5 w-2/5 -translate-x-1/2 bg-gray-900 rounded-full transition-opacity " +
+                        (isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100")
+                      }
+                    />
+                  </span>
                   {link.dropdown && <ChevronIcon open={isOpen} className="text-gray-400" />}
-                  <span
-                    className={
-                      "absolute left-1/2 -bottom-1 h-0.5 w-2/5 -translate-x-1/2 bg-gray-900 rounded-full transition-opacity " +
-                      (isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100")
-                    }
-                  />
                 </Link>
 
                 {link.dropdown && (
@@ -502,10 +504,10 @@ function Navbar() {
       <div
         className={
           "lg:hidden max-w-8xl mx-auto overflow-hidden transition-all duration-300 ease-in-out " +
-          (mobileOpen ? "max-h-[42rem] opacity-100 mt-2" : "max-h-0 opacity-0 mt-0")
+          (mobileOpen ? "max-h-[42rem] opacity-100" : "max-h-0 opacity-0")
         }
       >
-        <div className="bg-white rounded-2xl shadow-lg shadow-black/5 border border-gray-100 overflow-hidden">
+        <div className="bg-white overflow-hidden">
           <button
             type="button"
             onClick={() => {

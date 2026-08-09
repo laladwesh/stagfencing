@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import { useAuth } from "../context/AuthContext";
-import { requestOtp, verifyOtp, loginWithGoogle, getOrders } from "../lib/api";
+import { requestOtp, verifyOtp, loginWithGoogle, getOrders, getMyQuotes } from "../lib/api";
 
 function formatSelections(selections) {
   if (!selections) return null;
@@ -137,7 +138,9 @@ function LoginPanel() {
 function AccountPanel() {
   const { user, logout } = useAuth();
   const [orders, setOrders] = useState([]);
+  const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [quotesLoading, setQuotesLoading] = useState(true);
   const [avatarFailed, setAvatarFailed] = useState(false);
 
   useEffect(() => {
@@ -145,6 +148,10 @@ function AccountPanel() {
       .then(setOrders)
       .catch(() => setOrders([]))
       .finally(() => setLoading(false));
+    getMyQuotes()
+      .then((data) => setQuotes(data.quotes))
+      .catch(() => setQuotes([]))
+      .finally(() => setQuotesLoading(false));
   }, []);
 
   return (
@@ -177,7 +184,57 @@ function AccountPanel() {
         </button>
       </div>
 
-      <h2 className="mt-8 text-lg font-semibold text-black">Order history</h2>
+      <h2 className="mt-8 text-lg font-semibold text-black">Quote requests</h2>
+
+      {quotesLoading ? (
+        <p className="mt-4 text-sm text-gray-500">Loading quote requests…</p>
+      ) : quotes.length === 0 ? (
+        <p className="mt-4 text-sm text-gray-500">
+          No quote requests yet — head to{" "}
+          <Link to="/request-a-quote" className="text-black underline">
+            Request a Quote
+          </Link>{" "}
+          to book a free measure.
+        </p>
+      ) : (
+        <div className="mt-4 space-y-4">
+          {quotes.map((quote) => (
+            <div key={quote._id} className="border border-gray-200 rounded-sm p-5">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <p className="font-semibold text-black">
+                  {quote.service} · Quote #{quote.reference}
+                </p>
+                <span className="text-xs font-medium bg-[#F3EFE9] text-black px-3 py-1 rounded-full capitalize">
+                  {quote.status}
+                </span>
+              </div>
+              <p className="mt-1 text-xs text-gray-400">
+                {new Date(quote.createdAt).toLocaleDateString("en-AU", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </p>
+              <p className="mt-2 text-sm text-gray-600">
+                {[quote.propertyType, quote.approxLength, quote.suburb].filter(Boolean).join(" · ")}
+              </p>
+              {quote.preferredDate && (
+                <p className="mt-1 text-xs text-gray-500">
+                  Measure booked:{" "}
+                  {new Date(quote.preferredDate).toLocaleDateString("en-AU", {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                  })}
+                  {quote.noPreference ? "" : ` · ${quote.preferredTime}`}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      <h2 className="mt-10 text-lg font-semibold text-black">Order history</h2>
 
       {loading ? (
         <p className="mt-4 text-sm text-gray-500">Loading orders…</p>

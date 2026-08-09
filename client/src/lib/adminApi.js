@@ -69,6 +69,10 @@ export const createGalleryProject = (payload) => json("POST", "/gallery", payloa
 export const updateGalleryProject = (id, payload) => json("PUT", `/gallery/${id}`, payload);
 export const deleteGalleryProject = (id) => json("DELETE", `/gallery/${id}`);
 
+// Quote requests
+export const getAdminQuotes = () => request("/quotes");
+export const setQuoteStatus = (id, status) => json("PUT", `/quotes/${id}`, { status });
+
 // Search analytics
 export const getSearchQueries = () => request("/search-queries");
 export const deleteSearchQuery = (id) => json("DELETE", `/search-queries/${id}`);

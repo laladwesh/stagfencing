@@ -42,6 +42,7 @@ import AdminServiceCategoriesPage from "./pages/admin/AdminServiceCategoriesPage
 import AdminServicesPage from "./pages/admin/AdminServicesPage";
 import AdminServiceFormPage from "./pages/admin/AdminServiceFormPage";
 import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
+import AdminQuotesPage from "./pages/admin/AdminQuotesPage";
 import AdminGalleryPage from "./pages/admin/AdminGalleryPage";
 import AdminSearchAnalyticsPage from "./pages/admin/AdminSearchAnalyticsPage";
 
@@ -180,6 +181,7 @@ function App() {
                     element={<AdminServiceFormPage />}
                   />
                   <Route path="/admin/orders" element={<AdminOrdersPage />} />
+                  <Route path="/admin/quotes" element={<AdminQuotesPage />} />
                   <Route path="/admin/gallery" element={<AdminGalleryPage />} />
                   <Route
                     path="/admin/search-analytics"
