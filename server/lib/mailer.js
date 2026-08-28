@@ -154,4 +154,122 @@ async function sendQuoteConfirmationEmail(quote) {
   });
 }
 
-module.exports = { sendOtpEmail, sendQuoteRequestEmail, sendQuoteConfirmationEmail };
+function orderItemsHtml(order) {
+  const rows = (order.items || [])
+    .map((item) => {
+      const selections = item.selections && typeof item.selections === "object" ? Object.values(item.selections).filter(Boolean).join(" · ") : "";
+      return `<tr>
+        <td style="padding:6px 12px 6px 0;color:#111;">${item.name}${selections ? `<br/><span style="color:#888;font-size:12px;">${selections}</span>` : ""}</td>
+        <td style="padding:6px 12px;color:#666;text-align:center;">${item.quantity}</td>
+        <td style="padding:6px 0;color:#111;text-align:right;">$${(item.unitPrice * item.quantity).toFixed(2)}</td>
+      </tr>`;
+    })
+    .join("");
+
+  return `
+    <table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="border-bottom:1px solid #eee;">
+          <td style="padding:0 12px 6px 0;color:#888;font-size:12px;">Item</td>
+          <td style="padding:0 12px 6px;color:#888;font-size:12px;text-align:center;">Qty</td>
+          <td style="padding:0 0 6px;color:#888;font-size:12px;text-align:right;">Price</td>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <table cellpadding="0" cellspacing="0" style="width:100%;margin-top:8px;border-top:1px solid #eee;padding-top:8px;">
+      <tr><td style="padding:2px 0;color:#666;">Subtotal</td><td style="padding:2px 0;text-align:right;color:#111;">$${(order.subtotal || 0).toFixed(2)}</td></tr>
+      ${order.discount ? `<tr><td style="padding:2px 0;color:#666;">Discount</td><td style="padding:2px 0;text-align:right;color:#111;">-$${order.discount.toFixed(2)}</td></tr>` : ""}
+      <tr><td style="padding:2px 0;color:#666;">${order.deliveryMethod || "Delivery"}</td><td style="padding:2px 0;text-align:right;color:#111;">${order.deliveryFee ? `$${order.deliveryFee.toFixed(2)}` : "Free"}</td></tr>
+      <tr><td style="padding:6px 0 0;font-weight:bold;color:#111;">Total</td><td style="padding:6px 0 0;text-align:right;font-weight:bold;color:#111;">$${(order.total || 0).toFixed(2)}</td></tr>
+    </table>
+  `;
+}
+
+function bankTransferDetailsHtml(order) {
+  const accountName = process.env.BANK_ACCOUNT_NAME;
+  const bsb = process.env.BANK_BSB;
+  const accountNumber = process.env.BANK_ACCOUNT_NUMBER;
+
+  if (!accountName || !bsb || !accountNumber) {
+    return `<p style="color:#b91c1c;">Bank details are not yet configured — call 0431 703 770 for transfer instructions.</p>`;
+  }
+
+  return `
+    <table cellpadding="0" cellspacing="0">
+      ${row("Account name", accountName)}
+      ${row("BSB", bsb)}
+      ${row("Account number", accountNumber)}
+      ${row("Reference", `<strong>${order.reference}</strong> (please use this exact reference)`)}
+    </table>
+    <p style="color:#666;">Your order ships once we receive payment.</p>
+  `;
+}
+
+async function sendOrderConfirmationEmail(order, customerEmail, customerName) {
+  const transport = getTransporter();
+  if (!transport) {
+    console.log(`\n[mailer] SMTP not configured — order confirmation for ${order.reference} not sent to ${customerEmail}\n`);
+    return;
+  }
+
+  await transport.sendMail({
+    from: process.env.MAIL_FROM || "Stag Fencing <no-reply@stagfencing.com.au>",
+    to: customerEmail,
+    subject: `Order confirmed — ${order.reference}`,
+    html: `
+      <div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.5;">
+        <p>Hi ${customerName || "there"},</p>
+        <p>Thanks for your order — here's your receipt.</p>
+        <h2 style="margin:16px 0 4px;">Order ${order.reference}</h2>
+        ${orderItemsHtml(order)}
+        ${
+          order.paymentMethod === "bank_transfer"
+            ? `<h3 style="margin:16px 0 4px;">Bank transfer details</h3>${bankTransferDetailsHtml(order)}`
+            : `<p style="margin-top:16px;color:#666;">Paid by card — you're all set.</p>`
+        }
+        <p style="margin-top:16px;">Questions? Call 0431 703 770 or reply to this email.</p>
+        <p>— Stag Fencing</p>
+      </div>
+    `,
+  });
+}
+
+async function sendOrderNotificationEmail(order, customerEmail, customerName) {
+  const transport = getTransporter();
+  const to = process.env.ORDER_NOTIFY_EMAIL || process.env.QUOTE_NOTIFY_EMAIL || "quote@stagfencing.com.au";
+
+  if (!transport) {
+    console.log(`\n[mailer] SMTP not configured — new order ${order.reference} would be emailed to ${to}\n`);
+    return;
+  }
+
+  await transport.sendMail({
+    from: process.env.MAIL_FROM || "Stag Fencing <no-reply@stagfencing.com.au>",
+    to,
+    replyTo: customerEmail,
+    subject: `New order — ${order.reference} · $${(order.total || 0).toFixed(2)} · ${order.paymentMethod}`,
+    html: `
+      <div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.5;">
+        <h2 style="margin:0 0 4px;">New order — ${order.reference}</h2>
+        <table cellpadding="0" cellspacing="0">
+          ${row("Customer", `${customerName || ""} · <a href="mailto:${customerEmail}">${customerEmail}</a>`)}
+          ${row("Payment", `${order.paymentMethod} · ${order.status}`)}
+          ${row("Delivery", order.deliveryMethod)}
+          ${order.address ? row("Address", [order.address.street, order.address.apartment, order.address.suburb, order.address.state, order.address.postcode].filter(Boolean).join(", ")) : ""}
+          ${row("Notes", order.notes)}
+        </table>
+        <h3 style="margin:16px 0 4px;">Items</h3>
+        ${orderItemsHtml(order)}
+      </div>
+    `,
+  });
+}
+
+module.exports = {
+  sendOtpEmail,
+  sendQuoteRequestEmail,
+  sendQuoteConfirmationEmail,
+  sendOrderConfirmationEmail,
+  sendOrderNotificationEmail,
+};
