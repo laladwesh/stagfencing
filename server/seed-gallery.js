@@ -5,6 +5,10 @@ const GalleryProject = require("./models/GalleryProject");
 
 const IMG = "/hero-bg.png";
 const IMAGES = [IMG, IMG, IMG, IMG];
+const REAL_PHOTOS = JSON.parse(
+  require("fs").readFileSync(require("path").join(__dirname, "real-photo-urls.json"), "utf8")
+);
+const realImages = (slug, count = 4) => REAL_PHOTOS[slug]?.urls?.slice(0, count) || IMAGES;
 
 const PROJECTS = [
   {
@@ -38,6 +42,7 @@ const PROJECTS = [
     colour: "Woodland Grey",
     length: "30 lm",
     completedDate: new Date("2026-05-05"),
+    images: realImages("aluminium-slat-fencing-perth", 6),
   },
   {
     title: "Sleeper Retaining Wall",
@@ -48,6 +53,7 @@ const PROJECTS = [
     productSlug: "sleeper-retaining-wall-kit-per-metre",
     length: "12 lm",
     completedDate: new Date("2026-04-18"),
+    images: realImages("limestone-retaining", 6),
   },
   {
     title: "Automated Sliding Gate",
@@ -67,6 +73,7 @@ const PROJECTS = [
     colour: "Monument",
     length: "40 lm",
     completedDate: new Date("2026-03-22"),
+    images: realImages("garrison-fencing", 6),
   },
   {
     title: "Colorbond Fencing & Gate",
@@ -124,6 +131,7 @@ const PROJECTS = [
     serviceSlug: "chainmesh-fencing",
     length: "50 lm",
     completedDate: new Date("2025-12-05"),
+    images: realImages("chainmesh-fencing", 6),
   },
   {
     title: "PVC Picket Fencing",
@@ -145,6 +153,16 @@ const PROJECTS = [
     length: "18 lm",
     completedDate: new Date("2025-11-08"),
   },
+  {
+    title: "Post & Panel Retaining Wall",
+    suburb: "Perth",
+    service: "Retaining Walls",
+    categorySlug: "retaining-walls",
+    serviceSlug: "post-and-panel-retaining",
+    length: "10 lm",
+    completedDate: new Date("2026-08-25"),
+    images: realImages("post-and-panel-retaining", 4),
+  },
 ];
 
 async function seed() {
@@ -155,7 +173,10 @@ async function seed() {
 
   console.log("Seeding gallery projects...");
   await GalleryProject.create(
-    PROJECTS.map((p, i) => ({ ...p, image: IMAGES[0], images: IMAGES, sortOrder: i }))
+    PROJECTS.map((p, i) => {
+      const images = p.images || IMAGES;
+      return { ...p, image: images[0], images, sortOrder: i };
+    })
   );
 
   console.log(`Seed complete. ${PROJECTS.length} gallery projects.`);

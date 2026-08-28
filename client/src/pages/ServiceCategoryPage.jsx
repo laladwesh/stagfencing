@@ -106,6 +106,7 @@ function ServiceCategoryPage() {
         breadcrumb={`Home / Services / ${category.name.replace(/ Range$/, "")}`}
         title={category.rangeBannerTitle || category.name}
         subtitle={category.rangeBannerSubtitle}
+        image={category.heroImage}
       >
         <Link
           to="/request-a-quote"

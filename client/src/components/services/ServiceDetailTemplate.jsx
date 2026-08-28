@@ -234,7 +234,12 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
         image={service.image || service.cardImage}
         jsonLd={jsonLd}
       />
-      <PageBanner breadcrumb={breadcrumb} title={service.bannerTitle || service.name} subtitle={service.bannerSubtitle}>
+      <PageBanner
+        breadcrumb={breadcrumb}
+        title={service.bannerTitle || service.name}
+        subtitle={service.bannerSubtitle}
+        image={service.heroImage}
+      >
         <Link
           to="/request-a-quote"
           state={serviceSelectionState}

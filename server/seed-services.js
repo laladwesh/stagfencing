@@ -9,6 +9,9 @@ const IMG = "/hero-bg.png";
 const ICON_URLS = JSON.parse(
   require("fs").readFileSync(require("path").join(__dirname, "service-icon-urls.json"), "utf8")
 );
+const REAL_PHOTOS = JSON.parse(
+  require("fs").readFileSync(require("path").join(__dirname, "real-photo-urls.json"), "utf8")
+);
 const CATEGORY_ICON = {
   colorbond: ICON_URLS["colorbond-1800mm"],
   slat: ICON_URLS["slat-1"],
@@ -119,7 +122,8 @@ async function seed() {
     {
       name: "Slat Fencing Range",
       slug: "aluminium-slat-fencing-perth",
-      image: IMG,
+      image: REAL_PHOTOS["aluminium-slat-fencing-perth"].urls[0],
+      heroImage: REAL_PHOTOS["aluminium-slat-fencing-perth"].urls[1],
       icon: CATEGORY_ICON.slat,
       fromPrice: 190,
       priceUnit: "per lineal metre",
@@ -144,7 +148,8 @@ async function seed() {
     {
       name: "Retaining Walls",
       slug: "retaining-walls",
-      image: IMG,
+      image: REAL_PHOTOS["limestone-retaining"].urls[0],
+      heroImage: REAL_PHOTOS["limestone-retaining"].urls[1],
       icon: CATEGORY_ICON.retaining,
       fromPrice: 190,
       priceUnit: "per m²",
@@ -174,7 +179,8 @@ async function seed() {
     {
       name: "Security Fencing",
       slug: "security-fencing",
-      image: IMG,
+      image: REAL_PHOTOS["garrison-fencing"].urls[0],
+      heroImage: REAL_PHOTOS["garrison-fencing"].urls[1],
       icon: CATEGORY_ICON.security,
       fromPrice: 30,
       priceUnit: "per lineal metre",
@@ -362,10 +368,10 @@ async function seed() {
     isCategoryRoot: true,
     name: "Slat Fencing Range",
     slug: "aluminium-slat-fencing-perth",
-    cardImage: IMG,
+    cardImage: REAL_PHOTOS["aluminium-slat-fencing-perth"].urls[2],
     fromPrice: 190,
     priceUnit: "per lineal metre",
-    heroImage: IMG,
+    heroImage: REAL_PHOTOS["aluminium-slat-fencing-perth"].urls[3],
     breadcrumbLabel: "Slat Fencing",
     bannerTitle: "Aluminium Slat Fencing",
     bannerSubtitle: "Horizontal slat privacy fencing, powder-coated and rust-proof",
@@ -419,9 +425,9 @@ async function seed() {
     ),
     recentJobsTitle: "Recent slat jobs around Perth",
     recentJobs: [
-      { image: IMG, caption: "Mount Lawley · 18 lm · Monument 65mm" },
-      { image: IMG, caption: "Scarborough · Feature screen · Kwila" },
-      { image: IMG, caption: "Applecross · 24 lm · Black 90mm" },
+      { image: REAL_PHOTOS["aluminium-slat-fencing-perth"].urls[4], caption: "Slat fencing — recent install" },
+      { image: REAL_PHOTOS["aluminium-slat-fencing-perth"].urls[5], caption: "Slat fencing — recent install" },
+      { image: REAL_PHOTOS["aluminium-slat-fencing-perth"].urls[6], caption: "Slat fencing — recent install" },
     ],
     reviews: reviewPool(
       "P.K.",
@@ -951,10 +957,10 @@ async function seed() {
       isCategoryRoot: false,
       name,
       slug,
-      cardImage: IMG,
+      cardImage: REAL_PHOTOS[slug]?.urls?.[0] || IMG,
       fromPrice,
       priceUnit: "per m²",
-      heroImage: IMG,
+      heroImage: REAL_PHOTOS[slug]?.urls?.[1] || IMG,
       breadcrumbLabel: `Retaining Walls / ${name}`,
       bannerTitle: name,
       bannerSubtitle: tagline,
@@ -1052,9 +1058,9 @@ async function seed() {
       ],
       recentJobsTitle: "Recent Limestone walls around Perth",
       recentJobs: [
-        { image: IMG, caption: "Wanneroo · 18m · In concrete" },
-        { image: IMG, caption: "Byford · Tiered · Limestone Woodgrain" },
-        { image: IMG, caption: "Duncraig · 12m · Limestone Smooth" },
+        { image: REAL_PHOTOS["limestone-retaining"].urls[2], caption: "Limestone retaining — recent install" },
+        { image: REAL_PHOTOS["limestone-retaining"].urls[3], caption: "Limestone retaining — recent install" },
+        { image: REAL_PHOTOS["limestone-retaining"].urls[4], caption: "Limestone retaining — recent install" },
       ],
       reviews: reviewPool(
         "Marcus D.",
@@ -1109,9 +1115,8 @@ async function seed() {
       processStepInstall: "Posts set, sleepers slotted and clipped, drainage in — backfilled.",
       recentJobsTitle: "Recent Post & Panel walls around Perth",
       recentJobs: [
-        { image: IMG, caption: "Wanneroo · 18m · 1m concrete" },
-        { image: IMG, caption: "Byford · Tiered · Post & Panel Basalt" },
-        { image: IMG, caption: "Duncraig · 12m · Post & Panel Monument" },
+        { image: REAL_PHOTOS["post-and-panel-retaining"].urls[2], caption: "Post & Panel retaining — recent install" },
+        { image: REAL_PHOTOS["post-and-panel-retaining"].urls[3], caption: "Post & Panel retaining — recent install" },
       ],
       reviews: reviewPool(
         "Marcus D.",
@@ -1374,10 +1379,10 @@ async function seed() {
       isCategoryRoot: false,
       name,
       slug,
-      cardImage: IMG,
+      cardImage: REAL_PHOTOS[slug]?.urls?.[0] || IMG,
       fromPrice,
       priceUnit,
-      heroImage: IMG,
+      heroImage: REAL_PHOTOS[slug]?.urls?.[1] || IMG,
       breadcrumbLabel: `Security Fencing / ${name}`,
       bannerTitle: name,
       bannerSubtitle: tagline,
@@ -1473,9 +1478,9 @@ async function seed() {
       ],
       recentJobsTitle: "Recent garrison fences around Perth",
       recentJobs: [
-        { image: IMG, caption: "Malaga · Warehouse · 86 lm spear-top" },
-        { image: IMG, caption: "Como · School boundary · Flat-top" },
-        { image: IMG, caption: "Balcatta · Garrison + keyed gates" },
+        { image: REAL_PHOTOS["garrison-fencing"].urls[2], caption: "Garrison fencing — recent install" },
+        { image: REAL_PHOTOS["garrison-fencing"].urls[3], caption: "Garrison fencing — recent install" },
+        { image: REAL_PHOTOS["garrison-fencing"].urls[4], caption: "Garrison fencing — recent install" },
       ],
       faqTitle: "Garrison fencing FAQs",
       faqs: [
@@ -1506,9 +1511,9 @@ async function seed() {
       ],
       recentJobsTitle: "Recent chainmesh fences around Perth",
       recentJobs: [
-        { image: IMG, caption: "Malaga · Warehouse · 120 lm chainmesh" },
-        { image: IMG, caption: "Como · Tennis court · PVC black" },
-        { image: IMG, caption: "Balcatta · Compound + double gates" },
+        { image: REAL_PHOTOS["chainmesh-fencing"].urls[2], caption: "Chainmesh fencing — recent install" },
+        { image: REAL_PHOTOS["chainmesh-fencing"].urls[3], caption: "Chainmesh fencing — recent install" },
+        { image: REAL_PHOTOS["chainmesh-fencing"].urls[4], caption: "Chainmesh fencing — recent install" },
       ],
       faqTitle: "Chainmesh FAQs",
       faqs: [

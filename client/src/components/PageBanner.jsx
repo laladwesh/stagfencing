@@ -3,7 +3,7 @@ import TopBar from "./TopBar";
 import Navbar from "./Navbar";
 import Breadcrumb from "./Breadcrumb";
 
-function PageBanner({ breadcrumb, title, subtitle, children }) {
+function PageBanner({ breadcrumb, title, subtitle, image, children }) {
   const [showStickyNav, setShowStickyNav] = useState(false);
   const sentinelRef = useRef(null);
 
@@ -29,8 +29,7 @@ function PageBanner({ breadcrumb, title, subtitle, children }) {
       <div
         className="relative bg-cover bg-center"
         style={{
-          backgroundImage:
-            "linear-gradient(180deg, rgba(20,15,10,0.55) 0%, rgba(20,15,10,0.65) 100%), url('/hero-bg.png')",
+          backgroundImage: `linear-gradient(180deg, rgba(20,15,10,0.55) 0%, rgba(20,15,10,0.65) 100%), url('${image || "/hero-bg.png"}')`,
         }}
       >
         <header className="relative z-40">
