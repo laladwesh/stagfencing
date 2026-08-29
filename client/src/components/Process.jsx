@@ -1,23 +1,23 @@
 const STEPS = [
   {
-    icon: "📏",
+    icon: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/process/1788033145413-413b00b3484a785e.png",
     title: "Free measure and quote",
     description:
       "We come out, measure up, and give you a clear price the same day. No obligation to go ahead.",
   },
   {
-    icon: "🎨",
+    icon: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/process/1788033146288-d1a8a3e5990643ea.png",
     title: "Pick your style",
     description:
       "We help you settle on the material, height and colour that suit the place and the budget.",
   },
   {
-    icon: "🔧",
+    icon: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/process/1788033146504-c04dcb6e5d3a7823.png",
     title: "We build it",
     description: "Our crew installs it properly and cleans up after — usually done in a day or two.",
   },
   {
-    icon: "📋",
+    icon: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/process/1788033146722-b8698dd82daf1cbf.png",
     title: "Walk it with us",
     description:
       "We check the finished fence with you before we leave, so anything you're not happy with gets sorted on the spot.",
@@ -42,8 +42,8 @@ function Process() {
         <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {STEPS.map((step) => (
             <div key={step.title} className="flex flex-col items-center text-center">
-              <div className="relative w-20 h-20 rounded-full bg-gray-800 flex items-center justify-center text-3xl">
-                {step.icon}
+              <div className="relative w-20 h-20 rounded-full bg-gray-800 flex items-center justify-center">
+                <img src={step.icon} alt="" className="w-9 h-9 object-contain" />
                 {step.badge && (
                   <span className="absolute -bottom-1 -left-1 w-7 h-7 rounded-full bg-green-500 border-2 border-brand-dark flex items-center justify-center text-xs">
                     {step.badge}
