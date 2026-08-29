@@ -44,6 +44,7 @@ const REVIEWS = [
     avatarLetter: "B",
     avatarColor: "bg-blue-600",
     text: "Couldn't recommend Adi and the team at Stag Fencing enough. They did a fantastic job at removing our old asbestos fence and worked their",
+    image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/reviews/1788032341564-ac128e60134d824b.png",
   },
   {
     name: "Michael W",
@@ -51,6 +52,7 @@ const REVIEWS = [
     avatarLetter: "M",
     avatarColor: "bg-green-600",
     text: "Excellent service removing an asbestos fencing, no breakage and very professional. Quoted on the work the same day as requested and complete",
+    image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014158703-715b271101e641ea.png",
   },
   {
     name: "Manpreet Singh",
@@ -58,6 +60,7 @@ const REVIEWS = [
     avatarLetter: "M",
     avatarColor: "bg-orange-600",
     text: "Stag Fencing provides excellent service with high-quality materials and skilled craftsmanship. Their team is professional, reliable, and efficient. Hi",
+    image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/reviews/1788032340372-821c96ab6756256d.png",
   },
   {
     name: "Sandra Schmid",
@@ -65,6 +68,7 @@ const REVIEWS = [
     avatarLetter: "S",
     avatarColor: "bg-green-600",
     text: "From the first call to the final clean-up the whole job was handled without a single hiccup. Would happily use them again for the next property",
+    image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/reviews/1788032342002-94ec692dcbaa4931.png",
   },
   {
     name: "Priya Nair",
@@ -72,6 +76,7 @@ const REVIEWS = [
     avatarLetter: "P",
     avatarColor: "bg-purple-600",
     text: "Got three quotes and Stag's was the clearest by far. No hidden extras, showed up when they said they would and left the yard spotless",
+    image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/reviews/1788032342217-4e2f17d3e37c581a.png",
   },
   {
     name: "Tom Baxter",
@@ -79,6 +84,7 @@ const REVIEWS = [
     avatarLetter: "T",
     avatarColor: "bg-red-600",
     text: "Retaining wall and Colorbond fence done together in one week. Council approvals sorted for us too, which saved a lot of back and forth",
+    image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/gallery/limestone-retaining/1787905489749-911e439c58925df6.jpg",
   },
   {
     name: "Grace Lin",
@@ -86,6 +92,7 @@ const REVIEWS = [
     avatarLetter: "G",
     avatarColor: "bg-teal-600",
     text: "Pool fencing done to code without making the yard feel closed in. Frameless glass looks fantastic and the install crew were tidy and quick",
+    image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014157388-3085c6c9fcaf5722.png",
   },
   {
     name: "Daniel Okafor",
@@ -93,6 +100,7 @@ const REVIEWS = [
     avatarLetter: "D",
     avatarColor: "bg-indigo-600",
     text: "Old asbestos fence removed and replaced with slat fencing in the same visit. Handled the disposal paperwork so we didn't have to think about it",
+    image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/gallery/aluminium-slat-fencing-perth/1787905409260-9f458498f2ac1bf4.jpg",
   },
 ];
 
@@ -175,7 +183,7 @@ function Reviews() {
           {REVIEWS.map((review) => (
             <div key={review.name} className="snap-start shrink-0 w-full sm:w-1/2 lg:w-1/4 pr-5">
               <div className="bg-white rounded-sm overflow-hidden h-full">
-                <img src="/hero-bg.png" alt="" className="w-full h-32 object-cover" />
+                <img src={review.image} alt="" className="w-full h-32 object-cover" />
                 <div className="p-4">
                   <div className="flex items-center gap-1.5">
                     <GoogleIcon />
