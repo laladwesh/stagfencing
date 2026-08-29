@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function InfoCell({ label, value }) {
   if (!value) return null;
   return (
-    <div className="border border-gray-200 px-3 py-2.5 -ml-px -mt-px">
+    <div className="border-r border-b border-gray-200 px-3 py-2.5">
       <p className="text-xs text-gray-500">{label}</p>
       <p className="mt-0.5 text-sm font-semibold text-black">{value}</p>
     </div>
@@ -96,7 +96,7 @@ function ProjectModal({ project, onClose, hideActionLinks = false }) {
           </p>
 
           {infoRows.length > 0 && (
-            <div className="mt-5 grid grid-cols-2 border border-gray-200 ml-px mt-px">
+            <div className="mt-5 grid grid-cols-2 border-l border-t border-gray-200">
               {infoRows.map(([label, value]) => (
                 <InfoCell key={label} label={label} value={value} />
               ))}
