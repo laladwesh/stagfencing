@@ -77,10 +77,11 @@ export const setQuoteStatus = (id, status) => json("PUT", `/quotes/${id}`, { sta
 export const getSearchQueries = () => request("/search-queries");
 export const deleteSearchQuery = (id) => json("DELETE", `/search-queries/${id}`);
 
-export async function uploadAdminFile(file) {
+export async function uploadAdminFile(file, folder) {
   const token = getToken();
   const formData = new FormData();
   formData.append("files", file);
+  if (folder) formData.append("folder", folder);
   const res = await fetch("/api/uploads", {
     method: "POST",
     headers: token ? { Authorization: `Bearer ${token}` } : {},

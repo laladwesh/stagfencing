@@ -5,6 +5,7 @@ import {
   TextAreaField,
   NumberField,
   CheckboxField,
+  ImageUrlField,
   AdminButton,
 } from "../../components/admin/AdminFormFields";
 import {
@@ -18,6 +19,7 @@ const EMPTY = {
   name: "",
   slug: "",
   image: "",
+  heroImage: "",
   tagline: "",
   fromPrice: 0,
   priceUnit: "",
@@ -56,10 +58,13 @@ function CategoryForm({ initial, onSaved, onCancel }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <TextField label="Name*" value={form.name} onChange={set("name")} required />
         <TextField label="Slug*" value={form.slug} onChange={set("slug")} required />
-        <TextField label="Image URL" value={form.image} onChange={set("image")} />
         <NumberField label="From price" value={form.fromPrice} onChange={set("fromPrice")} />
         <TextField label="Price unit" value={form.priceUnit} onChange={set("priceUnit")} placeholder="per lineal metre" />
         <NumberField label="Sort order" value={form.sortOrder} onChange={set("sortOrder")} />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <ImageUrlField label="Card image" value={form.image} onChange={set("image")} folder="service-categories" />
+        <ImageUrlField label="Hero image (range banner)" value={form.heroImage} onChange={set("heroImage")} folder="service-categories" />
       </div>
       <TextField label="Tagline (used on the /services grid)" value={form.tagline} onChange={set("tagline")} />
 

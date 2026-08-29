@@ -1,4 +1,47 @@
 import Select from "../ui/Select";
+import { uploadAdminFile } from "../../lib/adminApi";
+
+export function ImageUrlField({ label, value, onChange, folder, className = "" }) {
+  const handleUpload = async (file) => {
+    try {
+      const url = await uploadAdminFile(file, folder);
+      onChange(url);
+    } catch (err) {
+      window.alert(err.message || "Upload failed");
+    }
+  };
+
+  return (
+    <div className={`block ${className}`}>
+      <span className="text-xs font-medium text-gray-500">{label}</span>
+      <div className="mt-1 flex items-center gap-2">
+        <div className="w-12 h-12 shrink-0 rounded-sm bg-gray-50 border border-gray-200 flex items-center justify-center overflow-hidden">
+          {value ? (
+            <img src={value} alt="" className="w-full h-full object-cover" />
+          ) : (
+            <span className="text-[9px] text-gray-400">none</span>
+          )}
+        </div>
+        <input
+          type="text"
+          value={value ?? ""}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="https://…"
+          className="flex-1 min-w-0 bg-[#F3EFE9] rounded-sm px-3 py-2 text-sm focus:outline-none"
+        />
+        <label className="shrink-0 text-xs font-medium text-white bg-black hover:bg-gray-800 rounded-full px-3 py-2 cursor-pointer transition-colors">
+          Upload
+          <input
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            className="hidden"
+            onChange={(e) => e.target.files?.[0] && handleUpload(e.target.files[0])}
+          />
+        </label>
+      </div>
+    </div>
+  );
+}
 
 export function TextField({ label, value, onChange, placeholder, required, className = "" }) {
   return (

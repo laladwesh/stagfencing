@@ -9,9 +9,19 @@ const upload = multer({
   limits: { fileSize: 8 * 1024 * 1024, files: 5 },
 });
 
+const ALLOWED_FOLDERS = new Set([
+  "reviews",
+  "services",
+  "service-categories",
+  "gallery",
+  "shop",
+]);
+
 router.post("/", requireAuth, upload.array("files", 5), async (req, res) => {
   const files = req.files || [];
   if (!files.length) return res.status(400).json({ error: "No files uploaded" });
+
+  const folder = ALLOWED_FOLDERS.has(req.body.folder) ? req.body.folder : "reviews";
 
   const uploaded = await Promise.all(
     files.map((file) =>
@@ -19,7 +29,7 @@ router.post("/", requireAuth, upload.array("files", 5), async (req, res) => {
         buffer: file.buffer,
         contentType: file.mimetype,
         originalName: file.originalname,
-        folder: "reviews",
+        folder,
       })
     )
   );

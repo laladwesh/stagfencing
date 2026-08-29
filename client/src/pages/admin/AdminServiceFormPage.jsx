@@ -8,6 +8,7 @@ import {
   CheckboxField,
   SelectField,
   StringListField,
+  ImageUrlField,
   AdminButton,
 } from "../../components/admin/AdminFormFields";
 import {
@@ -387,8 +388,8 @@ function AdminServiceFormPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <TextField label="Card image URL" value={form.cardImage} onChange={set("cardImage")} />
-          <TextField label="Hero image URL" value={form.heroImage} onChange={set("heroImage")} />
+          <ImageUrlField label="Card image" value={form.cardImage} onChange={set("cardImage")} folder="services" />
+          <ImageUrlField label="Hero image" value={form.heroImage} onChange={set("heroImage")} folder="services" />
           <TextField label="Breadcrumb label" value={form.breadcrumbLabel} onChange={set("breadcrumbLabel")} />
           <TextField label="Banner title" value={form.bannerTitle} onChange={set("bannerTitle")} />
           <TextField label="Banner subtitle" value={form.bannerSubtitle} onChange={set("bannerSubtitle")} />
