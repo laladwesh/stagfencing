@@ -9,6 +9,7 @@ import { FaChevronDown, FaImage, FaCheck } from "react-icons/fa";
 import { faqJsonLd, serviceJsonLd } from "../../lib/seo";
 import { SERVICE_CATEGORY_TO_QUOTE_LABEL } from "../../lib/serviceQuoteLabels";
 import { getGalleryProjects } from "../../lib/api";
+import ProjectModal from "../gallery/ProjectModal";
 
 function StatTiles({ tiles }) {
   if (!tiles?.length) return null;
@@ -185,6 +186,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
     : null;
 
   const [linkedProjects, setLinkedProjects] = useState([]);
+  const [selectedProject, setSelectedProject] = useState(null);
   useEffect(() => {
     if (!service.slug) return;
     getGalleryProjects({ serviceSlug: service.slug })
@@ -433,10 +435,11 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
             </div>
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-5">
               {linkedProjects.slice(0, 3).map((project) => (
-                <Link
+                <button
                   key={project._id}
-                  to="/gallery"
-                  className="relative rounded-sm overflow-hidden bg-gray-100 h-40 block"
+                  type="button"
+                  onClick={() => setSelectedProject(project)}
+                  className="relative rounded-sm overflow-hidden bg-gray-100 h-40 block text-left"
                 >
                   <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
                   <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent px-3 py-2">
@@ -445,7 +448,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
                       {project.suburb ? ` · ${project.suburb}` : ""}
                     </p>
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           </div>
@@ -528,6 +531,10 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
           </div>
         )}
       </div>
+
+      {selectedProject && (
+        <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} hideActionLinks />
+      )}
     </>
   );
 }
