@@ -375,7 +375,7 @@ function Calculator({ config, serviceType, path }) {
 
                 <p className="mt-3 text-[11px] text-gray-400 leading-relaxed">
                   Estimate only — based on a typical Perth-metro installation. Your final price depends on
-                  site access, ground conditions, levels, removal and measured lengths. Prices include GST.
+                  site access, ground conditions, levels, removal and measured lengths. Prices exclude GST.
                   This is not a contract or formal offer.
                 </p>
               </div>

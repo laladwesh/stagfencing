@@ -98,8 +98,9 @@ function CheckoutPage() {
   const [confirmedOrder, setConfirmedOrder] = useState(null);
 
   const deliveryMethod = DELIVERY_METHODS.find((m) => m.id === deliveryMethodId);
-  const total = subtotal + deliveryMethod.fee;
-  const taxIncluded = total / 11;
+  const preTaxTotal = subtotal + deliveryMethod.fee;
+  const gst = preTaxTotal * 0.1;
+  const total = preTaxTotal + gst;
   const stripePromise = getStripePromise();
 
   useEffect(() => {
@@ -477,11 +478,15 @@ function CheckoutPage() {
                     {deliveryMethod.fee === 0 ? "Free · pickup" : `$${deliveryMethod.fee.toFixed(2)}`}
                   </span>
                 </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">GST (10%)</span>
+                  <span className="text-black">${gst.toFixed(2)}</span>
+                </div>
                 <div className="flex justify-between font-semibold text-base pt-2 border-t border-gray-200">
                   <span className="text-black">Total</span>
                   <span className="text-black">${total.toFixed(2)}</span>
                 </div>
-                <p className="text-xs text-gray-400">Includes ${taxIncluded.toFixed(2)} tax</p>
+                <p className="text-xs text-gray-400">Prices shown exclude GST — added at checkout</p>
               </div>
 
               {error && <p className="mt-3 text-xs text-red-600">{error}</p>}

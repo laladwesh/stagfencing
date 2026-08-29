@@ -322,7 +322,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
           <div className="mt-10">
             <div className="flex items-baseline justify-between flex-wrap gap-2">
               <p className="text-sm font-semibold text-black">{service.stylesLabel || "Styles & pricing"}</p>
-              <p className="sm:hidden text-xs text-gray-400">← swipe · all prices incl. GST</p>
+              <p className="sm:hidden text-xs text-gray-400">← swipe · prices exclude GST</p>
             </div>
             <div className="mt-4 flex sm:grid sm:grid-cols-4 gap-3 overflow-x-auto sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 pb-1 snap-x snap-mandatory sm:snap-none">
               {service.styles.map((style) => (

@@ -1714,7 +1714,7 @@ async function seed() {
     title: "Asbestos Fence Removal Perth",
     description:
       'Safe, certified removal of asbestos "super six" fences by a WA government licensed removalist — our own trained crew, not subcontractors. Sheets are wet down, hand-lifted and double-wrapped, disposed of at a licensed facility with receipts supplied, and a new Colorbond fence can start the same day.',
-    trustBadges: ["5.0 · 300+ Google reviews", "Licensed & insured", "WA licensed removalist"],
+    trustBadges: ["5.0 · 300+ Google reviews", "Licensed & insured", "WA licence WR394"],
     statTiles: [
       { value: "Licensed", label: "WA govt asbestos removalist" },
       { value: "1 week", label: "order to install" },
@@ -1766,7 +1766,7 @@ async function seed() {
     ],
     waRulesTitle: "Done to WA law — handled for you",
     waRules: [
-      "In WA, anything over 10m² of asbestos must be removed by a licensed contractor — a fence run is well past that. We hold the WA government licence.",
+      "In WA, anything over 10m² of asbestos must be removed by a licensed contractor — a fence run is well past that. We hold WA asbestos removal licence WR394.",
       "Never water-blast, cut or snap sheets — it releases fibres and it's illegal on asbestos. Wet-down hand removal only.",
       "Sheets travel double-wrapped under manifest to a licensed facility — disposal receipts come with your invoice.",
     ],

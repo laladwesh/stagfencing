@@ -109,10 +109,12 @@ function LocationCard({ city, address, hours, phone }) {
         {city}
       </p>
       <div className="mt-3 space-y-2 text-sm text-gray-400">
-        <p className="flex items-center gap-2">
-          <FaMapMarkerAlt className="w-3.5 h-3.5 shrink-0" />
-          {address}
-        </p>
+        {address && (
+          <p className="flex items-center gap-2">
+            <FaMapMarkerAlt className="w-3.5 h-3.5 shrink-0" />
+            {address}
+          </p>
+        )}
         <p className="flex items-center gap-2">
           <FaRegClock className="w-3.5 h-3.5 shrink-0" />
           {hours}
@@ -226,8 +228,7 @@ function Footer() {
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5">
           <LocationCard
-            city="Perth · WA"
-            address="79 Millstream Drive, Southern River WA 6110"
+            city="Perth & the South West"
             hours="Mon-Fri 7:30am - 3:00pm"
             phone="0431 703 770"
           />
@@ -260,7 +261,7 @@ function Footer() {
 
       <div className="mt-8 border-t border-white/10">
         <div className="px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-          <p>© {new Date().getFullYear()} Stag Fencing · ABN TBC · All prices incl GST</p>
+          <p>© {new Date().getFullYear()} Stag Fencing · ABN 47 679 579 198 · All prices exclude GST</p>
           <div className="flex items-center gap-4">
             <a href="/terms-and-conditions" className="hover:text-white transition-colors">
               Terms

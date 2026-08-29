@@ -51,8 +51,9 @@ function CartPage() {
 
   const deliveryMethod = DELIVERY_METHODS.find((m) => m.id === deliveryMethodId);
   const discountAmount = subtotal * discountRate;
-  const total = Math.max(0, subtotal - discountAmount + deliveryMethod.fee);
-  const taxIncluded = total / 11;
+  const preTaxTotal = Math.max(0, subtotal - discountAmount + deliveryMethod.fee);
+  const gst = preTaxTotal * 0.1;
+  const total = preTaxTotal + gst;
 
   const applyDiscount = () => {
     const code = discountInput.trim().toUpperCase();
@@ -227,11 +228,15 @@ function CartPage() {
                   {deliveryMethod.fee === 0 ? "Free pickup" : `$${deliveryMethod.fee.toFixed(2)}`}
                 </span>
               </div>
+              <div className="flex justify-between">
+                <span className="text-gray-500">GST (10%)</span>
+                <span className="text-black">${gst.toFixed(2)}</span>
+              </div>
               <div className="flex justify-between font-semibold text-base pt-2 border-t border-gray-200">
                 <span className="text-black">Total</span>
                 <span className="text-black">${total.toFixed(2)}</span>
               </div>
-              <p className="text-xs text-gray-400">Includes ${taxIncluded.toFixed(2)} Tax</p>
+              <p className="text-xs text-gray-400">Prices shown exclude GST — added at checkout</p>
             </div>
 
             <button

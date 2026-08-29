@@ -543,7 +543,7 @@ function RequestQuotePage() {
               {estimateAttached && calculatorEstimate && (
                 <SelectionBanner
                   title={`${calculatorEstimate.label} Calculator estimate attached`}
-                  detail={`${calculatorEstimate.detail}, approx. $${calculatorEstimate.low.toLocaleString()}–$${calculatorEstimate.high.toLocaleString()} inc GST`}
+                  detail={`${calculatorEstimate.detail}, approx. $${calculatorEstimate.low.toLocaleString()}–$${calculatorEstimate.high.toLocaleString()} + GST`}
                   onRemove={() => setEstimateAttached(false)}
                 />
               )}
@@ -736,7 +736,7 @@ function RequestQuotePage() {
                   <div className="mt-3">
                     <SelectionBanner
                       title={`${calculatorEstimate.label} Calculator estimate attached`}
-                      detail={`${calculatorEstimate.detail}, approx. $${calculatorEstimate.low.toLocaleString()}–$${calculatorEstimate.high.toLocaleString()} inc GST`}
+                      detail={`${calculatorEstimate.detail}, approx. $${calculatorEstimate.low.toLocaleString()}–$${calculatorEstimate.high.toLocaleString()} + GST`}
                       onRemove={() => setEstimateAttached(false)}
                     />
                   </div>
