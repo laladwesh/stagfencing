@@ -39,7 +39,7 @@ function Hero() {
         className="relative bg-cover bg-center"
         style={{
           backgroundImage:
-            "linear-gradient(180deg, rgba(20,15,10,0.35) 0%, rgba(20,15,10,0.55) 60%, rgba(20,15,10,0.85) 100%), url('/hero-bg.png')",
+            "linear-gradient(180deg, rgba(20,15,10,0.35) 0%, rgba(20,15,10,0.55) 60%, rgba(20,15,10,0.85) 100%), url('https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/site/1788013878512-978305ff74033ae7.png')",
           backgroundColor: "#3a3226",
         }}
       >
