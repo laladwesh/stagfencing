@@ -50,7 +50,11 @@ function AboutUs() {
         </div>
 
         <div className="mt-10 rounded-sm overflow-hidden">
-          <img src="/hero-bg.png" alt="Fence installation" className="w-full h-64 sm:h-[420px] object-cover" />
+          <img
+            src="https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/site/1788033327236-4a27441ddcb079d5.png"
+            alt="Fence installation"
+            className="w-full h-64 sm:h-[420px] object-cover"
+          />
         </div>
       </div>
     </section>

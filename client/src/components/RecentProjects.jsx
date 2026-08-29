@@ -77,7 +77,7 @@ function RecentProjects() {
           </div>
         </div>
 
-        <div className="mt-8 relative rounded-sm overflow-hidden h-64 sm:h-96">
+        <div className="mt-8 relative rounded-sm overflow-hidden h-80 sm:h-[560px]">
           <div className="h-full overflow-hidden">
             <div
               className="h-full flex transition-transform duration-500 ease-out"
