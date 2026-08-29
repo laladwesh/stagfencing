@@ -2,12 +2,27 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getServiceCategories } from "../lib/api";
 
+// Hardcoded so the home page always shows these exact photos regardless of what's in the DB.
+// Uploaded by server/update-home-service-images.js — same URLs recorded in server/home-service-image-urls.json.
+const CATEGORY_IMAGES = {
+  "colorbond-fencing": "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014155458-0c6d28435ba8a443.png",
+  "aluminium-slat-fencing-perth": "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014156976-8a4226783d6efe08.png",
+  "pool-fencing": "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014157388-3085c6c9fcaf5722.png",
+  "retaining-walls": "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014157791-1df878069ebd7497.png",
+  "gates-automation": "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014158015-8922fb4faf2bf5cf.png",
+  "security-fencing": "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014158247-5d7f410dd983e111.png",
+  "blade-fencing": "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014158478-fadd60c382256a53.png",
+  "asbestos-fence-removal": "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014158703-715b271101e641ea.png",
+  "pvc-fencing": "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014158933-2a3d8659f2cd937a.png",
+  "modular-walls": "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014159163-f7b3e5ce6ef0b5c3.png",
+};
+
 function ServiceCard({ category }) {
   return (
     <Link to={`/services/${category.slug}`} className="block group">
       <div className="rounded-sm overflow-hidden bg-gray-100 aspect-square">
         <img
-          src={category.image}
+          src={CATEGORY_IMAGES[category.slug] || category.image}
           alt={category.name}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
