@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import ArrowIcon from "../ArrowIcon";
 
 function InfoCell({ label, value }) {
   if (!value) return null;
@@ -11,12 +12,12 @@ function InfoCell({ label, value }) {
   );
 }
 
+const NO_SCROLLBAR_STYLE = { scrollbarWidth: "none", msOverflowStyle: "none" };
+
 function ProjectModal({ project, onClose, hideActionLinks = false }) {
   const images = project.images?.length ? project.images : [project.image];
   const [activeImage, setActiveImage] = useState(0);
-  const completed = project.completedDate
-    ? new Date(project.completedDate).getFullYear()
-    : null;
+  const completed = project.completedDate ? new Date(project.completedDate).getFullYear() : null;
 
   const goPrev = () => setActiveImage((i) => (i - 1 + images.length) % images.length);
   const goNext = () => setActiveImage((i) => (i + 1) % images.length);
@@ -32,34 +33,37 @@ function ProjectModal({ project, onClose, hideActionLinks = false }) {
   return (
     <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4" onClick={onClose}>
       <div
-        className="bg-white max-w-3xl w-full overflow-hidden grid grid-cols-1 sm:grid-cols-2 max-h-[90vh] overflow-y-auto sm:h-[560px] sm:max-h-[560px] sm:overflow-hidden"
+        className="bg-white max-w-3xl w-full overflow-hidden grid grid-cols-1 sm:grid-cols-2 max-h-[90vh] overflow-y-auto sm:overflow-visible"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex flex-col sm:h-full">
-          <div className="h-56 sm:h-auto sm:flex-1 sm:min-h-0">
+        <div>
+          <div className="h-[300px] sm:h-[400px] w-full overflow-hidden">
             <img src={images[activeImage]} alt={project.title} className="w-full h-full object-cover" />
           </div>
           {images.length > 1 && (
-            <div className="shrink-0 p-2 border-t border-gray-100">
+            <div className="p-2 border-t border-gray-100">
               <div className="flex items-center justify-end gap-2 pb-2">
                 <button
                   type="button"
                   onClick={goPrev}
                   aria-label="Previous photo"
-                  className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-black hover:border-gray-400 transition-colors"
+                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-black hover:border-gray-400 transition-colors"
                 >
-                  ←
+                  <ArrowIcon className="rotate-[225deg]" />
                 </button>
                 <button
                   type="button"
                   onClick={goNext}
                   aria-label="Next photo"
-                  className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-black hover:border-gray-400 transition-colors"
+                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-black hover:border-gray-400 transition-colors"
                 >
-                  →
+                  <ArrowIcon className="rotate-45" />
                 </button>
               </div>
-              <div className="flex items-center gap-1.5 overflow-x-auto">
+              <div
+                className="flex items-center gap-1.5 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+                style={NO_SCROLLBAR_STYLE}
+              >
                 {images.map((img, i) => (
                   <button
                     key={i}
@@ -78,7 +82,7 @@ function ProjectModal({ project, onClose, hideActionLinks = false }) {
           )}
         </div>
 
-        <div className="p-6 relative sm:overflow-y-auto">
+        <div className="p-6 relative">
           <button
             type="button"
             onClick={onClose}
