@@ -1,17 +1,38 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+function InfoCell({ label, value }) {
+  if (!value) return null;
+  return (
+    <div className="border border-gray-200 px-3 py-2.5 -ml-px -mt-px">
+      <p className="text-xs text-gray-500">{label}</p>
+      <p className="mt-0.5 text-sm font-semibold text-black">{value}</p>
+    </div>
+  );
+}
+
 function ProjectModal({ project, onClose, hideActionLinks = false }) {
   const images = project.images?.length ? project.images : [project.image];
   const [activeImage, setActiveImage] = useState(0);
   const completed = project.completedDate
-    ? new Date(project.completedDate).toLocaleDateString("en-AU", { month: "long", year: "numeric" })
+    ? new Date(project.completedDate).getFullYear()
     : null;
+
+  const goPrev = () => setActiveImage((i) => (i - 1 + images.length) % images.length);
+  const goNext = () => setActiveImage((i) => (i + 1) % images.length);
+
+  const infoRows = [
+    ["Service", project.service],
+    ["Suburb", project.suburb],
+    ["Length", project.length],
+    ["Colour", project.colour],
+    ["Completed", completed],
+  ].filter(([, value]) => value);
 
   return (
     <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4" onClick={onClose}>
       <div
-        className="bg-white rounded-sm max-w-3xl w-full overflow-hidden grid grid-cols-1 sm:grid-cols-2 max-h-[90vh] overflow-y-auto sm:h-[560px] sm:max-h-[560px] sm:overflow-hidden"
+        className="bg-white max-w-3xl w-full overflow-hidden grid grid-cols-1 sm:grid-cols-2 max-h-[90vh] overflow-y-auto sm:h-[560px] sm:max-h-[560px] sm:overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col sm:h-full">
@@ -19,20 +40,40 @@ function ProjectModal({ project, onClose, hideActionLinks = false }) {
             <img src={images[activeImage]} alt={project.title} className="w-full h-full object-cover" />
           </div>
           {images.length > 1 && (
-            <div className="shrink-0 flex items-center gap-1.5 p-2 overflow-x-auto border-t border-gray-100">
-              {images.map((img, i) => (
+            <div className="shrink-0 p-2 border-t border-gray-100">
+              <div className="flex items-center justify-end gap-2 pb-2">
                 <button
-                  key={i}
                   type="button"
-                  onClick={() => setActiveImage(i)}
-                  className={
-                    "w-14 h-14 shrink-0 rounded overflow-hidden border-2 transition-colors " +
-                    (i === activeImage ? "border-black" : "border-transparent")
-                  }
+                  onClick={goPrev}
+                  aria-label="Previous photo"
+                  className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-black hover:border-gray-400 transition-colors"
                 >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
+                  ←
                 </button>
-              ))}
+                <button
+                  type="button"
+                  onClick={goNext}
+                  aria-label="Next photo"
+                  className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-black hover:border-gray-400 transition-colors"
+                >
+                  →
+                </button>
+              </div>
+              <div className="flex items-center gap-1.5 overflow-x-auto">
+                {images.map((img, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setActiveImage(i)}
+                    className={
+                      "w-20 h-20 shrink-0 overflow-hidden border-2 transition-colors " +
+                      (i === activeImage ? "border-black" : "border-transparent")
+                    }
+                  >
+                    <img src={img} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -47,67 +88,49 @@ function ProjectModal({ project, onClose, hideActionLinks = false }) {
             ✕
           </button>
 
-          <span className="inline-block bg-gray-900 text-white text-[11px] px-2.5 py-1 rounded-full">
-            {project.service}
-          </span>
-          <h3 className="mt-3 text-xl font-semibold text-black">{project.title}</h3>
-          <p className="mt-1 text-sm text-gray-500">{project.suburb}, WA</p>
+          <p className="text-xs font-semibold tracking-wide text-brand-orange uppercase">{project.service}</p>
+          <h3 className="mt-2 text-2xl font-semibold text-black leading-tight pr-8">{project.title}</h3>
+          <p className="mt-1 text-sm text-gray-500">
+            {project.suburb}
+            {completed ? ` · Completed ${completed}` : ""}
+          </p>
 
-          <dl className="mt-5 space-y-2 text-sm">
-            <div className="flex justify-between border-b border-gray-100 pb-2">
-              <dt className="text-gray-500">Location</dt>
-              <dd className="text-black font-medium">{project.suburb}</dd>
+          {infoRows.length > 0 && (
+            <div className="mt-5 grid grid-cols-2 border border-gray-200 ml-px mt-px">
+              {infoRows.map(([label, value]) => (
+                <InfoCell key={label} label={label} value={value} />
+              ))}
             </div>
-            <div className="flex justify-between border-b border-gray-100 pb-2">
-              <dt className="text-gray-500">Service</dt>
-              <dd className="text-black font-medium">{project.service}</dd>
-            </div>
-            {project.length && (
-              <div className="flex justify-between border-b border-gray-100 pb-2">
-                <dt className="text-gray-500">Length</dt>
-                <dd className="text-black font-medium">{project.length}</dd>
-              </div>
-            )}
-            {project.colour && (
-              <div className="flex justify-between border-b border-gray-100 pb-2">
-                <dt className="text-gray-500">Colour</dt>
-                <dd className="text-black font-medium">{project.colour}</dd>
-              </div>
-            )}
-            {completed && (
-              <div className="flex justify-between pb-2">
-                <dt className="text-gray-500">Completed</dt>
-                <dd className="text-black font-medium">{completed}</dd>
-              </div>
-            )}
-          </dl>
+          )}
 
-          {!hideActionLinks && project.serviceSlug && (
+          <div className="mt-5 space-y-2.5">
+            {!hideActionLinks && project.serviceSlug && (
+              <Link
+                to={
+                  project.categorySlug && project.categorySlug !== project.serviceSlug
+                    ? `/services/${project.categorySlug}/${project.serviceSlug}`
+                    : `/services/${project.serviceSlug}`
+                }
+                className="block text-center border border-gray-300 hover:bg-gray-50 text-gray-900 font-medium py-2.5 rounded-full transition-colors"
+              >
+                View this service
+              </Link>
+            )}
+            {!hideActionLinks && project.productSlug && (
+              <Link
+                to={`/product/${project.productSlug}`}
+                className="block text-center border border-gray-300 hover:bg-gray-50 text-gray-900 font-medium py-2.5 rounded-full transition-colors"
+              >
+                Shop this product
+              </Link>
+            )}
             <Link
-              to={
-                project.categorySlug && project.categorySlug !== project.serviceSlug
-                  ? `/services/${project.categorySlug}/${project.serviceSlug}`
-                  : `/services/${project.serviceSlug}`
-              }
-              className="mt-3 block text-center border border-gray-300 hover:bg-gray-50 text-gray-900 font-medium py-2.5 rounded-full transition-colors"
+              to="/request-a-quote"
+              className="block text-center bg-black hover:bg-gray-800 text-white font-medium py-2.5 rounded-full transition-colors"
             >
-              View this service
+              Get A Similar Quote
             </Link>
-          )}
-          {!hideActionLinks && project.productSlug && (
-            <Link
-              to={`/product/${project.productSlug}`}
-              className="mt-3 block text-center border border-gray-300 hover:bg-gray-50 text-gray-900 font-medium py-2.5 rounded-full transition-colors"
-            >
-              Shop this product
-            </Link>
-          )}
-          <Link
-            to="/request-a-quote"
-            className="mt-3 block text-center bg-black hover:bg-gray-800 text-white font-medium py-2.5 rounded-full transition-colors"
-          >
-            Get A Similar Quote
-          </Link>
+          </div>
         </div>
       </div>
     </div>
