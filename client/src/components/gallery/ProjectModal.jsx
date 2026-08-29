@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import ArrowIcon from "../ArrowIcon";
 
@@ -18,6 +18,15 @@ function ProjectModal({ project, onClose, hideActionLinks = false }) {
   const images = project.images?.length ? project.images : [project.image];
   const [activeImage, setActiveImage] = useState(0);
   const completed = project.completedDate ? new Date(project.completedDate).getFullYear() : null;
+  const thumbRefs = useRef([]);
+
+  useEffect(() => {
+    thumbRefs.current[activeImage]?.scrollIntoView({
+      behavior: "smooth",
+      inline: "nearest",
+      block: "nearest",
+    });
+  }, [activeImage]);
 
   const goPrev = () => setActiveImage((i) => (i - 1 + images.length) % images.length);
   const goNext = () => setActiveImage((i) => (i + 1) % images.length);
@@ -67,6 +76,7 @@ function ProjectModal({ project, onClose, hideActionLinks = false }) {
                 {images.map((img, i) => (
                   <button
                     key={i}
+                    ref={(el) => (thumbRefs.current[i] = el)}
                     type="button"
                     onClick={() => setActiveImage(i)}
                     className={
