@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import ArrowIcon from "../ArrowIcon";
+import CircleArrowIcon from "../CircleArrowIcon";
 
 function InfoCell({ label, value }) {
   if (!value) return null;
@@ -56,17 +56,17 @@ function ProjectModal({ project, onClose, hideActionLinks = false }) {
                   type="button"
                   onClick={goPrev}
                   aria-label="Previous photo"
-                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-black hover:border-gray-400 transition-colors"
+                  className="text-gray-600 hover:text-black transition-colors rotate-180"
                 >
-                  <ArrowIcon className="rotate-[225deg]" />
+                  <CircleArrowIcon className="w-8 h-8" />
                 </button>
                 <button
                   type="button"
                   onClick={goNext}
                   aria-label="Next photo"
-                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-black hover:border-gray-400 transition-colors"
+                  className="text-gray-600 hover:text-black transition-colors"
                 >
-                  <ArrowIcon className="rotate-45" />
+                  <CircleArrowIcon className="w-8 h-8" />
                 </button>
               </div>
               <div
