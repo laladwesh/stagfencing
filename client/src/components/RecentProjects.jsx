@@ -14,11 +14,17 @@ function ArrowIcon(props) {
 }
 
 const PROJECTS = [
-  { location: "Byford, WA", image: "/hero-bg.png" },
-  { location: "Baldivis, WA", image: "/hero-bg.png" },
-  { location: "Mandurah, WA", image: "/hero-bg.png" },
-  { location: "Ellenbrook, WA", image: "/hero-bg.png" },
-  { location: "Armadale, WA", image: "/hero-bg.png" },
+  { location: "Perth, WA", image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/recent-projects/1788032924024-4a8c6d4032b9dead.jpg" },
+  { location: "Perth, WA", image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/recent-projects/1788032925204-d65b5db42ae6ae41.jpg" },
+  { location: "Perth, WA", image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/recent-projects/1788032925608-603e3fd8659be77f.jpg" },
+  { location: "Perth, WA", image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/recent-projects/1788032925835-2d26e45ca1d07897.jpg" },
+  { location: "Perth, WA", image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/recent-projects/1788032926066-e28f7a06f5ca0a9d.jpg" },
+  { location: "Perth, WA", image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/recent-projects/1788032926303-8ec459d7d7bdd98e.jpg" },
+  { location: "Perth, WA", image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/recent-projects/1788032926516-6384b31273ee1ec3.jpg" },
+  { location: "Perth, WA", image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/recent-projects/1788032926732-ff6ba7e8629acbdf.jpg" },
+  { location: "Perth, WA", image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/recent-projects/1788032926953-f888c4138dfc5409.jpg" },
+  { location: "Perth, WA", image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/recent-projects/1788032927182-57afdf54a85d4c04.jpg" },
+  { location: "Perth, WA", image: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/recent-projects/1788032927396-ef35fb0cc9bc8560.jpg" },
 ];
 
 function RecentProjects() {
@@ -79,7 +85,7 @@ function RecentProjects() {
             >
               {PROJECTS.map((project) => (
                 <img
-                  key={project.location}
+                  key={project.image}
                   src={project.image}
                   alt={project.location}
                   className="w-full h-full shrink-0 object-cover"
@@ -91,7 +97,7 @@ function RecentProjects() {
           <div className="absolute bottom-4 inset-x-0 flex items-center justify-center gap-2">
             {PROJECTS.map((project, i) => (
               <button
-                key={project.location}
+                key={project.image}
                 type="button"
                 onClick={() => setActive(i)}
                 aria-label={`Show ${project.location} project`}

@@ -145,5 +145,5 @@ vite.config.ts.timestamp-*
 
 data/
 *.zip
-home_services
-we_take
+fences
+*-urls.json

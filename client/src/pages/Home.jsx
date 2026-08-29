@@ -24,7 +24,7 @@ function Home() {
       <Reviews />
       <RecentProjects />
       <Process />
-      <ShopPreview />
+      {/* <ShopPreview /> */}
       <AboutUs />
       <Articles />
       <Footer />
