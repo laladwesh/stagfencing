@@ -39,7 +39,7 @@ function Hero() {
         className="relative bg-cover bg-center"
         style={{
           backgroundImage:
-            "linear-gradient(180deg, rgba(20,15,10,0.35) 0%, rgba(20,15,10,0.55) 60%, rgba(20,15,10,0.85) 100%), url('https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/site/1788015097429-e11404b3b4ef871c.png')",
+            "linear-gradient(180deg, rgba(20,15,10,0.35) 0%, rgba(20,15,10,0.55) 60%, rgba(20,15,10,0.85) 100%), url('https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/site/1788029732439-856f2657dbcd0d45.jpg')",
           backgroundColor: "#3a3226",
         }}
       >
