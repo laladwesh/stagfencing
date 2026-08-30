@@ -84,10 +84,10 @@ function AdminQuotesPage() {
                     {quote.noPreference ? " · no preference" : ` · ${quote.preferredTime}`}
                   </p>
                 )}
-                {(quote.selection?.style || quote.selection?.color) && (
+                {(quote.selection?.serviceName || quote.selection?.style || quote.selection?.color) && (
                   <p className="sm:col-span-2">
                     <span className="text-gray-400">Selection: </span>
-                    {[quote.selection.style, quote.selection.color].filter(Boolean).join(" · ")}
+                    {[quote.selection.serviceName, quote.selection.style, quote.selection.color].filter(Boolean).join(" · ")}
                     {quote.selection.price ? ` · from $${quote.selection.price} ${quote.selection.priceUnit || ""}` : ""}
                   </p>
                 )}

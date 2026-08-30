@@ -6,8 +6,10 @@ import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
 import Seo from "../components/Seo";
 import { useAuth } from "../context/AuthContext";
-import { createQuoteRequest, uploadFile, getServiceCategories } from "../lib/api";
+import { createQuoteRequest, uploadFile, getServiceCategories, getServiceCategory } from "../lib/api";
+import LazyImage from "../components/LazyImage";
 import { SERVICE_CATEGORY_TO_QUOTE_LABEL } from "../lib/serviceQuoteLabels";
+import ServiceCategoryIcon from "../components/ServiceCategoryIcon";
 
 const SERVICE_TYPES = [
   "Colorbond",
@@ -119,11 +121,13 @@ function ServicePicker({ value, onChange, categories }) {
   const options = categories.length
     ? categories.map((category) => ({
         key: category.slug,
+        slug: category.slug,
         label: SERVICE_CATEGORY_TO_QUOTE_LABEL[category.slug] || category.name,
         name: category.name,
         icon: category.icon,
         fromPrice: category.fromPrice,
         priceUnit: category.priceUnit,
+        hasRange: category.hasRange,
         hazard: category.slug === "asbestos-fence-removal",
       }))
     : SERVICE_TYPES.map((type) => ({ key: type, label: type, name: type }));
@@ -138,13 +142,15 @@ function ServicePicker({ value, onChange, categories }) {
             type="button"
             onClick={() => onChange(option.label)}
             className={
-              "flex items-center gap-3 rounded-sm border px-4 py-3 text-left transition-colors " +
-              (isSelected ? "border-black bg-[#F3EFE9]" : "border-gray-200 hover:border-gray-300")
+              "flex items-center gap-3 rounded-sm border px-4 py-3 text-left transition-all duration-150 " +
+              (isSelected
+                ? "border-black bg-[#F3EFE9] shadow-sm ring-1 ring-black/5"
+                : "border-gray-200 hover:border-gray-400 hover:bg-gray-50")
             }
           >
             <span
               className={
-                "w-4 h-4 rounded-sm border flex items-center justify-center shrink-0 " +
+                "w-4 h-4 rounded-sm border flex items-center justify-center shrink-0 transition-colors " +
                 (isSelected ? "bg-black border-black" : "border-gray-300")
               }
             >
@@ -154,13 +160,22 @@ function ServicePicker({ value, onChange, categories }) {
               {option.hazard ? (
                 <FaExclamationTriangle className="w-4 h-4 text-red-500" />
               ) : option.icon ? (
-                <img src={option.icon} alt="" className="max-w-6 max-h-6 w-auto h-auto object-contain" />
+                <LazyImage src={option.icon} alt="" eager className="max-w-6 max-h-6 w-auto h-auto object-contain" />
+              ) : option.slug ? (
+                <ServiceCategoryIcon slug={option.slug} className="w-5 h-5 text-gray-500" />
               ) : (
                 <span className="w-2 h-2 rounded-full bg-gray-300" />
               )}
             </span>
             <span className="min-w-0">
-              <span className="block text-sm font-semibold text-black truncate">{option.name}</span>
+              <span className="block text-sm font-semibold text-black truncate">
+                {option.name}
+                {option.hasRange && (
+                  <span className="ml-1.5 align-middle text-[10px] font-medium text-gray-500 bg-gray-100 rounded-full px-1.5 py-0.5">
+                    range
+                  </span>
+                )}
+              </span>
               {option.fromPrice && (
                 <span className="block text-xs text-gray-500">
                   from ${option.fromPrice} / {option.priceUnit?.replace("per ", "") || "lm"}
@@ -170,6 +185,56 @@ function ServicePicker({ value, onChange, categories }) {
           </button>
         );
       })}
+    </div>
+  );
+}
+
+// Shown under ServicePicker when the chosen category has multiple real
+// services under it (hasRange). Entirely optional — picking one just gives
+// staff a more precise starting point; skipping it is fine, we confirm on
+// site either way.
+function SubServicePicker({ loading, services, value, onChange }) {
+  if (loading) {
+    return <p className="mt-3 text-xs text-gray-400">Loading {value ? "" : "options"}…</p>;
+  }
+  if (!services?.length) return null;
+
+  return (
+    <div className="mt-3 rounded-sm border border-dashed border-gray-300 p-3">
+      <p className="text-xs font-medium text-gray-600">
+        Know which one? <span className="text-gray-400 font-normal">(optional — pick the closest, or skip)</span>
+      </p>
+      <div className="mt-2 flex flex-wrap gap-2">
+        {services.map((service) => {
+          const isSelected = value?.slug === service.slug;
+          const icon = service.styles?.find((s) => s.icon)?.icon;
+          return (
+            <button
+              key={service.slug}
+              type="button"
+              onClick={() => onChange(isSelected ? null : service)}
+              className={
+                "flex items-center gap-2 rounded-full border pl-1.5 pr-3 py-1.5 text-left transition-colors " +
+                (isSelected ? "border-black bg-black text-white" : "border-gray-200 hover:border-gray-400")
+              }
+            >
+              <span className="w-6 h-6 rounded-full bg-white flex items-center justify-center shrink-0 overflow-hidden">
+                {icon ? (
+                  <LazyImage src={icon} alt="" eager className="max-w-4 max-h-4 w-auto h-auto object-contain" />
+                ) : (
+                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />
+                )}
+              </span>
+              <span className="text-xs font-medium">{service.name}</span>
+              {service.fromPrice && (
+                <span className={"text-[11px] " + (isSelected ? "text-gray-300" : "text-gray-400")}>
+                  from ${service.fromPrice}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -286,11 +351,33 @@ function RequestQuotePage() {
       .catch(() => {});
   }, []);
 
+  const [subServices, setSubServices] = useState([]);
+  const [subServicesLoading, setSubServicesLoading] = useState(false);
+  const [chosenSubService, setChosenSubService] = useState(null);
+
   const [service, setService] = useState(() => {
     if (serviceSelection?.label && SERVICE_TYPES.includes(serviceSelection.label)) return serviceSelection.label;
     if (calculatorEstimate && SERVICE_TYPES.includes(calculatorEstimate.serviceType)) return calculatorEstimate.serviceType;
     return SERVICE_TYPES[0];
   });
+  useEffect(() => {
+    const category = categories.find((c) => (SERVICE_CATEGORY_TO_QUOTE_LABEL[c.slug] || c.name) === service);
+    setChosenSubService(null);
+    if (!category?.hasRange) {
+      setSubServices([]);
+      return;
+    }
+    let cancelled = false;
+    setSubServicesLoading(true);
+    getServiceCategory(category.slug)
+      .then((data) => !cancelled && setSubServices(data.services || []))
+      .catch(() => !cancelled && setSubServices([]))
+      .finally(() => !cancelled && setSubServicesLoading(false));
+    return () => {
+      cancelled = true;
+    };
+  }, [service, categories]);
+
   const [propertyType, setPropertyType] = useState("Residential");
   const [approxLength, setApproxLength] = useState(calculatorEstimate?.approxLength ?? "");
   const [timeframe, setTimeframe] = useState("");
@@ -317,6 +404,15 @@ function RequestQuotePage() {
   const [submitError, setSubmitError] = useState("");
   const [reference, setReference] = useState("");
 
+  // A specific style/colour picked on a service page takes priority (it's more
+  // precise); otherwise fall back to the optional sub-service chip picked here.
+  const effectiveSelection =
+    selectionAttached && serviceSelection
+      ? serviceSelection
+      : chosenSubService
+      ? { serviceName: chosenSubService.name, price: chosenSubService.fromPrice, priceUnit: chosenSubService.priceUnit }
+      : null;
+
   const monthLabel = `${MONTH_LABELS[days[0].getMonth()]} ${days[0].getFullYear()}`;
   const selectedDay = days[selectedDayIndex];
   const selectedDayLabel = `${selectedDay.toLocaleDateString("en-AU", { weekday: "long" })} ${selectedDay.getDate()} ${MONTH_LABELS[selectedDay.getMonth()]}`;
@@ -341,7 +437,7 @@ function RequestQuotePage() {
         timeframe,
         notes,
         photos: photoUrls,
-        selection: selectionAttached && serviceSelection ? serviceSelection : undefined,
+        selection: effectiveSelection || undefined,
         calculatorEstimate: estimateAttached && calculatorEstimate ? calculatorEstimate : undefined,
         firstName,
         lastName,
@@ -496,6 +592,12 @@ function RequestQuotePage() {
           {currentStep === 1 && (
             <div className="mt-5">
               <ServicePicker value={service} onChange={setService} categories={categories} />
+              <SubServicePicker
+                loading={subServicesLoading}
+                services={subServices}
+                value={chosenSubService}
+                onChange={setChosenSubService}
+              />
               <p className="mt-3 text-xs text-gray-500">Pick the closest match — we'll confirm the details on site.</p>
             </div>
           )}
@@ -518,7 +620,7 @@ function RequestQuotePage() {
                 ))}
               </div>
 
-              {selectionAttached && serviceSelection && (
+              {selectionAttached && serviceSelection ? (
                 <SelectionBanner
                   title={`${serviceSelection.serviceName} selection attached`}
                   detail={
@@ -529,6 +631,18 @@ function RequestQuotePage() {
                   }
                   onRemove={() => setSelectionAttached(false)}
                 />
+              ) : (
+                chosenSubService && (
+                  <SelectionBanner
+                    title={`${chosenSubService.name} selected`}
+                    detail={
+                      chosenSubService.fromPrice
+                        ? `from $${chosenSubService.fromPrice} ${chosenSubService.priceUnit || ""}`
+                        : "We'll confirm pricing on site"
+                    }
+                    onRemove={() => setChosenSubService(null)}
+                  />
+                )
               )}
 
               <Field label="Approx. length*" value={approxLength} onChange={(e) => setApproxLength(e.target.value)} required placeholder="24 lm" />
@@ -598,8 +712,8 @@ function RequestQuotePage() {
                 detail={
                   [approxLength, timeframe].filter(Boolean).join(" · ") +
                   (estimateAttached && calculatorEstimate ? ` · estimate $${calculatorEstimate.low.toLocaleString()} attached` : "") +
-                  (selectionAttached && serviceSelection
-                    ? ` · ${[serviceSelection.style, serviceSelection.color].filter(Boolean).join(" · ")}`
+                  (effectiveSelection
+                    ? ` · ${[effectiveSelection.serviceName, effectiveSelection.style, effectiveSelection.color].filter(Boolean).join(" · ")}`
                     : "")
                 }
                 onEdit={() => setCurrentStep(2)}
@@ -681,6 +795,12 @@ function RequestQuotePage() {
                 <h2 className="text-xs font-semibold tracking-wide text-black">1. WHAT DO YOU NEED?</h2>
                 <div className="mt-3">
                   <ServicePicker value={service} onChange={setService} categories={categories} />
+                  <SubServicePicker
+                    loading={subServicesLoading}
+                    services={subServices}
+                    value={chosenSubService}
+                    onChange={setChosenSubService}
+                  />
                 </div>
                 <p className="mt-2 text-xs text-gray-500">
                   Pick the closest match — we'll confirm the details on site.
@@ -706,7 +826,7 @@ function RequestQuotePage() {
                   ))}
                 </div>
 
-                {selectionAttached && serviceSelection && (
+                {selectionAttached && serviceSelection ? (
                   <div className="mt-3">
                     <SelectionBanner
                       title={`${serviceSelection.serviceName} selection attached`}
@@ -719,6 +839,20 @@ function RequestQuotePage() {
                       onRemove={() => setSelectionAttached(false)}
                     />
                   </div>
+                ) : (
+                  chosenSubService && (
+                    <div className="mt-3">
+                      <SelectionBanner
+                        title={`${chosenSubService.name} selected`}
+                        detail={
+                          chosenSubService.fromPrice
+                            ? `from $${chosenSubService.fromPrice} ${chosenSubService.priceUnit || ""}`
+                            : "We'll confirm pricing on site"
+                        }
+                        onRemove={() => setChosenSubService(null)}
+                      />
+                    </div>
+                  )
                 )}
 
                 <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">

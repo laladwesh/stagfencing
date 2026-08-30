@@ -60,7 +60,7 @@ function quoteRequestHtml(quote) {
       </table>
 
       ${
-        quote.selection?.style || quote.selection?.color
+        quote.selection?.serviceName || quote.selection?.style || quote.selection?.color
           ? `<h3 style="margin:16px 0 4px;">Selection carried from service page</h3>
              <table cellpadding="0" cellspacing="0">
                ${row("Service", quote.selection.serviceName)}
