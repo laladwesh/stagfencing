@@ -6,12 +6,12 @@ const CALCULATORS = [
   {
     to: "/calculators/fence-calculator",
     title: "Fence Calculator",
-    description: "Instant Colorbond estimate — panels, posts and a ballpark price.",
+    description: "Instant fencing estimate — Colorbond, slat, security, blade or PVC, priced live.",
   },
   {
     to: "/calculators/retaining-calculator",
     title: "Retaining Calculator",
-    description: "Instant retaining wall estimate — height, length and sleeper system.",
+    description: "Instant retaining wall estimate — limestone or post & panel, priced by height and length.",
   },
 ];
 

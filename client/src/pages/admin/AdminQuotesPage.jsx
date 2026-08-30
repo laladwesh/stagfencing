@@ -88,6 +88,16 @@ function AdminQuotesPage() {
                   <p className="sm:col-span-2">
                     <span className="text-gray-400">Selection: </span>
                     {[quote.selection.style, quote.selection.color].filter(Boolean).join(" · ")}
+                    {quote.selection.price ? ` · from $${quote.selection.price} ${quote.selection.priceUnit || ""}` : ""}
+                  </p>
+                )}
+                {quote.calculatorEstimate?.detail && (
+                  <p className="sm:col-span-2">
+                    <span className="text-gray-400">Calculator estimate: </span>
+                    {quote.calculatorEstimate.label} — {quote.calculatorEstimate.detail}
+                    {quote.calculatorEstimate.low
+                      ? ` · $${quote.calculatorEstimate.low.toLocaleString()}–$${quote.calculatorEstimate.high?.toLocaleString?.() || ""}`
+                      : ""}
                   </p>
                 )}
                 {quote.notes && (

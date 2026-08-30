@@ -14,7 +14,7 @@ router.get("/categories/:categorySlug", async (req, res) => {
   if (!category) return res.status(404).json({ error: "Service category not found" });
 
   const services = await Service.find({ category: category._id })
-    .select("name slug cardImage fromPrice priceUnit")
+    .select("name slug cardImage fromPrice priceUnit styles")
     .sort({ name: 1 });
 
   res.json({ category, services });
