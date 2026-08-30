@@ -8,10 +8,19 @@ const router = express.Router();
 
 const SITE_URL = process.env.SITE_URL || "https://stagfencing.com.au";
 
-// Only the one blog article with real content is indexable — the rest of
-// client/src/data/articles.js are "coming soon" stubs marked noindex on the
-// client, so they're deliberately left out of the sitemap.
-const INDEXABLE_BLOG_SLUGS = ["how-to-choose-the-right-fence"];
+// Every article in client/src/data/articles.js currently has real content
+// (a non-empty `blocks` array) and is indexable. Any future stub added there
+// without `blocks` is automatically marked noindex on the client and should
+// stay out of this list until it has real content.
+const INDEXABLE_BLOG_SLUGS = [
+  "how-to-choose-the-right-fence",
+  "5-popular-fence-styles-1",
+  "5-popular-fence-styles-2",
+  "5-popular-fence-styles-3",
+  "colorbond-fence-cost-perth",
+  "council-approval-new-fence",
+  "asbestos-fence-removal-guide",
+];
 
 const STATIC_PAGES = [
   { path: "/", priority: "1.0", changefreq: "weekly" },

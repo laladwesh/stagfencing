@@ -70,7 +70,12 @@ function Articles() {
                 {slide.map((article) => (
                   <Link key={article.slug} to={`/blog/${article.slug}`} className="block">
                     <div className="relative rounded-sm overflow-hidden">
-                      <LazyImage src="/hero-bg.png" alt="" className="w-full h-48 object-cover" />
+                      <LazyImage
+                        src={article.coverImage || "/hero-bg.png"}
+                        alt={article.coverAlt || ""}
+                        width={500}
+                        className="w-full h-48 object-cover"
+                      />
                       <span className="absolute top-3 left-3 flex items-center gap-1.5 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full">
                         🕐 {article.readTime}
                       </span>

@@ -4,7 +4,6 @@ import WhyChooseUs from "../components/WhyChooseUs";
 import Reviews from "../components/Reviews";
 import RecentProjects from "../components/RecentProjects";
 import Process from "../components/Process";
-import ShopPreview from "../components/ShopPreview";
 import AboutUs from "../components/AboutUs";
 import Articles from "../components/Articles";
 import Footer from "../components/Footer";
