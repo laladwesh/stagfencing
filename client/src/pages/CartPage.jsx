@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import Breadcrumb from "../components/Breadcrumb";
 import ChevronIcon from "../components/ChevronIcon";
+import LazyImage from "../components/LazyImage";
 import { useCart } from "../context/CartContext";
 
 const DELIVERY_METHODS = [
@@ -108,7 +109,7 @@ function CartPage() {
                   ✕
                 </button>
                 <div className="w-20 h-20 rounded-sm bg-gray-100 overflow-hidden shrink-0">
-                  {item.image && <img src={item.image} alt={item.name} className="w-full h-full object-cover" />}
+                  {item.image && <LazyImage src={item.image} alt={item.name} eager width={100} className="w-full h-full object-cover" />}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-black leading-snug">{item.name}</p>

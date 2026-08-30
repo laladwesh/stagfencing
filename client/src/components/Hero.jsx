@@ -5,6 +5,7 @@ import TopBar from "./TopBar";
 import Navbar from "./Navbar";
 import QuoteForm from "./QuoteForm";
 import ArrowIcon from "./ArrowIcon";
+import LazyImage from "./LazyImage";
 
 const STATS = [
   { value: "500+", label: "Fences Built" },
@@ -106,9 +107,10 @@ function Hero() {
           </div>
 
           <div className="hidden md:flex absolute right-0 top-64 lg:top-72 max-w-xs backdrop-blur-md border border-white/10 rounded-sm p-4 gap-3 text-white">
-            <img
+            <LazyImage
               src="/founder.png"
               alt=""
+              eager
               className="w-34 h-34 rounded-sm object-cover bg-gray-500 shrink-0"
             />
             <div>

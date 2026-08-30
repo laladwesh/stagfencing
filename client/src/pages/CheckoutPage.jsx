@@ -10,6 +10,7 @@ import { getStripePromise } from "../lib/stripeClient";
 import { CardPaymentElement, CardPayButton } from "../components/checkout/StripePaymentForm";
 import Select from "../components/ui/Select";
 import Breadcrumb from "../components/Breadcrumb";
+import LazyImage from "../components/LazyImage";
 
 const DELIVERY_METHODS = [
   {
@@ -454,7 +455,7 @@ function CheckoutPage() {
                 {items.map((item) => (
                   <div key={item.id} className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-sm bg-gray-100 overflow-hidden shrink-0">
-                      {item.image && <img src={item.image} alt="" className="w-full h-full object-cover" />}
+                      {item.image && <LazyImage src={item.image} alt="" eager width={80} className="w-full h-full object-cover" />}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-black truncate">{item.name}</p>

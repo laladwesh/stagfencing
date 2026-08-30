@@ -5,15 +5,18 @@ import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
 import ServiceDetailTemplate from "../components/services/ServiceDetailTemplate";
 import Seo from "../components/Seo";
+import LazyImage from "../components/LazyImage";
 import { getServiceCategory, getServiceDetail } from "../lib/api";
 
-function ServiceCard({ categorySlug, service }) {
+function ServiceCard({ categorySlug, service, eager }) {
   return (
     <Link to={`/services/${categorySlug}/${service.slug}`} className="block group">
       <div className="rounded-sm overflow-hidden bg-gray-100">
-        <img
+        <LazyImage
           src={service.cardImage}
           alt={service.name}
+          eager={eager}
+          width={500}
           className="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
@@ -123,8 +126,8 @@ function ServiceCategoryPage() {
         {category.rangeIntro && <p className="text-sm text-gray-600 max-w-3xl leading-relaxed">{category.rangeIntro}</p>}
 
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service) => (
-            <ServiceCard key={service.slug} categorySlug={categorySlug} service={service} />
+          {services.map((service, i) => (
+            <ServiceCard key={service.slug} categorySlug={categorySlug} service={service} eager={i < 4} />
           ))}
         </div>
       </div>

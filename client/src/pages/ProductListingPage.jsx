@@ -5,6 +5,7 @@ import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
 import Seo from "../components/Seo";
 import Select from "../components/ui/Select";
+import LazyImage from "../components/LazyImage";
 import { getCategories, getCategory, getProducts } from "../lib/api";
 
 const PAGE_SIZE = 9;
@@ -208,16 +209,18 @@ function ProductListingPage() {
                 <p className="text-sm text-gray-500">No products match these filters.</p>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {products.map((product) => (
+                  {products.map((product, i) => (
                     <Link
                       key={product._id}
                       to={`/product/${product.slug}`}
                       className={"group block " + (product.inStock === false ? "opacity-50" : "")}
                     >
                       <div className="relative rounded-sm overflow-hidden bg-gray-100">
-                        <img
+                        <LazyImage
                           src={product.images?.[0]}
                           alt={product.name}
+                          eager={i < 6}
+                          width={500}
                           className="w-full h-48 object-cover"
                         />
                         <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">

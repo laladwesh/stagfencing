@@ -1,4 +1,5 @@
 import StarRating from "../StarRating";
+import LazyImage from "../LazyImage";
 
 const AVATAR_COLORS = ["bg-stone-500", "bg-slate-600", "bg-emerald-700", "bg-orange-700", "bg-indigo-600", "bg-rose-700"];
 
@@ -27,7 +28,7 @@ function ReviewCard({ review }) {
         <div className="mt-3 flex flex-wrap gap-2">
           {review.photos.map((src, i) => (
             <div key={i} className="w-14 h-14 rounded-sm overflow-hidden bg-gray-100">
-              <img src={src} alt="" className="w-full h-full object-cover" />
+              <LazyImage src={src} alt="" width={150} className="w-full h-full object-cover" />
             </div>
           ))}
         </div>

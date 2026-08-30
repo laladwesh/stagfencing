@@ -8,6 +8,7 @@ import ReviewPhotoGrid from "../components/reviews/ReviewPhotoGrid";
 import WriteReviewForm from "../components/reviews/WriteReviewForm";
 import Seo from "../components/Seo";
 import Breadcrumb from "../components/Breadcrumb";
+import LazyImage from "../components/LazyImage";
 import { getCategory, getProduct } from "../lib/api";
 import { useCart } from "../context/CartContext";
 import { notifyAddedToCart } from "../lib/toast";
@@ -29,7 +30,7 @@ function ProductCard({ product }) {
   return (
     <Link to={`/product/${product.slug}`} className="block">
       <div className="rounded-sm overflow-hidden bg-gray-100">
-        <img src={product.images?.[0]} alt={product.name} className="w-full h-40 object-cover" />
+        <LazyImage src={product.images?.[0]} alt={product.name} width={500} className="w-full h-40 object-cover" />
       </div>
       <p className="mt-2 text-xs text-gray-500">{product.shortDescription}</p>
       <p className="mt-1 text-sm font-semibold text-black leading-snug">{product.name}</p>
@@ -165,9 +166,11 @@ function ProductDetailPage() {
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <div className="rounded-sm overflow-hidden bg-gray-100">
-              <img
+              <LazyImage
                 src={product.images?.[activeImage] || product.images?.[0]}
                 alt={product.name}
+                eager
+                width={900}
                 className="w-full h-80 sm:h-96 object-cover"
               />
             </div>
@@ -183,7 +186,7 @@ function ProductDetailPage() {
                       (i === activeImage ? "border-black" : "border-transparent")
                     }
                   >
-                    <img src={img} alt="" className="w-full h-20 object-cover" />
+                    <LazyImage src={img} alt="" width={100} className="w-full h-20 object-cover" />
                   </button>
                 ))}
               </div>

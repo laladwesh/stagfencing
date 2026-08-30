@@ -1,3 +1,5 @@
+import LazyImage from "../LazyImage";
+
 function ReviewPhotoGrid({ photos, max = 6 }) {
   if (!photos.length) return null;
   const visible = photos.slice(0, max);
@@ -11,7 +13,7 @@ function ReviewPhotoGrid({ photos, max = 6 }) {
           const isLast = i === visible.length - 1 && remaining > 0;
           return (
             <div key={i} className="relative aspect-square rounded-sm overflow-hidden bg-gray-100">
-              <img src={src} alt="" className="w-full h-full object-cover" />
+              <LazyImage src={src} alt="" width={200} className="w-full h-full object-cover" />
               {isLast && (
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-sm font-semibold">
                   +{remaining}

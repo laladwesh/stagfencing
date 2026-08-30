@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FaStar } from "react-icons/fa";
+import LazyImage from "./LazyImage";
 
 function ArrowIcon(props) {
   return (
@@ -183,7 +184,7 @@ function Reviews() {
           {REVIEWS.map((review) => (
             <div key={review.name} className="snap-start shrink-0 w-full sm:w-1/2 lg:w-1/4 pr-5">
               <div className="bg-white rounded-sm overflow-hidden h-full">
-                <img src={review.image} alt="" className="w-full h-32 object-cover" />
+                <LazyImage src={review.image} alt="" width={300} className="w-full h-32 object-cover" />
                 <div className="p-4">
                   <div className="flex items-center gap-1.5">
                     <GoogleIcon />

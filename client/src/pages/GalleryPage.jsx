@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import ArrowIcon from "../components/ArrowIcon";
 import Seo from "../components/Seo";
 import ProjectModal from "../components/gallery/ProjectModal";
+import LazyImage from "../components/LazyImage";
 import { getGalleryProjects } from "../lib/api";
 
 function QuoteCta({ label }) {
@@ -82,7 +83,7 @@ function GalleryPage() {
               </div>
 
               <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProjects.map((project) => (
+                {filteredProjects.map((project, i) => (
                   <button
                     key={project._id}
                     type="button"
@@ -90,7 +91,13 @@ function GalleryPage() {
                     className="text-left"
                   >
                     <div className="rounded-sm overflow-hidden">
-                      <img src={project.image} alt={project.title} className="w-full h-48 object-cover" />
+                      <LazyImage
+                        src={project.image}
+                        alt={project.title}
+                        eager={i < 6}
+                        width={500}
+                        className="w-full h-48 object-cover"
+                      />
                     </div>
                     <p className="mt-2 text-sm text-gray-600">
                       {project.suburb} · {project.service}

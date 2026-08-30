@@ -1,4 +1,5 @@
 import { useState } from "react";
+import LazyImage from "./LazyImage";
 
 function ArrowIcon(props) {
   return (
@@ -83,11 +84,13 @@ function RecentProjects() {
               className="h-full flex transition-transform duration-500 ease-out"
               style={{ transform: `translateX(-${active * 100}%)` }}
             >
-              {PROJECTS.map((project) => (
-                <img
+              {PROJECTS.map((project, i) => (
+                <LazyImage
                   key={project.image}
                   src={project.image}
                   alt={project.location}
+                  eager={i === 0}
+                  width={900}
                   className="w-full h-full shrink-0 object-cover"
                 />
               ))}

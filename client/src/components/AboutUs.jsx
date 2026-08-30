@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import LazyImage from "./LazyImage";
 
 function ArrowIcon(props) {
   return (
@@ -50,9 +51,10 @@ function AboutUs() {
         </div>
 
         <div className="mt-10 rounded-sm overflow-hidden">
-          <img
+          <LazyImage
             src="https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/site/1788033327236-4a27441ddcb079d5.png"
             alt="Fence installation"
+            width={1200}
             className="w-full h-64 sm:h-[420px] object-cover"
           />
         </div>

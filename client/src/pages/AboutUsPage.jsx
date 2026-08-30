@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
+import LazyImage from "../components/LazyImage";
 
 function GoogleIcon(props) {
   return (
@@ -80,7 +81,7 @@ function AboutUsPage() {
           </div>
 
           <div className="rounded-sm overflow-hidden">
-            <img src="/hero-bg.png" alt="" className="w-full h-64 object-cover" />
+            <LazyImage src="/hero-bg.png" alt="" eager className="w-full h-64 object-cover" />
           </div>
         </div>
       </div>
@@ -88,7 +89,7 @@ function AboutUsPage() {
       <div className="bg-[#F3EFE9] py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div className="rounded-sm overflow-hidden order-2 lg:order-1">
-            <img src="/hero-bg.png" alt="" className="w-full h-64 object-cover" />
+            <LazyImage src="/hero-bg.png" alt="" className="w-full h-64 object-cover" />
           </div>
 
           <div className="order-1 lg:order-2">

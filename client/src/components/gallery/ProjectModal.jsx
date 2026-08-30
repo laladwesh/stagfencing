@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CircleArrowIcon from "../CircleArrowIcon";
+import LazyImage from "../LazyImage";
 
 function InfoCell({ label, value }) {
   if (!value) return null;
@@ -47,7 +48,7 @@ function ProjectModal({ project, onClose, hideActionLinks = false }) {
       >
         <div>
           <div className="h-[300px] sm:h-[400px] w-full overflow-hidden">
-            <img src={images[activeImage]} alt={project.title} className="w-full h-full object-cover" />
+            <LazyImage src={images[activeImage]} alt={project.title} eager width={800} className="w-full h-full object-cover" />
           </div>
           {images.length > 1 && (
             <div className="p-2 border-t border-gray-100">
@@ -84,7 +85,7 @@ function ProjectModal({ project, onClose, hideActionLinks = false }) {
                       (i === activeImage ? "border-black" : "border-transparent")
                     }
                   >
-                    <img src={img} alt="" className="w-full h-full object-cover" />
+                    <LazyImage src={img} alt="" width={100} className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>

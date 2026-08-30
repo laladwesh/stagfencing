@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getServiceCategories } from "../lib/api";
+import LazyImage from "./LazyImage";
 
 // Hardcoded so the home page always shows these exact photos regardless of what's in the DB.
 // Uploaded by server/update-home-service-images.js — same URLs recorded in server/home-service-image-urls.json.
@@ -17,13 +18,15 @@ const CATEGORY_IMAGES = {
   "modular-walls": "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/home-services/1788014159163-f7b3e5ce6ef0b5c3.png",
 };
 
-function ServiceCard({ category }) {
+function ServiceCard({ category, eager }) {
   return (
     <Link to={`/services/${category.slug}`} className="block group">
       <div className="rounded-sm overflow-hidden bg-gray-100 aspect-square">
-        <img
+        <LazyImage
           src={CATEGORY_IMAGES[category.slug] || category.image}
           alt={category.name}
+          eager={eager}
+          width={400}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
@@ -62,8 +65,8 @@ function Services() {
         </div>
 
         <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8 lg:gap-x-6 lg:gap-y-10">
-          {categories.map((category) => (
-            <ServiceCard key={category.slug} category={category} />
+          {categories.map((category, i) => (
+            <ServiceCard key={category.slug} category={category} eager={i < 4} />
           ))}
 
           <div className="col-span-2 bg-[#F3EFE9] rounded-sm p-6 flex flex-col justify-center">

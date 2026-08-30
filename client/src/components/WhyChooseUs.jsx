@@ -1,3 +1,5 @@
+import LazyImage from "./LazyImage";
+
 const FEATURES = [
   {
     icon: "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/why-choose-us/1788031877362-ffa070064dbb7e64.png",
@@ -44,7 +46,7 @@ function WhyChooseUs() {
 
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           <div className="aspect-square rounded-sm overflow-hidden">
-            <img src={FEATURE_PHOTO} alt="Happy Stag Fencing customer" className="w-full h-full object-cover" />
+            <LazyImage src={FEATURE_PHOTO} alt="Happy Stag Fencing customer" width={700} className="w-full h-full object-cover" />
           </div>
 
           <ul className="divide-y divide-gray-300/70">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
+import LazyImage from "../components/LazyImage";
 import { getCategories } from "../lib/api";
 
 function ShopPage() {
@@ -31,14 +32,20 @@ function ShopPage() {
           <p className="mt-10 text-sm text-gray-500">Loading categories…</p>
         ) : (
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.map((category) => (
+            {categories.map((category, i) => (
               <Link
                 key={category.slug}
                 to={`/shop/${category.slug}`}
                 className="block rounded-sm overflow-hidden border border-gray-200 hover:border-gray-400 transition-colors"
               >
                 <div className="rounded-t-sm overflow-hidden bg-gray-100">
-                  <img src={category.image} alt={category.name} className="w-full h-40 object-cover" />
+                  <LazyImage
+                    src={category.image}
+                    alt={category.name}
+                    eager={i < 6}
+                    width={500}
+                    className="w-full h-40 object-cover"
+                  />
                 </div>
                 <div className="p-4">
                   <h2 className="font-semibold text-black">{category.name}</h2>

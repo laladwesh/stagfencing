@@ -10,6 +10,7 @@ import { faqJsonLd, serviceJsonLd } from "../../lib/seo";
 import { SERVICE_CATEGORY_TO_QUOTE_LABEL } from "../../lib/serviceQuoteLabels";
 import { getGalleryProjects } from "../../lib/api";
 import ProjectModal from "../gallery/ProjectModal";
+import LazyImage from "../LazyImage";
 
 function StatTiles({ tiles }) {
   if (!tiles?.length) return null;
@@ -355,7 +356,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
                 <div key={i} className="border border-gray-200 rounded-sm p-4">
                   <div className="rounded-sm overflow-hidden bg-gray-100 h-28 mb-3 flex items-center justify-center">
                     {card.image ? (
-                      <img src={card.image} alt={card.title} className="w-full h-full object-cover" />
+                      <LazyImage src={card.image} alt={card.title} width={400} className="w-full h-full object-cover" />
                     ) : (
                       <FaImage className="w-6 h-6 text-gray-300" />
                     )}
@@ -441,7 +442,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
                   onClick={() => setSelectedProject(project)}
                   className="relative rounded-sm overflow-hidden bg-gray-100 h-40 block text-left"
                 >
-                  <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                  <LazyImage src={project.image} alt={project.title} width={400} className="w-full h-full object-cover" />
                   <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent px-3 py-2">
                     <p className="text-xs font-medium text-white">
                       {project.title}
@@ -464,7 +465,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-5">
                 {service.recentJobs.map((job, i) => (
                   <div key={i} className="relative rounded-sm overflow-hidden bg-gray-100 h-40">
-                    {job.image && <img src={job.image} alt="" className="w-full h-full object-cover" />}
+                    {job.image && <LazyImage src={job.image} alt="" width={400} className="w-full h-full object-cover" />}
                     <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent px-3 py-2">
                       <p className="text-xs font-medium text-white">{job.caption}</p>
                     </div>
