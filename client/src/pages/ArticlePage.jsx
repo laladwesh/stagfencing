@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import Breadcrumb from "../components/Breadcrumb";
+import LazyImage from "../components/LazyImage";
 import { ARTICLES } from "../data/articles";
 
 const TOC = [
@@ -45,7 +46,7 @@ function FeaturedArticle() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <div className="rounded-sm overflow-hidden bg-gray-100">
-          <img src="/hero-bg.png" alt="" className="w-full h-64 sm:h-80 object-cover" />
+          <LazyImage src="/hero-bg.png" alt="" eager className="w-full h-64 sm:h-80 object-cover" />
         </div>
       </div>
 

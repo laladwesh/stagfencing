@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import PageBanner from "../components/PageBanner";
 import ArrowIcon from "../components/ArrowIcon";
 import Seo from "../components/Seo";
+import LazyImage from "../components/LazyImage";
 import { ARTICLES } from "../data/articles";
 
 function QuoteCta({ label }) {
@@ -39,10 +40,10 @@ function BlogPage() {
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-            {ARTICLES.map((article) => (
+            {ARTICLES.map((article, i) => (
               <Link key={article.slug} to={`/blog/${article.slug}`} className="block">
                 <div className="relative rounded-sm overflow-hidden">
-                  <img src="/hero-bg.png" alt="" className="w-full h-48 object-cover" />
+                  <LazyImage src="/hero-bg.png" alt="" eager={i < 6} className="w-full h-48 object-cover" />
                   <span className="absolute top-3 left-3 flex items-center gap-1.5 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full">
                     🕐 {article.readTime}
                   </span>
