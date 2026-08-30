@@ -7,7 +7,7 @@ import { getOptimizedUrl } from "../lib/imageOptimizer";
  *
  * - Lazy-loads via the native `loading` attribute (skip for above-the-fold
  *   images by passing `eager`).
- * - Shows a skeleton by giving the <img> itself a pulsing background colour;
+ * - Shows a skeleton by giving the <img> itself a plain background colour;
  *   the background disappears the instant the real pixels paint in, no
  *   separate overlay element needed.
  * - Routes every src through getOptimizedUrl so a future resizing/CDN layer
@@ -40,7 +40,7 @@ function LazyImage({ src, alt = "", width, eager = false, className = "", onLoad
         setErrored(true);
         onError && onError(e);
       }}
-      className={[className, showSkeleton ? "bg-gray-200 animate-pulse" : ""].filter(Boolean).join(" ")}
+      className={[className, showSkeleton ? "bg-gray-200" : ""].filter(Boolean).join(" ")}
       {...rest}
     />
   );

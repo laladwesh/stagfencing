@@ -27,7 +27,7 @@ function ServiceCard({ category, eager }) {
           alt={category.name}
           eager={eager}
           width={400}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-full object-cover"
         />
       </div>
       <p className="mt-3 text-sm font-semibold text-black">{category.name}</p>
