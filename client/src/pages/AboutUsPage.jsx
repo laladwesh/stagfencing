@@ -75,8 +75,8 @@ function AboutUsPage() {
                   <FaStar key={i} className="w-3.5 h-3.5" />
                 ))}
               </div>
-              <span className="text-sm font-semibold text-black">5.0</span>
-              <span className="text-xs text-gray-500">300+ Google reviews</span>
+              <span className="text-sm font-semibold text-black">4.9</span>
+              <span className="text-xs text-gray-500">43 Google reviews</span>
             </div>
           </div>
 

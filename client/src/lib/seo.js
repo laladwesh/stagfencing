@@ -40,8 +40,8 @@ export function localBusinessJsonLd() {
     },
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: "5.0",
-      reviewCount: "500",
+      ratingValue: "4.9",
+      reviewCount: "43",
     },
   };
 }

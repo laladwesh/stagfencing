@@ -10,7 +10,7 @@ async function run() {
     { slug: "asbestos-fence-removal" },
     {
       $set: {
-        trustBadges: ["5.0 · 300+ Google reviews", "Licensed & insured", "WA licence WR394"],
+        trustBadges: ["4.9 · 43 Google reviews", "Licensed & insured", "WA licence WR394"],
         waRules: [
           "In WA, anything over 10m² of asbestos must be removed by a licensed contractor — a fence run is well past that. We hold WA asbestos removal licence WR394.",
           "Never water-blast, cut or snap sheets — it releases fibres and it's illegal on asbestos. Wet-down hand removal only.",

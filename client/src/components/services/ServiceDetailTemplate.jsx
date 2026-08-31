@@ -489,7 +489,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
                 <div className="flex items-center gap-2">
                   <StarRating value={averageRating} />
                   <span className="text-sm font-semibold text-black">{averageRating.toFixed(1)}</span>
-                  <span className="text-xs text-gray-500">· 300+ Google reviews</span>
+                  <span className="text-xs text-gray-500">· 43 Google reviews</span>
                 </div>
               )}
             </div>

@@ -73,13 +73,13 @@ const POOL_POWDER_COLOURS = [
   { label: "Dune", hex: "#9C8768" },
 ];
 
-const STANDARD_TRUST = (rating = "5.0") => [`${rating} · 300+ Google reviews`, "Licensed & insured"];
+const STANDARD_TRUST = (rating = "4.9") => [`${rating} · 43 Google reviews`, "Licensed & insured"];
 
 function statTiles(warranty, install, extra = "$0", extraLabel = "Measure & written quote") {
   return [
     { value: warranty, label: warranty.includes("yr") ? "Warranty" : "Every barrier certified" },
     { value: install, label: install.includes("day") ? "Typical install" : "Typical install" },
-    { value: "5.0", label: "300+ Google reviews" },
+    { value: "4.9", label: "43 Google reviews" },
     { value: extra, label: extraLabel },
   ];
 }
@@ -267,7 +267,7 @@ async function seed() {
     statTiles: [
       { value: "120 day", label: "workmanship warranty" },
       { value: "1 week", label: "order to install" },
-      { value: "5.0", label: "500+ Google reviews" },
+      { value: "4.9", label: "43 Google reviews" },
       { value: "$0", label: "measure & written quote" },
     ],
     swatchGroupLabel: "Pick your colour",
@@ -383,7 +383,7 @@ async function seed() {
     statTiles: [
       { value: "120 day", label: "workmanship warranty" },
       { value: "1 week", label: "order to install" },
-      { value: "5.0", label: "500+ Google reviews" },
+      { value: "4.9", label: "43 Google reviews" },
       { value: "$0", label: "measure & written quote" },
     ],
     swatchGroupLabel: "Pick your colour or wood-look",
@@ -511,7 +511,7 @@ async function seed() {
       statTiles: [
         { value: "AS 1926.1", label: "every barrier certified" },
         { value: "1 week", label: "order to install" },
-        { value: "5.0", label: "300+ Google reviews" },
+        { value: "4.9", label: "43 Google reviews" },
         { value: "$0", label: "measure & written quote" },
       ],
       swatchGroupLabel,
@@ -657,7 +657,7 @@ async function seed() {
       statTiles: [
         { value: "AS 1926.1", label: "every barrier certified" },
         { value: "1 week", label: "order to install" },
-        { value: "5.0", label: "500+ Google reviews" },
+        { value: "4.9", label: "43 Google reviews" },
         { value: "$0", label: "measure & written quote" },
       ],
       recentJobsTitle: "Recent tubular pool fences around Perth",
@@ -967,11 +967,11 @@ async function seed() {
       bannerCta: bannerCta || "Retaining Calculator",
       title: `${name} Retaining Perth`,
       description,
-      trustBadges: ["5.0 · 300+ Google reviews", "Licensed & insured", "Engineering on request"],
+      trustBadges: ["4.9 · 43 Google reviews", "Licensed & insured", "Engineering on request"],
       statTiles: [
         { value: "120 day", label: "workmanship warranty" },
         { value: "1 week", label: "order to install" },
-        { value: "5.0", label: "300+ Google reviews" },
+        { value: "4.9", label: "43 Google reviews" },
         { value: "$0", label: "measure & written quote" },
       ],
       swatchGroupLabel: swatchGroupLabel || "Sleeper finishes",
@@ -1177,11 +1177,11 @@ async function seed() {
       bannerCta: "Get A Free Quote",
       title: name === "Automation" ? "Gate Automation Perth" : `${name} Perth`,
       description,
-      trustBadges: ["5.0 · 300+ Google reviews", "Licensed & insured", "Centsys & FAAC dealer"],
+      trustBadges: ["4.9 · 43 Google reviews", "Licensed & insured", "Centsys & FAAC dealer"],
       statTiles: [
         { value: "120 day", label: "workmanship warranty" },
         { value: "1 week", label: "order to install" },
-        { value: "5.0", label: "300+ Google reviews" },
+        { value: "4.9", label: "43 Google reviews" },
         { value: "$0", label: "measure & written quote" },
       ],
       swatchGroupLabel: swatchGroupLabel || "Match your fence colour",
@@ -1389,11 +1389,11 @@ async function seed() {
       bannerCta: "Get A Free Quote",
       title: name === "Enclosures" ? "Security Enclosures Perth" : `${name} Fencing Perth`,
       description,
-      trustBadges: ["5.0 · 300+ Google reviews", "Licensed & insured", "Homes & commercial"],
+      trustBadges: ["4.9 · 43 Google reviews", "Licensed & insured", "Homes & commercial"],
       statTiles: [
         { value: "120 day", label: "workmanship warranty" },
         { value: "1 week", label: "order to install" },
-        { value: "5.0", label: "300+ Google reviews" },
+        { value: "4.9", label: "43 Google reviews" },
         { value: "$0", label: "measure & written quote" },
       ],
       swatchGroupLabel: "Powder-coat colours",
@@ -1619,11 +1619,11 @@ async function seed() {
     title: "Blade Fencing Perth",
     description:
       "Designer vertical blade fencing — deep radiator profiles and direct-fixed frameless blades, in select powder-coat colours and wood-look finishes. Pool-compliant options to 1.2m, supplied and installed by our own crews across Perth and the South West.",
-    trustBadges: ["5.0 · 300+ Google reviews", "Licensed & insured", "Designer range"],
+    trustBadges: ["4.9 · 43 Google reviews", "Licensed & insured", "Designer range"],
     statTiles: [
       { value: "120 day", label: "workmanship warranty" },
       { value: "1 week", label: "order to install" },
-      { value: "5.0", label: "300+ Google reviews" },
+      { value: "4.9", label: "43 Google reviews" },
       { value: "$0", label: "measure & written quote" },
     ],
     swatchGroupLabel: "Pick your colour or wood-look",
@@ -1714,11 +1714,11 @@ async function seed() {
     title: "Asbestos Fence Removal Perth",
     description:
       'Safe, certified removal of asbestos "super six" fences by a WA government licensed removalist — our own trained crew, not subcontractors. Sheets are wet down, hand-lifted and double-wrapped, disposed of at a licensed facility with receipts supplied, and a new Colorbond fence can start the same day.',
-    trustBadges: ["5.0 · 300+ Google reviews", "Licensed & insured", "WA licence WR394"],
+    trustBadges: ["4.9 · 43 Google reviews", "Licensed & insured", "WA licence WR394"],
     statTiles: [
       { value: "Licensed", label: "WA govt asbestos removalist" },
       { value: "1 week", label: "order to install" },
-      { value: "5.0", label: "300+ Google reviews" },
+      { value: "4.9", label: "43 Google reviews" },
       { value: "$0", label: "measure & written quote" },
     ],
     swatchGroupLabel: "",
@@ -1841,11 +1841,11 @@ async function seed() {
       bannerCta: "Fence Calculator",
       title: `${name} Perth`,
       description,
-      trustBadges: ["5.0 · 300+ Google reviews", "Licensed & insured", "30-yr PVC + 120-day workmanship"],
+      trustBadges: ["4.9 · 43 Google reviews", "Licensed & insured", "30-yr PVC + 120-day workmanship"],
       statTiles: [
         { value: "30 yr", label: "PVC materials warranty" },
         { value: "1 week", label: "order to install" },
-        { value: "5.0", label: "300+ Google reviews" },
+        { value: "4.9", label: "43 Google reviews" },
         { value: "$0", label: "measure & written quote" },
       ],
       swatchGroupLabel: "Finish & styles",
@@ -1983,11 +1983,11 @@ async function seed() {
     title: "Modular Wall Fencing Perth",
     description:
       "Rendered modular walling for estate frontages, acoustic barriers and solid boundary statements — engineered panel systems on steel posts, finished to match your home. Designed, supplied and installed by our own crews across Perth and the South West.",
-    trustBadges: ["5.0 · 300+ Google reviews", "Licensed & insured", "120-day workmanship warranty"],
+    trustBadges: ["4.9 · 43 Google reviews", "Licensed & insured", "120-day workmanship warranty"],
     statTiles: [
       { value: "120 day", label: "workmanship warranty" },
       { value: "1 week", label: "order to install" },
-      { value: "5.0", label: "300+ Google reviews" },
+      { value: "4.9", label: "43 Google reviews" },
       { value: "$0", label: "measure & written quote" },
     ],
     swatchGroupLabel: "Render finishes",

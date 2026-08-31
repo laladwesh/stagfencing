@@ -39,7 +39,15 @@ const SUPPORT_LINKS = [
   { label: "FAQs", href: "/faqs" },
 ];
 
-const SOCIAL_ICONS = [FaFacebookF, FaInstagram, FaGoogle];
+const SOCIAL_LINKS = [
+  {
+    label: "Facebook",
+    Icon: FaFacebookF,
+    href: "https://www.facebook.com/people/Stag-Contractors/61569623215053/",
+  },
+  { label: "Instagram", Icon: FaInstagram, href: "https://www.instagram.com/stag_contractors/" },
+  { label: "Google", Icon: FaGoogle, href: "https://share.google/dlo2wmvpJmrD6oTjE" },
+];
 
 function FooterColumn({ title, links, open, onToggle }) {
   return (
@@ -183,18 +191,22 @@ function Footer() {
                   <FaStar key={i} className="w-3 h-3" />
                 ))}
               </div>
-              <span className="text-sm font-semibold text-white">5.0</span>
-              <span className="text-xs text-gray-400">300+ Google reviews</span>
+              <span className="text-sm font-semibold text-white">4.9</span>
+              <span className="text-xs text-gray-400">43 Google reviews</span>
             </div>
 
             <div className="mt-4 flex items-center gap-2">
-              {SOCIAL_ICONS.map((Icon, i) => (
-                <span
-                  key={i}
-                  className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-gray-300"
+              {SOCIAL_LINKS.map(({ label, Icon, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-gray-300 hover:text-white hover:border-white/30 transition-colors"
                 >
                   <Icon className="w-3.5 h-3.5" />
-                </span>
+                </a>
               ))}
             </div>
 
