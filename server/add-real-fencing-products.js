@@ -20,6 +20,8 @@ const S3 = "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com";
 const NEW_CATEGORIES = [
   { name: "Security Fencing", slug: "security-fencing", description: "Garrison and chainmesh security fencing for homes, schools and commercial sites.", sortOrder: 10 },
   { name: "Blade Fencing", slug: "blade-fencing", description: "Designer vertical blade fencing — radiator profile and wood-look finishes.", sortOrder: 11 },
+  { name: "Gates & Automation", slug: "gates-automation", description: "Swing and sliding gates, with automation kits.", sortOrder: 12 },
+  { name: "Modular Walls", slug: "modular-walls", description: "Modular boundary wall panels for Perth homes.", sortOrder: 13 },
 ];
 
 // One real, currently-priced product per service — matches exactly what the
@@ -124,6 +126,94 @@ const PRODUCTS = [
     image: `${S3}/gallery/post-and-panel-retaining/1787905544786-110dd4f42ee37417.jpg`,
     basePrice: 240,
     unit: "per square metre",
+  },
+  {
+    name: "Frameless Glass Pool Fencing — Spigot-Fixed",
+    slug: "frameless-glass-pool-fencing-spigot-fixed",
+    categorySlug: "pool-fencing",
+    shortDescription: "AS 1926.1 compliant frameless glass pool fencing",
+    description:
+      "Spigot-fixed frameless glass pool fencing with no visible frame — the fence that disappears so the pool and yard read as one space. AS 1926.1 compliant.",
+    image: `${S3}/home-services/1788014157388-3085c6c9fcaf5722.png`,
+    basePrice: 330,
+    unit: "per lineal metre",
+  },
+  {
+    name: "Tubular Aluminium Pool Fencing — Flat-Top",
+    slug: "tubular-aluminium-pool-fencing-flat-top",
+    categorySlug: "pool-fencing",
+    shortDescription: "Powder-coated tubular aluminium pool fencing",
+    description:
+      "Powder-coated tubular aluminium pool fencing, flat-top profile — rust-free, kid-tough and installed to AS 1926.1 with self-closing, self-latching gates.",
+    image: `${S3}/home-services/1788014157388-3085c6c9fcaf5722.png`,
+    basePrice: 100,
+    unit: "per lineal metre",
+  },
+  {
+    name: "Perforated Pool Fencing — Round-Hole",
+    slug: "perforated-pool-fencing-round-hole",
+    categorySlug: "pool-fencing",
+    shortDescription: "Perforated aluminium pool panels",
+    description:
+      "Perforated aluminium pool panels, round-hole pattern, that screen the pool without boxing it in — non-climbable, rust-free and AS 1926.1 compliant.",
+    image: `${S3}/home-services/1788014157388-3085c6c9fcaf5722.png`,
+    basePrice: 330,
+    unit: "per lineal metre",
+  },
+  {
+    name: "Free Standing Batten Fencing — 40mm",
+    slug: "free-standing-batten-fencing-40mm",
+    categorySlug: "pool-fencing",
+    shortDescription: "Free-standing aluminium batten privacy screen",
+    description:
+      "Free-standing 40mm aluminium batten fencing at compliant sub-100mm spacing — a pool-compliant privacy screen with no visible frame.",
+    image: `${S3}/home-services/1788014157388-3085c6c9fcaf5722.png`,
+    basePrice: 360,
+    unit: "per lineal metre",
+  },
+  {
+    name: "Pik Round Batten Fencing — 50mm",
+    slug: "pik-round-batten-fencing-50mm",
+    categorySlug: "pool-fencing",
+    shortDescription: "Cylindrical aluminium batten privacy screen",
+    description:
+      "Cylindrical 50mm aluminium battens with no visible frame — a softer take on the batten look, at compliant sub-100mm spacing.",
+    image: `${S3}/home-services/1788014157388-3085c6c9fcaf5722.png`,
+    basePrice: 470,
+    unit: "per lineal metre",
+  },
+  {
+    name: "Barr Fencing — 40mm Batten",
+    slug: "barr-fencing-40mm-batten",
+    categorySlug: "pool-fencing",
+    shortDescription: "Through-railed aluminium batten fencing",
+    description:
+      "Horizontal rails threaded through precision-punched 40mm battens, so the fence reads clean and identical from both sides — a true floating-batten look.",
+    image: `${S3}/home-services/1788014157388-3085c6c9fcaf5722.png`,
+    basePrice: 220,
+    unit: "per lineal metre",
+  },
+  {
+    name: "Single Swing Gate — Installed",
+    slug: "single-swing-gate-installed",
+    categorySlug: "gates-automation",
+    shortDescription: "Single swing gate, matched to your fence",
+    description:
+      "Single swing gate fabricated to your opening, matched to your fence in slat, tubular or Colorbond infill. Priced installed, ready for automation.",
+    image: `${S3}/services/1786207396820-59786857961644fb.png`,
+    basePrice: 810,
+    unit: "each",
+  },
+  {
+    name: "Modular Wall Panel",
+    slug: "modular-wall-panel",
+    categorySlug: "modular-walls",
+    shortDescription: "Modular boundary wall panel",
+    description:
+      "Practical modular wall panel for a modern boundary — supplied and installed by our own crews across Perth residential properties.",
+    image: `${S3}/home-services/1788014159163-f7b3e5ce6ef0b5c3.png`,
+    basePrice: 430,
+    unit: "per lineal metre",
   },
 ];
 
