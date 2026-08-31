@@ -11,6 +11,7 @@ const adminRouter = require("./admin");
 const searchRouter = require("./search");
 const galleryRouter = require("./gallery");
 const quotesRouter = require("./quotes");
+const imageRouter = require("./image");
 
 const router = express.Router();
 
@@ -30,5 +31,6 @@ router.use("/admin", adminRouter);
 router.use("/search", searchRouter);
 router.use("/gallery", galleryRouter);
 router.use("/quotes", quotesRouter);
+router.use("/img", imageRouter);
 
 module.exports = router;

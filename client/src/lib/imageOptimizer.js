@@ -1,15 +1,17 @@
-// Utility to optimize image URLs. All current site images are hosted on S3
-// (uploaded as-is, no on-the-fly resizing infra), so for S3 URLs this is a
-// passthrough — it exists as a single seam to add a resizing/CDN layer later
-// (e.g. CloudFront + Lambda@Edge, or an imgproxy) without touching every
-// call site. The Cloudinary branch is kept for forward/backward
-// compatibility in case any image source other than S3 is ever introduced.
+// Utility to optimize image URLs. S3 has no resizing of its own, so S3 URLs
+// are routed through our own /api/img resize proxy (server/routes/image.js)
+// whenever a target width is known — that's what actually makes the `width`
+// prop passed around LazyImage do something, instead of being served at full
+// original size regardless of how small the image is rendered. With no width
+// given, the (already web-optimized) original is used as-is. The Cloudinary
+// branch is kept for forward/backward compatibility in case any image source
+// other than S3 is ever introduced.
 export function getOptimizedUrl(imageUrl, width) {
   if (!imageUrl || typeof imageUrl !== "string") return imageUrl;
 
   if (imageUrl.includes(".s3.") && imageUrl.includes(".amazonaws.com")) {
-    // No resizing service in front of S3 yet — served as uploaded.
-    return imageUrl;
+    if (!width) return imageUrl;
+    return `/api/img?src=${encodeURIComponent(imageUrl)}&w=${width}`;
   }
 
   const marker = "/upload/";

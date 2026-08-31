@@ -2,10 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import TopBar from "./TopBar";
 import Navbar from "./Navbar";
 import Breadcrumb from "./Breadcrumb";
+import { getOptimizedUrl } from "../lib/imageOptimizer";
 
 function PageBanner({ breadcrumb, title, subtitle, image, children }) {
   const [showStickyNav, setShowStickyNav] = useState(false);
   const sentinelRef = useRef(null);
+  const src = image || "/hero-bg.png";
+  const overlay = "linear-gradient(180deg, rgba(20,15,10,0.55) 0%, rgba(20,15,10,0.65) 100%)";
 
   useEffect(() => {
     const el = sentinelRef.current;
@@ -27,9 +30,10 @@ function PageBanner({ breadcrumb, title, subtitle, image, children }) {
       </div>
 
       <div
-        className="relative bg-cover bg-center"
+        className="relative bg-cover bg-center bg-[image:var(--banner-bg-mobile)] sm:bg-[image:var(--banner-bg-desktop)]"
         style={{
-          backgroundImage: `linear-gradient(180deg, rgba(20,15,10,0.55) 0%, rgba(20,15,10,0.65) 100%), url('${image || "/hero-bg.png"}')`,
+          "--banner-bg-mobile": `${overlay}, url('${getOptimizedUrl(src, 800)}')`,
+          "--banner-bg-desktop": `${overlay}, url('${getOptimizedUrl(src, 1920)}')`,
         }}
       >
         <header className="relative z-40">

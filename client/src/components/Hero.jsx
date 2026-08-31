@@ -6,6 +6,10 @@ import Navbar from "./Navbar";
 import QuoteForm from "./QuoteForm";
 import ArrowIcon from "./ArrowIcon";
 import LazyImage from "./LazyImage";
+import { getOptimizedUrl } from "../lib/imageOptimizer";
+
+const HERO_BG = "https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/site/1788029732439-856f2657dbcd0d45.jpg";
+const HERO_OVERLAY = "linear-gradient(180deg, rgba(20,15,10,0.35) 0%, rgba(20,15,10,0.55) 60%, rgba(20,15,10,0.85) 100%)";
 
 const STATS = [
   { value: "500+", label: "Fences Built" },
@@ -37,10 +41,10 @@ function Hero() {
       </div>
 
       <div
-        className="relative bg-cover bg-center"
+        className="relative bg-cover bg-center bg-[image:var(--hero-bg-mobile)] sm:bg-[image:var(--hero-bg-desktop)]"
         style={{
-          backgroundImage:
-            "linear-gradient(180deg, rgba(20,15,10,0.35) 0%, rgba(20,15,10,0.55) 60%, rgba(20,15,10,0.85) 100%), url('https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/site/1788029732439-856f2657dbcd0d45.jpg')",
+          "--hero-bg-mobile": `${HERO_OVERLAY}, url('${getOptimizedUrl(HERO_BG, 800)}')`,
+          "--hero-bg-desktop": `${HERO_OVERLAY}, url('${getOptimizedUrl(HERO_BG, 1920)}')`,
           backgroundColor: "#3a3226",
         }}
       >
