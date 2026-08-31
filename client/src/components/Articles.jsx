@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ARTICLES } from "../data/articles";
 import LazyImage from "./LazyImage";
@@ -16,15 +16,32 @@ function ArrowIcon(props) {
   );
 }
 
-const VISIBLE_COUNT = 3;
-
 function Articles() {
-  const maxStart = Math.max(0, ARTICLES.length - VISIBLE_COUNT);
-  const [start, setStart] = useState(0);
-  const slides = Array.from({ length: maxStart + 1 }, (_, s) => ARTICLES.slice(s, s + VISIBLE_COUNT));
+  const trackRef = useRef(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
 
-  const showPrev = () => setStart((s) => Math.max(0, s - 1));
-  const showNext = () => setStart((s) => Math.min(maxStart, s + 1));
+  const updateEdges = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    setAtStart(el.scrollLeft <= 4);
+    setAtEnd(el.scrollLeft >= el.scrollWidth - el.clientWidth - 4);
+  };
+
+  useEffect(() => {
+    updateEdges();
+  }, []);
+
+  const scrollByOneCard = (direction) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const card = el.firstElementChild;
+    const step = card ? card.getBoundingClientRect().width : el.clientWidth;
+    el.scrollBy({ left: direction * step, behavior: "smooth" });
+  };
+
+  const showPrev = () => scrollByOneCard(-1);
+  const showNext = () => scrollByOneCard(1);
 
   return (
     <section className="bg-white py-16 sm:py-24 border-t border-gray-200">
@@ -43,7 +60,7 @@ function Articles() {
           <button
             type="button"
             onClick={showPrev}
-            disabled={start === 0}
+            disabled={atStart}
             aria-label="Previous articles"
             className="w-9 h-9 rounded-full border border-gray-300 text-gray-700 flex items-center justify-center hover:bg-gray-100 transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
           >
@@ -52,7 +69,7 @@ function Articles() {
           <button
             type="button"
             onClick={showNext}
-            disabled={start === maxStart}
+            disabled={atEnd}
             aria-label="Next articles"
             className="w-9 h-9 rounded-full border border-gray-300 text-gray-700 flex items-center justify-center hover:bg-gray-100 transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
           >
@@ -60,39 +77,36 @@ function Articles() {
           </button>
         </div>
 
-        <div className="mt-4 overflow-hidden">
-          <div
-            className="flex transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${start * 100}%)` }}
-          >
-            {slides.map((slide, slideIndex) => (
-              <div key={slideIndex} className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full shrink-0 pr-6">
-                {slide.map((article) => (
-                  <Link key={article.slug} to={`/blog/${article.slug}`} className="block">
-                    <div className="relative rounded-sm overflow-hidden">
-                      <LazyImage
-                        src={article.coverImage || "/hero-bg.png"}
-                        alt={article.coverAlt || ""}
-                        width={500}
-                        className="w-full h-48 object-cover"
-                      />
-                      <span className="absolute top-3 left-3 flex items-center gap-1.5 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full">
-                        🕐 {article.readTime}
-                      </span>
-                    </div>
-                    <div className="mt-3 flex items-center gap-2">
-                      <span className="bg-gray-900 text-white text-[11px] px-2.5 py-1 rounded-full shrink-0">
-                        {article.tag}
-                      </span>
-                      <span className="flex-1 border-t border-dashed border-gray-300" />
-                      <span className="text-xs text-gray-400 shrink-0">{article.date}</span>
-                    </div>
-                    <h3 className="mt-2 text-base font-semibold text-black leading-snug">{article.title}</h3>
-                  </Link>
-                ))}
-              </div>
-            ))}
-          </div>
+        <div
+          ref={trackRef}
+          onScroll={updateEdges}
+          className="mt-4 flex overflow-x-auto scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {ARTICLES.map((article) => (
+            <div key={article.slug} className="snap-start shrink-0 w-full sm:w-1/2 lg:w-1/3 px-2.5 sm:pr-6 sm:pl-0">
+              <Link to={`/blog/${article.slug}`} className="block">
+                <div className="relative rounded-sm overflow-hidden">
+                  <LazyImage
+                    src={article.coverImage || "/hero-bg.png"}
+                    alt={article.coverAlt || ""}
+                    width={500}
+                    className="w-full h-48 object-cover"
+                  />
+                  <span className="absolute top-3 left-3 flex items-center gap-1.5 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full">
+                    🕐 {article.readTime}
+                  </span>
+                </div>
+                <div className="mt-3 flex items-center gap-2">
+                  <span className="bg-gray-900 text-white text-[11px] px-2.5 py-1 rounded-full shrink-0">
+                    {article.tag}
+                  </span>
+                  <span className="flex-1 border-t border-dashed border-gray-300" />
+                  <span className="text-xs text-gray-400 shrink-0">{article.date}</span>
+                </div>
+                <h3 className="mt-2 text-base font-semibold text-black leading-snug">{article.title}</h3>
+              </Link>
+            </div>
+          ))}
         </div>
 
         <div className="mt-10 text-center">

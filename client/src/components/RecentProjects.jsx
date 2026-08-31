@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import LazyImage from "./LazyImage";
 
 function ArrowIcon(props) {
@@ -29,10 +29,24 @@ const PROJECTS = [
 ];
 
 function RecentProjects() {
+  const trackRef = useRef(null);
   const [active, setActive] = useState(0);
 
-  const showPrev = () => setActive((i) => Math.max(0, i - 1));
-  const showNext = () => setActive((i) => Math.min(PROJECTS.length - 1, i + 1));
+  const updateActiveFromScroll = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    setActive(Math.round(el.scrollLeft / el.clientWidth));
+  };
+
+  const scrollToIndex = (index) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const clamped = Math.max(0, Math.min(PROJECTS.length - 1, index));
+    el.scrollTo({ left: clamped * el.clientWidth, behavior: "smooth" });
+  };
+
+  const showPrev = () => scrollToIndex(active - 1);
+  const showNext = () => scrollToIndex(active + 1);
 
   return (
     <section className="bg-white py-16 sm:py-24 border-t border-gray-200">
@@ -79,22 +93,21 @@ function RecentProjects() {
         </div>
 
         <div className="mt-8 relative rounded-sm overflow-hidden h-80 sm:h-[560px]">
-          <div className="h-full overflow-hidden">
-            <div
-              className="h-full flex transition-transform duration-500 ease-out"
-              style={{ transform: `translateX(-${active * 100}%)` }}
-            >
-              {PROJECTS.map((project, i) => (
-                <LazyImage
-                  key={project.image}
-                  src={project.image}
-                  alt={project.location}
-                  eager={i === 0}
-                  width={900}
-                  className="w-full h-full shrink-0 object-cover"
-                />
-              ))}
-            </div>
+          <div
+            ref={trackRef}
+            onScroll={updateActiveFromScroll}
+            className="h-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {PROJECTS.map((project, i) => (
+              <LazyImage
+                key={project.image}
+                src={project.image}
+                alt={project.location}
+                eager={i === 0}
+                width={900}
+                className="w-full h-full shrink-0 snap-start object-cover"
+              />
+            ))}
           </div>
 
           <div className="absolute bottom-4 inset-x-0 flex items-center justify-center gap-2">
@@ -102,7 +115,7 @@ function RecentProjects() {
               <button
                 key={project.image}
                 type="button"
-                onClick={() => setActive(i)}
+                onClick={() => scrollToIndex(i)}
                 aria-label={`Show ${project.location} project`}
                 className={
                   "h-1.5 rounded-full bg-white transition-all " +
