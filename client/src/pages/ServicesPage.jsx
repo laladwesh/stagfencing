@@ -45,8 +45,8 @@ function ServicesPage() {
   return (
     <Layout transparentHeader>
       <Seo
-        title="Fencing Services Perth | Installation & Repairs"
-        description="Colorbond, pool, slat, security, retaining wall and gate installation across Perth. Free on-site measure and a written quote within 48 hours."
+        title="Fencing Services Perth | Installation & Repairs | Stag Fencing"
+        description="Explore top-rated fencing services in Perth. We supply & install Colorbond, slat, pool, security fencing, retaining walls & asbestos removal."
         path="/services"
         jsonLd={faqJsonLd(SERVICES_FAQS)}
       />

@@ -3,8 +3,8 @@ import PlaceholderPage from "../components/PlaceholderPage";
 function ColorbondColoursPage() {
   return (
     <PlaceholderPage
-      title="Colorbond Colours"
-      description="The full BlueScope Colorbond colour range, with swatches and suggested pairings, is coming soon."
+      title="Colorbond Fencing Colours Perth | Stag Fencing"
+      description="Explore popular Colorbond fencing colours for Perth homes and businesses. Find a fence colour that suits your property, exterior and surrounding landscape."
       path="/resources/colorbond-colours"
     />
   );

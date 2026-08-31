@@ -36,8 +36,8 @@ function ContactPage() {
   return (
     <Layout transparentHeader>
       <Seo
-        title="Contact Us"
-        description="Call, email or book a free on-site measure with Stag Fencing — Perth's local fencing contractor."
+        title="Contact Stag Fencing Perth | Free On-Site Measure & Quote"
+        description="Get in touch with Stag Fencing for a free measure & fixed written quote in Perth metro & surrounding WA regions. Call 0431 703 770 today!"
         path="/contact-us"
       />
       <PageBanner

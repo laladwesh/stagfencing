@@ -31,8 +31,8 @@ function AboutUsPage() {
   return (
     <Layout>
       <Seo
-        title="About Stag Fencing"
-        description="Local Perth fencing contractor with 500+ fences built, a 5-star Google rating and a 10 year workmanship warranty."
+        title="About Stag Fencing | Top Fencing Contractors in Perth, WA"
+        description="Learn why Perth trusts Stag Fencing. 500+ fences built, 10-year workmanship warranty, transparent itemised pricing, and local WA expertise."
         path="/about-us"
       />
       <div className="bg-white py-16 sm:py-20">

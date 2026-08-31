@@ -13,8 +13,8 @@ function Home() {
   return (
     <div className="bg-white">
       <Seo
-        title="Fencing Contractor Perth"
-        description="Stag Fencing builds and repairs Colorbond, pool, slat, security and retaining wall fencing across Perth and WA. Free on-site measure, written quote within 48 hours, 10 year workmanship warranty."
+        title="Stag Fencing Perth | Colorbond, Slat & Pool Fencing Contractors"
+        description="Trusted Perth fencing contractors offering Colorbond, aluminium slat, pool fencing, retaining walls & gates. Get a free, fixed-price quote today!"
         path="/"
       />
       <Hero />

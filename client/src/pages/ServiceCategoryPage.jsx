@@ -7,6 +7,7 @@ import ServiceDetailTemplate from "../components/services/ServiceDetailTemplate"
 import Seo from "../components/Seo";
 import LazyImage from "../components/LazyImage";
 import { getServiceCategory, getServiceDetail } from "../lib/api";
+import { SEO_OVERRIDES } from "../data/seoOverrides";
 
 function ServiceCard({ categorySlug, service, eager }) {
   return (
@@ -100,8 +101,12 @@ function ServiceCategoryPage() {
   return (
     <Layout transparentHeader>
       <Seo
-        title={`${category.name} Perth`}
-        description={category.rangeIntro || `${category.name} across Perth. Free on-site measure and a written quote within 48 hours.`}
+        title={SEO_OVERRIDES[`/services/${categorySlug}`]?.title || `${category.name} Perth`}
+        description={
+          SEO_OVERRIDES[`/services/${categorySlug}`]?.description ||
+          category.rangeIntro ||
+          `${category.name} across Perth. Free on-site measure and a written quote within 48 hours.`
+        }
         path={`/services/${categorySlug}`}
         image={category.image}
       />

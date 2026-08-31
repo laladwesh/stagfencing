@@ -11,6 +11,7 @@ import { SERVICE_CATEGORY_TO_QUOTE_LABEL } from "../../lib/serviceQuoteLabels";
 import { getGalleryProjects } from "../../lib/api";
 import ProjectModal from "../gallery/ProjectModal";
 import LazyImage from "../LazyImage";
+import { SEO_OVERRIDES } from "../../data/seoOverrides";
 
 function StatTiles({ tiles }) {
   if (!tiles?.length) return null;
@@ -231,8 +232,12 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
   return (
     <>
       <Seo
-        title={`${service.name} Perth`}
-        description={service.description || `${service.name} installation across Perth. Free on-site measure and a written quote within 48 hours.`}
+        title={SEO_OVERRIDES[path]?.title || `${service.name} Perth`}
+        description={
+          SEO_OVERRIDES[path]?.description ||
+          service.description ||
+          `${service.name} installation across Perth. Free on-site measure and a written quote within 48 hours.`
+        }
         path={path}
         image={service.image || service.cardImage}
         jsonLd={jsonLd}
