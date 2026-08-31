@@ -81,7 +81,12 @@ function AboutUsPage() {
           </div>
 
           <div className="rounded-sm overflow-hidden">
-            <LazyImage src="/hero-bg.png" alt="" eager className="w-full h-64 object-cover" />
+            <LazyImage
+              src="https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/about-us/1788156044031-c4651c25169ba4e5.png"
+              alt="Colorbond fence with slat privacy gate installed by Stag Fencing"
+              eager
+              className="w-full h-64 object-cover"
+            />
           </div>
         </div>
       </div>
@@ -89,7 +94,12 @@ function AboutUsPage() {
       <div className="bg-[#F3EFE9] py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div className="rounded-sm overflow-hidden order-2 lg:order-1">
-            <LazyImage src="/hero-bg.png" alt="" className="w-full h-64 object-cover" />
+            <LazyImage
+              src="https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/about-us/1788156045792-d6be08b724fc0f0c.png"
+              alt="The Stag Fencing team on site in Perth"
+              width={800}
+              className="w-full h-64 object-cover"
+            />
           </div>
 
           <div className="order-1 lg:order-2">
