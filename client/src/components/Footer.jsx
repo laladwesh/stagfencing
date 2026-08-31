@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getServiceCategories, getCategories } from "../lib/api";
 import {
   FaStar,
   FaFacebookF,
@@ -26,32 +27,15 @@ function ArrowIcon(props) {
   );
 }
 
-const FENCING_LINKS = [
-  "Colorbond",
-  "Pool & glass",
-  "Aluminium slat",
-  "Security fencing",
-  "Retaining walls",
-  "Gates & automation",
-];
-const SHOP_LINKS = [
-  { label: "Shop all products", href: "/shop" },
-  "Panels & posts",
-  "Gates & hardware",
-  "Fencing accessories",
-  "Gate motors",
-];
 const COMPANY_LINKS = [
   { label: "About us", href: "/about-us" },
   { label: "Gallery", href: "/gallery" },
-  "Reviews",
+  { label: "Reviews", href: "/#reviews" },
   { label: "Contact", href: "/contact-us" },
 ];
 const SUPPORT_LINKS = [
   { label: "Fencing calculator", href: "/calculators" },
-  "Warranty",
-  "Delivery",
-  "Returns",
+  { label: "Blog", href: "/blog" },
   { label: "FAQs", href: "/faqs" },
 ];
 
@@ -132,6 +116,26 @@ function Footer() {
   const [openColumn, setOpenColumn] = useState(null);
   const toggleColumn = (title) => setOpenColumn((prev) => (prev === title ? null : title));
 
+  const [serviceCategories, setServiceCategories] = useState([]);
+  const [shopCategories, setShopCategories] = useState([]);
+
+  useEffect(() => {
+    getServiceCategories()
+      .then((data) => setServiceCategories(data.categories))
+      .catch(() => {});
+    getCategories()
+      .then(setShopCategories)
+      .catch(() => {});
+  }, []);
+
+  const fencingLinks = serviceCategories.length
+    ? serviceCategories.map((c) => ({ label: c.name, href: `/services/${c.slug}` }))
+    : [];
+  const shopLinks = [
+    { label: "Shop all products", href: "/shop" },
+    ...shopCategories.map((c) => ({ label: c.name, href: `/shop/${c.slug}` })),
+  ];
+
   return (
     <footer className="bg-black text-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
@@ -202,13 +206,13 @@ function Footer() {
 
           <FooterColumn
             title="FENCING"
-            links={FENCING_LINKS}
+            links={fencingLinks}
             open={openColumn === "FENCING"}
             onToggle={() => toggleColumn("FENCING")}
           />
           <FooterColumn
             title="SHOP"
-            links={SHOP_LINKS}
+            links={shopLinks}
             open={openColumn === "SHOP"}
             onToggle={() => toggleColumn("SHOP")}
           />
@@ -263,9 +267,6 @@ function Footer() {
         <div className="px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
           <p>© {new Date().getFullYear()} Stag Fencing · ABN 47 679 579 198 · All prices exclude GST</p>
           <div className="flex items-center gap-4">
-            <a href="/terms-and-conditions" className="hover:text-white transition-colors">
-              Terms
-            </a>
             <Link to="/privacy-policy" className="hover:text-white transition-colors">
               Privacy
             </Link>

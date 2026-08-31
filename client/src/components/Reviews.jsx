@@ -133,7 +133,7 @@ function Reviews() {
   const showNext = () => scrollByOneCard(1);
 
   return (
-    <section className="bg-brand-dark py-16 sm:py-24">
+    <section id="reviews" className="bg-brand-dark py-16 sm:py-24 scroll-mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div>

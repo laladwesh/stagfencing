@@ -54,6 +54,7 @@ function ServicesPage() {
         breadcrumb="Home / Services"
         title="Installation services"
         subtitle="Every fence, wall and gate we build — pick your service"
+        image="https://stagfencing-media.s3.ap-southeast-2.amazonaws.com/service-categories/1788085730660-6da5d1ce83bfdc2b.png"
       >
         <Link
           to="/calculators"

@@ -34,7 +34,7 @@ function SwatchRow({ label, note, swatches, selectedLabel, onSelect }) {
         <p className="text-sm font-semibold text-black">{label}</p>
         {note && <p className="text-xs text-gray-400">{note}</p>}
       </div>
-      <div className="mt-4 flex sm:grid sm:grid-cols-9 gap-4 overflow-x-auto sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 pb-1 snap-x snap-mandatory sm:snap-none">
+      <div className="mt-4 flex sm:grid sm:grid-cols-9 gap-4 overflow-x-auto sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 py-2 -my-2 snap-x snap-mandatory sm:snap-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {swatches.map((s) => {
           const isSelected = s.label === selectedLabel;
           return (
@@ -327,7 +327,7 @@ function ServiceDetailTemplate({ service, breadcrumb, path }) {
               <p className="text-sm font-semibold text-black">{service.stylesLabel || "Styles & pricing"}</p>
               <p className="sm:hidden text-xs text-gray-400">← swipe · prices exclude GST</p>
             </div>
-            <div className="mt-4 flex sm:grid sm:grid-cols-4 gap-3 overflow-x-auto sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 pb-1 snap-x snap-mandatory sm:snap-none">
+            <div className="mt-4 flex sm:grid sm:grid-cols-4 gap-3 overflow-x-auto sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 py-2 -my-2 snap-x snap-mandatory sm:snap-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
               {service.styles.map((style) => (
                 <div key={style.name} className="w-36 sm:w-auto shrink-0 sm:shrink snap-start">
                   <StyleCard

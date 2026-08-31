@@ -261,7 +261,7 @@ function DayTimePicker({ days, selectedDayIndex, onSelectDay, selectedTime, onSe
       <div
         className={
           mobile
-            ? "mt-3 flex gap-2 overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-1"
+            ? "mt-3 flex gap-2 overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             : "mt-3 grid grid-cols-7 gap-2"
         }
       >
