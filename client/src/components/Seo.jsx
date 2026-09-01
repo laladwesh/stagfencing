@@ -2,7 +2,12 @@ import { Helmet } from "react-helmet-async";
 import { DEFAULT_OG_IMAGE, SITE_NAME, absoluteUrl } from "../lib/seo";
 
 function Seo({ title, description, path = "/", image = DEFAULT_OG_IMAGE, noindex = false, jsonLd }) {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | Best Fencing Contractor in Perth`;
+  const alreadyHasSiteName = title?.trim().toLowerCase().endsWith(SITE_NAME.toLowerCase());
+  const fullTitle = !title
+    ? `${SITE_NAME} | Best Fencing Contractor in Perth`
+    : alreadyHasSiteName
+    ? title
+    : `${title} | ${SITE_NAME}`;
   const url = absoluteUrl(path);
   const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 

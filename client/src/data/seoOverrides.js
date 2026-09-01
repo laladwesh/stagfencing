@@ -54,9 +54,9 @@ export const SEO_OVERRIDES = {
       "Choose strong, modern blade fencing in Perth for improved property security and privacy. Stag Fencing provides professional supply and installation.",
   },
   "/services/security-fencing/chainmesh-fencing": {
-    title: "Chainmesh Fencing in Perth | Supply & Installation | Stag Fencing",
+    title: "Chainmesh Fencing in Perth | Security Fencing | Stag Fencing",
     description:
-      "Secure your property with chainmesh fencing in Perth. Stag Fencing provides professional chainmesh fence installation for residential, commercial and industrial sites.",
+      "Chainmesh fencing in Perth for homes, businesses and commercial properties. Stag Fencing provides durable security fencing with professional installation. Get a free quote.",
   },
   "/services/security-fencing/garrison-fencing": {
     title: "Garrison Fencing Perth | High-Security Fencing | Stag Fencing",
@@ -67,5 +67,25 @@ export const SEO_OVERRIDES = {
     title: "Security Enclosures Perth | Custom Fencing Solutions | Stag Fencing",
     description:
       "Stag Fencing builds secure enclosures in Perth for homes, businesses and equipment. Get a practical fencing solution designed around your property.",
+  },
+  "/services/security-fencing/palisade-fencing": {
+    title: "Palisade Fencing in Perth | Security Fencing | Stag Fencing",
+    description:
+      "Palisade fencing in Perth for strong, reliable property security. Stag Fencing supplies and installs durable palisade fencing for homes and businesses.",
+  },
+  "/services/gates-automation/automation": {
+    title: "Automatic Gates Perth | Gate Automation | Stag Fencing",
+    description:
+      "Upgrade your Perth property with automatic gate automation from Stag Fencing. Enjoy convenient, secure access with professional installation.",
+  },
+  "/services/gates-automation/sliding-gates": {
+    title: "Sliding Gates Perth | Sliding Gate Installation | Stag Fencing",
+    description:
+      "Get durable sliding gates in Perth with professional installation from Stag Fencing. Choose practical, secure gate solutions for homes and businesses.",
+  },
+  "/services/gates-automation/swing-gates": {
+    title: "Swing Gates Perth | Custom Gate Installation | Stag Fencing",
+    description:
+      "Get quality swing gates in Perth designed for security, access and style. Stag Fencing provides custom swing gate solutions and professional installation.",
   },
 };

@@ -13,7 +13,7 @@ function Home() {
   return (
     <div className="bg-white">
       <Seo
-        title="Stag Fencing Perth | Colorbond, Slat & Pool Fencing Contractors"
+        title="Colorbond & PVC Fencing Perth | Gates, Slat & Pool Fences| Stag Fencing"
         description="Trusted Perth fencing contractors offering Colorbond, aluminium slat, pool fencing, retaining walls & gates. Get a free, fixed-price quote today!"
         path="/"
       />
