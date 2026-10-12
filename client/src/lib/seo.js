@@ -3,10 +3,11 @@ export const SITE_URL = "https://stagfencing.com.au";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/hero-bg.png`;
 export const BUSINESS_PHONE = "+61431703770";
 export const BUSINESS_EMAIL = "quote@stagfencing.com.au";
-// No street address by design — Stag Fencing services all of Perth & the South West
-// rather than operating from a single walk-in location, so only the region is published.
 export const BUSINESS_ADDRESS = {
+  streetAddress: "79 Millstream Drive, Southern River",
+  addressLocality: "Perth",
   addressRegion: "WA",
+  postalCode: "6110",
   addressCountry: "AU",
 };
 export const SERVICE_AREAS = [
@@ -25,7 +26,7 @@ export function absoluteUrl(path = "/") {
 export function localBusinessJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "HomeAndConstructionBusiness",
+    "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
     "@id": `${SITE_URL}/#business`,
     name: SITE_NAME,
     url: SITE_URL,
